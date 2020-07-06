@@ -9,6 +9,13 @@ reserved = {
     'let' : 'LET',
     'var' : 'VAR',
     'const' : 'CONST',
+    'number' : 'VARNUMBER',
+    'string' : 'VARSTRING',
+    'boolean' : 'VARBOOLEAN',
+    'any' : 'ANY',
+    'enum' : 'enum',
+    'true' : 'TRUE',
+    'false' : 'FALSE',
 }
 
 tokens = [
@@ -32,9 +39,12 @@ tokens = [
     'END',
 ] + list(reserved.values())
 
-#Valores y simbolos
+#Valores
 t_NUMBER = r'[0-9]+'
 t_FLOAT = r'[0-9]+\.[0-9]+'
+
+
+#simbolos
 t_PLUS = r'\+'
 t_MINUS = r'-'
 t_PRODUCT = r'\*'
@@ -60,9 +70,15 @@ t_FOR = r'for'
 t_LET = r'let'
 t_VAR = r'var'
 t_CONST = r'const'
+t_VARNUMBER = r'number'
+t_VARSTRING = r'string'
+t_VARBOOLEAN = r'boolean'
+t_ANY = r'any'
+t_TRUE = r'true'
+t_FALSE = r'false'
 
 
-t_ignore = r' \t'
+t_ignore = ' \t'
 
 def t_VARIABLE(t):
     r'[a-z_][a-zA-Z_0-9]*'
@@ -79,7 +95,7 @@ def t_error(t):
 
 
 # Build the lexer
-cadena = "for if mds"
+cadena = "let x: boolean = true;"
 lexer = lex.lex()
 lexer.input(cadena)
 
