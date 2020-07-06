@@ -16,11 +16,20 @@ reserved = {
     'enum' : 'enum',
     'true' : 'TRUE',
     'false' : 'FALSE',
+    'null' : 'NULL',
+    'undefined' : 'UNDEFINED',
+    'new' : 'NEW',
+    'object' : 'VAROBJECT',
+    'Array' : 'ARRAY',
 }
 
 tokens = [
     'NUMBER',
     'FLOAT',
+    'OBJECTNAME',
+    'NORMSTRING1',
+    'NORMSTRING2',
+    'MULTISTRING',
     'PLUS',
     'MINUS',
     'PRODUCT',
@@ -36,12 +45,22 @@ tokens = [
     'VARIABLE',
     'EQUAL',
     'TWOPOINTS',
+    'COMMA',
+    'DOLLAR',
+    'LBRACKET',
+    'RBRACKET',
+    'LKEY',
+    'RKEY',
     'END',
 ] + list(reserved.values())
 
 #Valores
 t_NUMBER = r'[0-9]+'
 t_FLOAT = r'[0-9]+\.[0-9]+'
+t_NORMSTRING1 = r'\".*\"' #Falta arreglar los dos norm y el multi
+t_NORMSTRING2 = r'\'.*\''
+t_MULTISTRING = r'`.*`'
+t_OBJECTNAME = r'([A-Z][a-z]*)+'
 
 
 #simbolos
@@ -60,6 +79,11 @@ t_EQUALTO = r'=='
 t_NOTEQUALTO = r'!='
 t_TWOPOINTS = r'\:'
 t_END = r';'
+t_LBRACKET = r'\['
+t_RBRACKET = r'\]'
+t_LKEY = r'\{'
+t_RKEY = r'\}'
+t_COMMA = r','
 
 #Reservados
 t_IF = r'if'
@@ -76,6 +100,11 @@ t_VARBOOLEAN = r'boolean'
 t_ANY = r'any'
 t_TRUE = r'true'
 t_FALSE = r'false'
+t_NULL = r'null'
+t_UNDEFINED = r'undefined'
+t_NEW = r'new'
+t_VAROBJECT = r'object'
+t_ARRAY = r'Array'
 
 
 t_ignore = ' \t'
@@ -95,7 +124,7 @@ def t_error(t):
 
 
 # Build the lexer
-cadena = "let x: boolean = true;"
+cadena = "enum MyClass = {Perro, Gato};"
 lexer = lex.lex()
 lexer.input(cadena)
 
