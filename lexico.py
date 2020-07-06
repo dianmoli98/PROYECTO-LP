@@ -6,6 +6,9 @@ reserved = {
     'else' : 'ELSE',
     'while' : 'WHILE',
     'for' : 'FOR',
+    'let' : 'LET',
+    'var' : 'VAR',
+    'const' : 'CONST',
 }
 
 tokens = [
@@ -29,6 +32,7 @@ tokens = [
     'END',
 ] + list(reserved.values())
 
+#Valores y simbolos
 t_NUMBER = r'[0-9]+'
 t_FLOAT = r'[0-9]+\.[0-9]+'
 t_PLUS = r'\+'
@@ -44,13 +48,19 @@ t_GREATER = r'>=?'
 t_LESS = r'<=?'
 t_EQUALTO = r'=='
 t_NOTEQUALTO = r'!='
+t_TWOPOINTS = r'\:'
+t_END = r';'
+
+#Reservados
 t_IF = r'if'
 t_ELIF = r'elif'
 t_ELSE = r'else'
 t_WHILE = r'while'
 t_FOR = r'for'
-t_TWOPOINTS = r'\:'
-t_END = r';'
+t_LET = r'let'
+t_VAR = r'var'
+t_CONST = r'const'
+
 
 t_ignore = r' \t'
 
