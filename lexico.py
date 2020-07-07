@@ -1,3 +1,7 @@
+#Molina Diana
+#Marlon Lindao
+#Dennys Lopez
+
 import ply.lex as lex
 
 reserved = {
@@ -23,13 +27,15 @@ reserved = {
 
     'new' : 'NEW',
     'object' : 'VAROBJECT',
-    'array' : 'ARRAY',
-    'set' : 'SET',
+    'Array' : 'ARRAY',
+    'Set' : 'SET',
 
     #FUNCIONES
+    'Math': 'FUNMATH',
+    'abs' : 'ABS',
+    'round': 'ROUND',
+    'pow':'POW',
     'charAt': 'FUNCTIONCHARAT',
-
-
 }
 
 tokens = [
@@ -71,9 +77,11 @@ tokens = [
 
     'TWOPOINTS',
     'COMMA',
-    'POINTCOMMA', #PUNTO Y COMA
-    'SPECIAL', #PARA EL SIMBOLO
+    'POINTCOMMA',
+    'SPECIAL',
     'DOLLAR',
+    'PRINT',
+
 ] + list(reserved.values())
 
 #Valores
@@ -82,7 +90,6 @@ t_FLOAT = r'[0-9]+\.[0-9]+'
 t_NORMSTRING1 = r'\".*\"' #Falta arreglar los dos norm y el multi
 t_NORMSTRING2 = r'\'.*\''
 t_MULTISTRING = r'`.*`'
-t_OBJECTNAME = r'([A-Z][a-z]*)+'
 t_POINT = r'\.'
 
 #simbolos
@@ -119,8 +126,6 @@ t_POINTCOMMA = r';'
 t_SPECIAL = r'`'
 t_DOLLAR = r'\$'
 
-
-
 #Reservados
 t_LET = r'let'
 t_VAR = r'var'
@@ -148,15 +153,30 @@ t_ARRAY = r'Array'
 t_SET = r'Set'
 
 #FUNCIONES
+t_FUNMATH = r'Math'
+t_ABS = r'abs'
+t_ROUND = r'round'
+t_POW = r'pow'
 t_FUNCTIONCHARAT= r'charAt'
-
 
 
 t_ignore = ' \t'
 
+
+def t_PRINT(t):
+    r'console.log'
+    t.type = reserved.get(t.value,'PRINT')    # Check for reserved words
+    return t
+
+
 def t_VARIABLE(t):
     r'[a-z_][a-zA-Z_0-9]*'
     t.type = reserved.get(t.value,'VARIABLE')    # Check for reserved words
+    return t
+
+def t_OBJECTNAME(t):
+    r'([A-Z][a-z]*)+'
+    t.type = reserved.get(t.value,'OBJECTNAME')    # Check for reserved words
     return t
 
 def t_newline(t):
@@ -169,7 +189,7 @@ def t_error(t):
 
 
 # Build the lexer
-cadena = "new set()"
+cadena = "contador++;"
 lexer = lex.lex()
 lexer.input(cadena)
 
