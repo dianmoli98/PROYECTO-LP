@@ -89,7 +89,7 @@ t_NUMBER = r'[0-9]+'
 t_FLOAT = r'[0-9]+\.[0-9]+'
 t_NORMSTRING1 = r'\".*\"' #Falta arreglar los dos norm y el multi
 t_NORMSTRING2 = r'\'.*\''
-t_MULTISTRING = r'`.*`'
+t_MULTISTRING = r'`(.*\n?)*`'
 t_POINT = r'\.'
 
 #simbolos
@@ -170,7 +170,7 @@ def t_PRINT(t):
 
 
 def t_VARIABLE(t):
-    r'[a-z_][a-zA-Z_0-9]*'
+    r'[a-z_$][a-zA-Z_0-9]*'
     t.type = reserved.get(t.value,'VARIABLE')    # Check for reserved words
     return t
 
@@ -189,7 +189,7 @@ def t_error(t):
 
 
 # Build the lexer
-cadena = "contador++;"
+cadena = "console.log(`Holap\nHoli`);"
 lexer = lex.lex()
 lexer.input(cadena)
 
