@@ -14,12 +14,16 @@ reserved = {
     'enum' : 'ENUM',
     'null' : 'NULL',
     'undefined' : 'UNDEFINED',
+    'static' : 'STATIC',
+    'typeof' : 'TYPEOF',
+    'instanceof' : 'INSTANCEOF',
 
     'if' : 'IF',
-    'elif' : 'ELIF',
+    'elif' :'ELIF',
     'else' : 'ELSE',
     'while' : 'WHILE',
     'for' : 'FOR',
+    'in' : 'IN',
 
     'any' : 'ANY',
     'true' : 'TRUE',
@@ -81,6 +85,7 @@ tokens = [
     'SPECIAL',
     'DOLLAR',
     'PRINT',
+    'COMMENT',
 
 ] + list(reserved.values())
 
@@ -126,6 +131,7 @@ t_POINTCOMMA = r';'
 t_SPECIAL = r'`'
 t_DOLLAR = r'\$'
 
+
 #Reservados
 t_LET = r'let'
 t_VAR = r'var'
@@ -136,12 +142,17 @@ t_VARBOOLEAN = r'boolean'
 t_ENUM = r'enum'
 t_NULL = r'null'
 t_UNDEFINED = r'undefined'
+t_STATIC = r'static'
+t_INSTANCEOF = r'instanceof'
+t_TYPEOF = r'typeof'
 
 t_IF = r'if'
-t_ELIF = r'elif'
 t_ELSE = r'else'
+t_ELIF = r'elif'
 t_WHILE = r'while'
 t_FOR = r'for'
+t_IN = r'in'
+
 
 t_ANY = r'any'
 t_TRUE = r'true'
@@ -168,6 +179,11 @@ def t_PRINT(t):
     t.type = reserved.get(t.value,'PRINT')    # Check for reserved words
     return t
 
+def t_COMMENT(t):
+    r'\/\/[a-z_][a-zA-Z_0-9\s]*'
+    t.type = reserved.get(t.value,'COMMENT')    # Check for reserved words
+    return t
+
 
 def t_VARIABLE(t):
     r'[a-z_$][a-zA-Z_0-9]*'
@@ -189,7 +205,8 @@ def t_error(t):
 
 
 # Build the lexer
-cadena = "console.log(`Holap\nHoli`);"
+cadena = "//esto es un comentario  "
+
 lexer = lex.lex()
 lexer.input(cadena)
 
