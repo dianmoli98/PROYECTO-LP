@@ -193,7 +193,6 @@ t_FUNCTIONFILTER= r'filter'
 
 #FUNCIONES Conjuntos
 t_FUNCTIONADD= r'add'
-
 t_FUNCTIONHAS= r'has'
 
 
@@ -233,7 +232,7 @@ def t_error(t):
 
 lexer = lex.lex()
 
-#Test
+#Test - Dennys Lopez
 
 test1_assignacion="var arreglo1 = [\"Ana\",\"Juan\"];"
 
@@ -245,7 +244,21 @@ test_concat="var str1: string = \"Ana\";"+ "\nvar str2: string = \"Maria\";"+ "\
 
 test_for="for (let i = 0; i < 3; i++) {"+ "console.log (\"i:\" + i);" +"}"
 
+
+
+
+#test - Diana Molina T
+test_enum="enum Color {Amarrillo, Azul, Rojo}"
+
+test_set = "let set1 = new Set ();"
+
+test_split = "var result = str.split(" "); "
+
+test_comment = "//esto es un comentario de una linea"
+
 test_while="let i: number=5;"+ "\nwhile (i==5) {"+  "\nconsole.log(\"I am an infinity while loop .\");" +"\n}"
+
+test_suma= "4+3"
 
 
 #test - Marlon Lindao
@@ -257,13 +270,10 @@ test_boolean = "static y: boolean = true"
 
 test_boolean2 = "let b = (var1 <= 5)&&(var2 != 10)"
 
-test_enum="enum Color {Amarrillo, Azul, Rojo}"
 
-test_set = "let set1 = new Set ();"
 
-test_split = "var result = str.split(" "); "
 tests=[test1_assignacion,test_has,test_join,test_concat,test_for,test_while,test_enum,test_set,test_split,test_enum2,test_tuple,
-       test_boolean,test_boolean2]
+       test_boolean,test_boolean2, test_comment,test_suma]
 
 
 for i in tests:
