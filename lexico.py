@@ -232,16 +232,36 @@ def t_error(t):
     t.lexer.skip(1)
 
 
-# Build the lexer
-cadena = "//esto es un comentario  "
+
 
 lexer = lex.lex()
-lexer.input(cadena)
 
-while(True):
-    tok = lexer.token()
-    if not tok:
-        break  # No more input
-    print(tok)
+#Test
+
+test1_assignacion="var arreglo1 = [\"Ana\",\"Juan\"];"
+
+test_has="let set1 = new Set();" + "\nlet result:boolean =set1.has(1);"
+
+test_join="var arreglo1 = [\"Ana\",\"Juan\"];"+ "\nvar result = arreglo1.join(\",\");"
+
+test_concat="var str1: string = \"Ana\";"+ "\nvar str2: string = \"Maria\";"+ "\nvar str3: string = str1.concat(str2);"
+
+test_for="for (let i = 0; i < 3; i++) {"+ "console.log (\"i:\" + i);" +"}"
+
+test_while="let i: number=5;"+ "\nwhile (i==5) {"+  "\nconsole.log(\"I am an infinity while loop .\");" +"\n}"
+
+
+tests=[test1_assignacion,test_has,test_join,test_concat,test_for,test_while]
+
+for i in tests:
+    print("\n"+i+"\n")
+    
+    lexer.input(i)
+    while(True):
+        tok = lexer.token()
+        if not tok:
+            break  # No more input
+        print(tok)
+
 
 
