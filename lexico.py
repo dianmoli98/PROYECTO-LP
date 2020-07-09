@@ -193,7 +193,6 @@ t_FUNCTIONFILTER= r'filter'
 
 #FUNCIONES Conjuntos
 t_FUNCTIONADD= r'add'
-
 t_FUNCTIONHAS= r'has'
 
 
@@ -252,7 +251,9 @@ test_enum="enum Color {Amarrillo, Azul, Rojo}"
 test_set = "let set1 = new Set ();"
 
 test_split = "var result = str.split(" "); "
-tests=[test1_assignacion,test_has,test_join,test_concat,test_for,test_while,test_enum,test_set,test_split]
+
+test_comment = "//esto es un comentario de una linea"
+tests=[test1_assignacion,test_has,test_join,test_concat,test_for,test_while,test_enum,test_set,test_split,test_comment]
 
 for i in tests:
     print("\n"+i+"\n")
