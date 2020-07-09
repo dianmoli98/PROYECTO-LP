@@ -48,7 +48,7 @@ reserved = {
     #FUNCIONES Arrays
     'join': 'FUNCTIONJOIN',
     'filter': 'FUNCTIONFILTER',
-    
+
     #FUNCIONES Conjuntos
     'add': 'FUNCTIONADD',
     'has': 'FUNCTIONHAS',
@@ -248,8 +248,15 @@ test_for="for (let i = 0; i < 3; i++) {"+ "console.log (\"i:\" + i);" +"}"
 
 test_while="let i: number=5;"+ "\nwhile (i==5) {"+  "\nconsole.log(\"I am an infinity while loop .\");" +"\n}"
 
+#test - Marlon Lindao
+test_enum = "enum Animal{Perro, Gato=1}" + "\nconst x: Animal = Animal.Perro"
 
-tests=[test1_assignacion,test_has,test_join,test_concat,test_for,test_while]
+test_tuple= "let x: [string,number] = [\"Hola mundo\",4.5]"
+
+test_boolean = "static y: boolean = true"
+
+
+tests=[test1_assignacion,test_has,test_join,test_concat,test_for,test_while,test_enum,test_tuple,test_boolean]
 
 for i in tests:
     print("\n"+i+"\n")
