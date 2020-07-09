@@ -210,7 +210,6 @@ def t_COMMENT(t):
     t.type = reserved.get(t.value,'COMMENT')    # Check for reserved words
     return t
 
-
 def t_VARIABLE(t):
     r'[a-z_$][a-zA-Z_0-9]*'
     t.type = reserved.get(t.value,'VARIABLE')    # Check for reserved words
@@ -248,8 +247,12 @@ test_for="for (let i = 0; i < 3; i++) {"+ "console.log (\"i:\" + i);" +"}"
 
 test_while="let i: number=5;"+ "\nwhile (i==5) {"+  "\nconsole.log(\"I am an infinity while loop .\");" +"\n}"
 
+test_enum="enum Color {Amarrillo, Azul, Rojo}"
 
-tests=[test1_assignacion,test_has,test_join,test_concat,test_for,test_while]
+test_set = "let set1 = new Set ();"
+
+test_split = "var result = str.split(" "); "
+tests=[test1_assignacion,test_has,test_join,test_concat,test_for,test_while,test_enum,test_set,test_split]
 
 for i in tests:
     print("\n"+i+"\n")
