@@ -40,20 +40,18 @@ reserved = {
     'round': 'ROUND',
     'pow':'POW',
 
-		#FUNCIONES Strings
+    #FUNCIONES Strings
     'charAt': 'FUNCTIONCHARAT',
-		'concat': 'FUNCTIONCONCAT',
-		'split': 'FUNCTIONSPLIT',
+    'concat': 'FUNCTIONCONCAT',
+    'split': 'FUNCTIONSPLIT',
 
-	#FUNCIONES Arrays
-'join': 'FUNCTIONJOIN',
-'filter': 'FUNCTIONFILTER',
-
-#FUNCIONES Conjuntos
-'add': 'FUNCTIONADD',
-'has': 'FUNCTIONHAS',
-
-		
+    #FUNCIONES Arrays
+    'join': 'FUNCTIONJOIN',
+    'filter': 'FUNCTIONFILTER',
+    
+    #FUNCIONES Conjuntos
+    'add': 'FUNCTIONADD',
+    'has': 'FUNCTIONHAS',
 }
 
 tokens = [
