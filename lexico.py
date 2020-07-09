@@ -210,7 +210,6 @@ def t_COMMENT(t):
     t.type = reserved.get(t.value,'COMMENT')    # Check for reserved words
     return t
 
-
 def t_VARIABLE(t):
     r'[a-z_$][a-zA-Z_0-9]*'
     t.type = reserved.get(t.value,'VARIABLE')    # Check for reserved words
@@ -248,15 +247,24 @@ test_for="for (let i = 0; i < 3; i++) {"+ "console.log (\"i:\" + i);" +"}"
 
 test_while="let i: number=5;"+ "\nwhile (i==5) {"+  "\nconsole.log(\"I am an infinity while loop .\");" +"\n}"
 
+
 #test - Marlon Lindao
-test_enum = "enum Animal{Perro, Gato=1}" + "\nconst x: Animal = Animal.Perro"
+test_enum2= "enum Animal{Perro, Gato=1}" + "\nconst x: Animal = Animal.Perro"
 
 test_tuple= "let x: [string,number] = [\"Hola mundo\",4.5]"
 
 test_boolean = "static y: boolean = true"
 
+test_boolean2 = "let b = (var1 <= 5)&&(var2 != 10)"
 
-tests=[test1_assignacion,test_has,test_join,test_concat,test_for,test_while,test_enum,test_tuple,test_boolean]
+test_enum="enum Color {Amarrillo, Azul, Rojo}"
+
+test_set = "let set1 = new Set ();"
+
+test_split = "var result = str.split(" "); "
+tests=[test1_assignacion,test_has,test_join,test_concat,test_for,test_while,test_enum,test_set,test_split,test_enum2,test_tuple,
+       test_boolean,test_boolean2]
+
 
 for i in tests:
     print("\n"+i+"\n")
