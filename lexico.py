@@ -39,7 +39,21 @@ reserved = {
     'abs' : 'ABS',
     'round': 'ROUND',
     'pow':'POW',
+
+		#FUNCIONES Strings
     'charAt': 'FUNCTIONCHARAT',
+		'concat': 'FUNCTIONCONCAT',
+		'split': 'FUNCTIONSPLIT',
+
+	#FUNCIONES Arrays
+'join': 'FUNCTIONJOIN',
+'filter': 'FUNCTIONFILTER',
+
+#FUNCIONES Conjuntos
+'add': 'FUNCTIONADD',
+'has': 'FUNCTIONHAS',
+
+		
 }
 
 tokens = [
@@ -168,7 +182,21 @@ t_FUNMATH = r'Math'
 t_ABS = r'abs'
 t_ROUND = r'round'
 t_POW = r'pow'
-t_FUNCTIONCHARAT= r'charAt'
+
+#FUNCIONES Strings
+
+t_FUNCTIONCHARAT= r'charAt' # Tambien para Arrays
+t_FUNCTIONCONCAT= r'concat'
+t_FUNCTIONSPLIT= r'split'
+
+#FUNCIONES Arrays
+t_FUNCTIONJOIN= r'join'
+t_FUNCTIONFILTER= r'filter'
+
+#FUNCIONES Conjuntos
+t_FUNCTIONADD= r'add'
+
+t_FUNCTIONHAS= r'has'
 
 
 t_ignore = ' \t'
