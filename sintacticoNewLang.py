@@ -42,7 +42,7 @@ def p_declare_boolean_value(p):
     'boolean_value : boolean'
 
 def p_declare_generic(p):
-    'declare_generic : declare_any EQUAL VARIABLE'
+    'declare_generic : declare_any EQUAL variable'
     p[0] = 100
 
 #Can be used for all declarations
@@ -103,26 +103,25 @@ def p_term_product(p):
 
 def p_term_div(p):
     'term : term DIVIDE factor'
-    p[0] = p[1] / p[3]
+    if p[3] != 0:
+        p[0] = p[1] / p[3]
 
 def p_term_factor(p):
-    'term : factor'
+    '''term : factor
+    | factor_expr'''
     p[0] = p[1]
-
-#Terminals
 
 def p_factor_num(p):
-    'factor : number'
-    p[0] = p[1]
-
-def p_factor_var(p):
-    'factor : variable'
+    '''factor : number
+    | variable'''
     p[0] = p[1]
 
 def p_factor_expr(p):
-    'factor : LPAREN expression RPAREN'
+    'factor_expr : LPAREN expression RPAREN'
     p[0] = p[2]
 
+
+#Terminals
 def p_prefix(p):
     '''prefix : LET
     | VAR
