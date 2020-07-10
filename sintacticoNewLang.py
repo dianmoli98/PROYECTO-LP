@@ -6,31 +6,63 @@ tokens = mylexer.tokens
 def p_all(p):
     '''all : statement
     | concatenate
+    | declare
     | assign'''
     p[0] = p[1]
 
 #Declaration of Variables
-def p_assign(p):
-    '''assign : var_boolean'''
+def p_declare(p):
+    '''declare : var_boolean
+    | var_number
+    | declare_generic'''
     p[0] = p[1]
+
+#Declaration of var_number
+def p_var_number(p):
+    '''var_number : declare_any EQUAL number_value
+    | declare_number number_value'''
+    p[0] = 110
+
+def p_declare_number(p):
+    'declare_number : declare_any TWOPOINTS VARNUMBER'
+
+def p_number_value(p):
+    'number_value : expression'
 
 #Declaration of var boolean
 def p_var_boolean(p):
-    '''var_boolean : declare_any EQUAL boolean
-    | declare_boolean EQUAL boolean'''
-    p[0] = 10000
+    '''var_boolean : declare_any EQUAL boolean_value
+    | declare_boolean EQUAL boolean_value'''
+    p[0] = 120
 
 def p_declare_boolean(p):
-    'declare_boolean : prefix VARIABLE TWOPOINTS VARBOOLEAN'
+    'declare_boolean : declare_any TWOPOINTS VARBOOLEAN'
+
+def p_declare_boolean_value(p):
+    'boolean_value : boolean'
+
+def p_declare_generic(p):
+    'declare_generic : declare_any EQUAL VARIABLE'
+    p[0] = 100
 
 #Can be used for all declarations
 def p_declare_any(p):
     'declare_any : prefix VARIABLE'
 
+#Assignments
+def p_assign(p):
+    'assign : VARIABLE EQUAL assign_value'
+    p[0] = 50
+
+def p_assign_value(p):
+    '''assign_value : expression
+    | boolean
+    | string'''
+
 #ConcatenationString--Review
 def p_concatenate(p):
     'concatenate : termS'
-    p[0] = 20000
+    p[0] = 300
 
 def p_concatenate_termS(p):
     'termS : string PLUS chain'
@@ -78,11 +110,29 @@ def p_term_factor(p):
     p[0] = p[1]
 
 #Terminals
+
+def p_factor_num(p):
+    'factor : number'
+    p[0] = p[1]
+
+def p_factor_var(p):
+    'factor : variable'
+    p[0] = p[1]
+
+def p_factor_expr(p):
+    'factor : LPAREN expression RPAREN'
+    p[0] = p[2]
+
 def p_prefix(p):
     '''prefix : LET
     | VAR
     | STATIC
     | CONST'''
+
+def p_number(p):
+    '''number : NUMBER
+    | FLOAT'''
+    p[0] = float(p[1])
 
 def p_string(p):
     'string : NORMSTRING1'
@@ -91,19 +141,9 @@ def p_boolean_value(p):
     '''boolean : TRUE
     | FALSE'''
 
-def p_factor_num(p):
-    '''factor : NUMBER
-    | FLOAT'''
-    p[0] = float(p[1])
-
-def p_factor_var(p):
-    'factor : VARIABLE'
+def p_variable(p):
+    'variable : VARIABLE'
     p[0] = 1
-
-def p_factor_expr(p):
-    'factor : LPAREN expression RPAREN'
-    p[0] = p[2]
-
 
 # Error rule for syntax errors
 def p_error(p):
