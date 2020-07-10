@@ -1,6 +1,7 @@
 #Molina Diana
 #Marlon Lindao
 #Dennys Lopez
+#GRUPO NEWLANG
 
 import ply.lex as lex
 
@@ -266,7 +267,7 @@ test_comment = "//esto es un comentario de una linea"
 
 test_while="let i: number=5;"+ "\nwhile (i==5) {"+  "\nconsole.log(\"I am an infinity while loop .\");" +"\n}"
 
-test_suma= "4+3"
+test_suma= "56-8"
 
 
 #test - Marlon Lindao
