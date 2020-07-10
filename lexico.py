@@ -211,7 +211,7 @@ def t_COMMENT(t):
     return t
 
 def t_MULTICOMMENT(t):
-    r'\/\*(.|[\n\s])*\*\/'
+    r'\/\*(.|\n|\s)*\*\/'
     t.type = reserved.get(t.value,'MULTICOMMENT')    # Check for reserved words
     return t
 
