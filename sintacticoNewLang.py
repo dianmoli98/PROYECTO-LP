@@ -1,5 +1,5 @@
 import ply.yacc as yacc
-import lexicoNewLang as mylexer
+import lexico_NewLang as mylexer
 tokens = mylexer.tokens
 
 #All

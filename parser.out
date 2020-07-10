@@ -1,0 +1,801 @@
+Created by PLY version 3.11 (http://www.dabeaz.com/ply)
+
+Unused terminals:
+
+    ABS
+    AND
+    ANY
+    ARRAY
+    COMMA
+    COMMENT
+    DECREMENT
+    DOLLAR
+    ELIF
+    ELSE
+    ENUM
+    EQUALTO
+    FOR
+    FUNCTIONADD
+    FUNCTIONCHARAT
+    FUNCTIONCONCAT
+    FUNCTIONFILTER
+    FUNCTIONHAS
+    FUNCTIONJOIN
+    FUNCTIONSPLIT
+    FUNMATH
+    GREATER
+    IF
+    IN
+    INCREMENT
+    INSTANCEOF
+    LBRACKET
+    LCOMILLA
+    LESS
+    LKEY
+    MOD
+    MULTICOMMENT
+    MULTISTRING
+    NEGATION
+    NEW
+    NORMSTRING2
+    NOTEQUALTO
+    NULL
+    OBJECTNAME
+    OR
+    POINT
+    POINTCOMMA
+    POW
+    PRINT
+    RBRACKET
+    RCOMILLA
+    RKEY
+    ROUND
+    SET
+    SPECIAL
+    TYPEOF
+    UNDEFINED
+    VARNUMBER
+    VAROBJECT
+    VARSTRING
+    WHILE
+
+Grammar
+
+Rule 0     S' -> all
+Rule 1     all -> statement
+Rule 2     all -> concatenate
+Rule 3     all -> assign
+Rule 4     assign -> var_boolean
+Rule 5     var_boolean -> declare_any EQUAL boolean
+Rule 6     var_boolean -> declare_boolean EQUAL boolean
+Rule 7     declare_boolean -> prefix VARIABLE TWOPOINTS VARBOOLEAN
+Rule 8     declare_any -> prefix VARIABLE
+Rule 9     concatenate -> termS
+Rule 10    termS -> string PLUS chain
+Rule 11    chain -> termS PLUS value
+Rule 12    chain -> value
+Rule 13    value -> expression
+Rule 14    value -> string
+Rule 15    statement -> expression
+Rule 16    expression -> expression PLUS term
+Rule 17    expression -> expression MINUS term
+Rule 18    expression -> term
+Rule 19    term -> term PRODUCT factor
+Rule 20    term -> term DIVIDE factor
+Rule 21    term -> factor
+Rule 22    prefix -> LET
+Rule 23    prefix -> VAR
+Rule 24    prefix -> STATIC
+Rule 25    prefix -> CONST
+Rule 26    string -> NORMSTRING1
+Rule 27    boolean -> TRUE
+Rule 28    boolean -> FALSE
+Rule 29    factor -> NUMBER
+Rule 30    factor -> FLOAT
+Rule 31    factor -> VARIABLE
+Rule 32    factor -> LPAREN expression RPAREN
+
+Terminals, with rules where they appear
+
+ABS                  : 
+AND                  : 
+ANY                  : 
+ARRAY                : 
+COMMA                : 
+COMMENT              : 
+CONST                : 25
+DECREMENT            : 
+DIVIDE               : 20
+DOLLAR               : 
+ELIF                 : 
+ELSE                 : 
+ENUM                 : 
+EQUAL                : 5 6
+EQUALTO              : 
+FALSE                : 28
+FLOAT                : 30
+FOR                  : 
+FUNCTIONADD          : 
+FUNCTIONCHARAT       : 
+FUNCTIONCONCAT       : 
+FUNCTIONFILTER       : 
+FUNCTIONHAS          : 
+FUNCTIONJOIN         : 
+FUNCTIONSPLIT        : 
+FUNMATH              : 
+GREATER              : 
+IF                   : 
+IN                   : 
+INCREMENT            : 
+INSTANCEOF           : 
+LBRACKET             : 
+LCOMILLA             : 
+LESS                 : 
+LET                  : 22
+LKEY                 : 
+LPAREN               : 32
+MINUS                : 17
+MOD                  : 
+MULTICOMMENT         : 
+MULTISTRING          : 
+NEGATION             : 
+NEW                  : 
+NORMSTRING1          : 26
+NORMSTRING2          : 
+NOTEQUALTO           : 
+NULL                 : 
+NUMBER               : 29
+OBJECTNAME           : 
+OR                   : 
+PLUS                 : 10 11 16
+POINT                : 
+POINTCOMMA           : 
+POW                  : 
+PRINT                : 
+PRODUCT              : 19
+RBRACKET             : 
+RCOMILLA             : 
+RKEY                 : 
+ROUND                : 
+RPAREN               : 32
+SET                  : 
+SPECIAL              : 
+STATIC               : 24
+TRUE                 : 27
+TWOPOINTS            : 7
+TYPEOF               : 
+UNDEFINED            : 
+VAR                  : 23
+VARBOOLEAN           : 7
+VARIABLE             : 7 8 31
+VARNUMBER            : 
+VAROBJECT            : 
+VARSTRING            : 
+WHILE                : 
+error                : 
+
+Nonterminals, with rules where they appear
+
+all                  : 0
+assign               : 3
+boolean              : 5 6
+chain                : 10
+concatenate          : 2
+declare_any          : 5
+declare_boolean      : 6
+expression           : 13 15 16 17 32
+factor               : 19 20 21
+prefix               : 7 8
+statement            : 1
+string               : 10 14
+term                 : 16 17 18 19 20
+termS                : 9 11
+value                : 11 12
+var_boolean          : 4
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . all
+    (1) all -> . statement
+    (2) all -> . concatenate
+    (3) all -> . assign
+    (15) statement -> . expression
+    (9) concatenate -> . termS
+    (4) assign -> . var_boolean
+    (16) expression -> . expression PLUS term
+    (17) expression -> . expression MINUS term
+    (18) expression -> . term
+    (10) termS -> . string PLUS chain
+    (5) var_boolean -> . declare_any EQUAL boolean
+    (6) var_boolean -> . declare_boolean EQUAL boolean
+    (19) term -> . term PRODUCT factor
+    (20) term -> . term DIVIDE factor
+    (21) term -> . factor
+    (26) string -> . NORMSTRING1
+    (8) declare_any -> . prefix VARIABLE
+    (7) declare_boolean -> . prefix VARIABLE TWOPOINTS VARBOOLEAN
+    (29) factor -> . NUMBER
+    (30) factor -> . FLOAT
+    (31) factor -> . VARIABLE
+    (32) factor -> . LPAREN expression RPAREN
+    (22) prefix -> . LET
+    (23) prefix -> . VAR
+    (24) prefix -> . STATIC
+    (25) prefix -> . CONST
+
+    NORMSTRING1     shift and go to state 13
+    NUMBER          shift and go to state 16
+    FLOAT           shift and go to state 17
+    VARIABLE        shift and go to state 15
+    LPAREN          shift and go to state 18
+    LET             shift and go to state 19
+    VAR             shift and go to state 20
+    STATIC          shift and go to state 21
+    CONST           shift and go to state 22
+
+    all                            shift and go to state 1
+    statement                      shift and go to state 2
+    concatenate                    shift and go to state 3
+    assign                         shift and go to state 4
+    expression                     shift and go to state 5
+    termS                          shift and go to state 6
+    var_boolean                    shift and go to state 7
+    term                           shift and go to state 8
+    string                         shift and go to state 9
+    declare_any                    shift and go to state 10
+    declare_boolean                shift and go to state 11
+    factor                         shift and go to state 12
+    prefix                         shift and go to state 14
+
+state 1
+
+    (0) S' -> all .
+
+
+
+state 2
+
+    (1) all -> statement .
+
+    $end            reduce using rule 1 (all -> statement .)
+
+
+state 3
+
+    (2) all -> concatenate .
+
+    $end            reduce using rule 2 (all -> concatenate .)
+
+
+state 4
+
+    (3) all -> assign .
+
+    $end            reduce using rule 3 (all -> assign .)
+
+
+state 5
+
+    (15) statement -> expression .
+    (16) expression -> expression . PLUS term
+    (17) expression -> expression . MINUS term
+
+    $end            reduce using rule 15 (statement -> expression .)
+    PLUS            shift and go to state 23
+    MINUS           shift and go to state 24
+
+
+state 6
+
+    (9) concatenate -> termS .
+
+    $end            reduce using rule 9 (concatenate -> termS .)
+
+
+state 7
+
+    (4) assign -> var_boolean .
+
+    $end            reduce using rule 4 (assign -> var_boolean .)
+
+
+state 8
+
+    (18) expression -> term .
+    (19) term -> term . PRODUCT factor
+    (20) term -> term . DIVIDE factor
+
+    PLUS            reduce using rule 18 (expression -> term .)
+    MINUS           reduce using rule 18 (expression -> term .)
+    $end            reduce using rule 18 (expression -> term .)
+    RPAREN          reduce using rule 18 (expression -> term .)
+    PRODUCT         shift and go to state 25
+    DIVIDE          shift and go to state 26
+
+
+state 9
+
+    (10) termS -> string . PLUS chain
+
+    PLUS            shift and go to state 27
+
+
+state 10
+
+    (5) var_boolean -> declare_any . EQUAL boolean
+
+    EQUAL           shift and go to state 28
+
+
+state 11
+
+    (6) var_boolean -> declare_boolean . EQUAL boolean
+
+    EQUAL           shift and go to state 29
+
+
+state 12
+
+    (21) term -> factor .
+
+    PRODUCT         reduce using rule 21 (term -> factor .)
+    DIVIDE          reduce using rule 21 (term -> factor .)
+    PLUS            reduce using rule 21 (term -> factor .)
+    MINUS           reduce using rule 21 (term -> factor .)
+    $end            reduce using rule 21 (term -> factor .)
+    RPAREN          reduce using rule 21 (term -> factor .)
+
+
+state 13
+
+    (26) string -> NORMSTRING1 .
+
+    PLUS            reduce using rule 26 (string -> NORMSTRING1 .)
+    $end            reduce using rule 26 (string -> NORMSTRING1 .)
+
+
+state 14
+
+    (8) declare_any -> prefix . VARIABLE
+    (7) declare_boolean -> prefix . VARIABLE TWOPOINTS VARBOOLEAN
+
+    VARIABLE        shift and go to state 30
+
+
+state 15
+
+    (31) factor -> VARIABLE .
+
+    PRODUCT         reduce using rule 31 (factor -> VARIABLE .)
+    DIVIDE          reduce using rule 31 (factor -> VARIABLE .)
+    PLUS            reduce using rule 31 (factor -> VARIABLE .)
+    MINUS           reduce using rule 31 (factor -> VARIABLE .)
+    $end            reduce using rule 31 (factor -> VARIABLE .)
+    RPAREN          reduce using rule 31 (factor -> VARIABLE .)
+
+
+state 16
+
+    (29) factor -> NUMBER .
+
+    PRODUCT         reduce using rule 29 (factor -> NUMBER .)
+    DIVIDE          reduce using rule 29 (factor -> NUMBER .)
+    PLUS            reduce using rule 29 (factor -> NUMBER .)
+    MINUS           reduce using rule 29 (factor -> NUMBER .)
+    $end            reduce using rule 29 (factor -> NUMBER .)
+    RPAREN          reduce using rule 29 (factor -> NUMBER .)
+
+
+state 17
+
+    (30) factor -> FLOAT .
+
+    PRODUCT         reduce using rule 30 (factor -> FLOAT .)
+    DIVIDE          reduce using rule 30 (factor -> FLOAT .)
+    PLUS            reduce using rule 30 (factor -> FLOAT .)
+    MINUS           reduce using rule 30 (factor -> FLOAT .)
+    $end            reduce using rule 30 (factor -> FLOAT .)
+    RPAREN          reduce using rule 30 (factor -> FLOAT .)
+
+
+state 18
+
+    (32) factor -> LPAREN . expression RPAREN
+    (16) expression -> . expression PLUS term
+    (17) expression -> . expression MINUS term
+    (18) expression -> . term
+    (19) term -> . term PRODUCT factor
+    (20) term -> . term DIVIDE factor
+    (21) term -> . factor
+    (29) factor -> . NUMBER
+    (30) factor -> . FLOAT
+    (31) factor -> . VARIABLE
+    (32) factor -> . LPAREN expression RPAREN
+
+    NUMBER          shift and go to state 16
+    FLOAT           shift and go to state 17
+    VARIABLE        shift and go to state 15
+    LPAREN          shift and go to state 18
+
+    expression                     shift and go to state 31
+    term                           shift and go to state 8
+    factor                         shift and go to state 12
+
+state 19
+
+    (22) prefix -> LET .
+
+    VARIABLE        reduce using rule 22 (prefix -> LET .)
+
+
+state 20
+
+    (23) prefix -> VAR .
+
+    VARIABLE        reduce using rule 23 (prefix -> VAR .)
+
+
+state 21
+
+    (24) prefix -> STATIC .
+
+    VARIABLE        reduce using rule 24 (prefix -> STATIC .)
+
+
+state 22
+
+    (25) prefix -> CONST .
+
+    VARIABLE        reduce using rule 25 (prefix -> CONST .)
+
+
+state 23
+
+    (16) expression -> expression PLUS . term
+    (19) term -> . term PRODUCT factor
+    (20) term -> . term DIVIDE factor
+    (21) term -> . factor
+    (29) factor -> . NUMBER
+    (30) factor -> . FLOAT
+    (31) factor -> . VARIABLE
+    (32) factor -> . LPAREN expression RPAREN
+
+    NUMBER          shift and go to state 16
+    FLOAT           shift and go to state 17
+    VARIABLE        shift and go to state 15
+    LPAREN          shift and go to state 18
+
+    term                           shift and go to state 32
+    factor                         shift and go to state 12
+
+state 24
+
+    (17) expression -> expression MINUS . term
+    (19) term -> . term PRODUCT factor
+    (20) term -> . term DIVIDE factor
+    (21) term -> . factor
+    (29) factor -> . NUMBER
+    (30) factor -> . FLOAT
+    (31) factor -> . VARIABLE
+    (32) factor -> . LPAREN expression RPAREN
+
+    NUMBER          shift and go to state 16
+    FLOAT           shift and go to state 17
+    VARIABLE        shift and go to state 15
+    LPAREN          shift and go to state 18
+
+    term                           shift and go to state 33
+    factor                         shift and go to state 12
+
+state 25
+
+    (19) term -> term PRODUCT . factor
+    (29) factor -> . NUMBER
+    (30) factor -> . FLOAT
+    (31) factor -> . VARIABLE
+    (32) factor -> . LPAREN expression RPAREN
+
+    NUMBER          shift and go to state 16
+    FLOAT           shift and go to state 17
+    VARIABLE        shift and go to state 15
+    LPAREN          shift and go to state 18
+
+    factor                         shift and go to state 34
+
+state 26
+
+    (20) term -> term DIVIDE . factor
+    (29) factor -> . NUMBER
+    (30) factor -> . FLOAT
+    (31) factor -> . VARIABLE
+    (32) factor -> . LPAREN expression RPAREN
+
+    NUMBER          shift and go to state 16
+    FLOAT           shift and go to state 17
+    VARIABLE        shift and go to state 15
+    LPAREN          shift and go to state 18
+
+    factor                         shift and go to state 35
+
+state 27
+
+    (10) termS -> string PLUS . chain
+    (11) chain -> . termS PLUS value
+    (12) chain -> . value
+    (10) termS -> . string PLUS chain
+    (13) value -> . expression
+    (14) value -> . string
+    (26) string -> . NORMSTRING1
+    (16) expression -> . expression PLUS term
+    (17) expression -> . expression MINUS term
+    (18) expression -> . term
+    (19) term -> . term PRODUCT factor
+    (20) term -> . term DIVIDE factor
+    (21) term -> . factor
+    (29) factor -> . NUMBER
+    (30) factor -> . FLOAT
+    (31) factor -> . VARIABLE
+    (32) factor -> . LPAREN expression RPAREN
+
+    NORMSTRING1     shift and go to state 13
+    NUMBER          shift and go to state 16
+    FLOAT           shift and go to state 17
+    VARIABLE        shift and go to state 15
+    LPAREN          shift and go to state 18
+
+    string                         shift and go to state 36
+    chain                          shift and go to state 37
+    termS                          shift and go to state 38
+    value                          shift and go to state 39
+    expression                     shift and go to state 40
+    term                           shift and go to state 8
+    factor                         shift and go to state 12
+
+state 28
+
+    (5) var_boolean -> declare_any EQUAL . boolean
+    (27) boolean -> . TRUE
+    (28) boolean -> . FALSE
+
+    TRUE            shift and go to state 42
+    FALSE           shift and go to state 43
+
+    boolean                        shift and go to state 41
+
+state 29
+
+    (6) var_boolean -> declare_boolean EQUAL . boolean
+    (27) boolean -> . TRUE
+    (28) boolean -> . FALSE
+
+    TRUE            shift and go to state 42
+    FALSE           shift and go to state 43
+
+    boolean                        shift and go to state 44
+
+state 30
+
+    (8) declare_any -> prefix VARIABLE .
+    (7) declare_boolean -> prefix VARIABLE . TWOPOINTS VARBOOLEAN
+
+    EQUAL           reduce using rule 8 (declare_any -> prefix VARIABLE .)
+    TWOPOINTS       shift and go to state 45
+
+
+state 31
+
+    (32) factor -> LPAREN expression . RPAREN
+    (16) expression -> expression . PLUS term
+    (17) expression -> expression . MINUS term
+
+    RPAREN          shift and go to state 46
+    PLUS            shift and go to state 23
+    MINUS           shift and go to state 24
+
+
+state 32
+
+    (16) expression -> expression PLUS term .
+    (19) term -> term . PRODUCT factor
+    (20) term -> term . DIVIDE factor
+
+    PLUS            reduce using rule 16 (expression -> expression PLUS term .)
+    MINUS           reduce using rule 16 (expression -> expression PLUS term .)
+    $end            reduce using rule 16 (expression -> expression PLUS term .)
+    RPAREN          reduce using rule 16 (expression -> expression PLUS term .)
+    PRODUCT         shift and go to state 25
+    DIVIDE          shift and go to state 26
+
+
+state 33
+
+    (17) expression -> expression MINUS term .
+    (19) term -> term . PRODUCT factor
+    (20) term -> term . DIVIDE factor
+
+    PLUS            reduce using rule 17 (expression -> expression MINUS term .)
+    MINUS           reduce using rule 17 (expression -> expression MINUS term .)
+    $end            reduce using rule 17 (expression -> expression MINUS term .)
+    RPAREN          reduce using rule 17 (expression -> expression MINUS term .)
+    PRODUCT         shift and go to state 25
+    DIVIDE          shift and go to state 26
+
+
+state 34
+
+    (19) term -> term PRODUCT factor .
+
+    PRODUCT         reduce using rule 19 (term -> term PRODUCT factor .)
+    DIVIDE          reduce using rule 19 (term -> term PRODUCT factor .)
+    PLUS            reduce using rule 19 (term -> term PRODUCT factor .)
+    MINUS           reduce using rule 19 (term -> term PRODUCT factor .)
+    $end            reduce using rule 19 (term -> term PRODUCT factor .)
+    RPAREN          reduce using rule 19 (term -> term PRODUCT factor .)
+
+
+state 35
+
+    (20) term -> term DIVIDE factor .
+
+    PRODUCT         reduce using rule 20 (term -> term DIVIDE factor .)
+    DIVIDE          reduce using rule 20 (term -> term DIVIDE factor .)
+    PLUS            reduce using rule 20 (term -> term DIVIDE factor .)
+    MINUS           reduce using rule 20 (term -> term DIVIDE factor .)
+    $end            reduce using rule 20 (term -> term DIVIDE factor .)
+    RPAREN          reduce using rule 20 (term -> term DIVIDE factor .)
+
+
+state 36
+
+    (10) termS -> string . PLUS chain
+    (14) value -> string .
+
+  ! shift/reduce conflict for PLUS resolved as shift
+    PLUS            shift and go to state 27
+    $end            reduce using rule 14 (value -> string .)
+
+  ! PLUS            [ reduce using rule 14 (value -> string .) ]
+
+
+state 37
+
+    (10) termS -> string PLUS chain .
+
+    $end            reduce using rule 10 (termS -> string PLUS chain .)
+    PLUS            reduce using rule 10 (termS -> string PLUS chain .)
+
+
+state 38
+
+    (11) chain -> termS . PLUS value
+
+    PLUS            shift and go to state 47
+
+
+state 39
+
+    (12) chain -> value .
+
+    $end            reduce using rule 12 (chain -> value .)
+    PLUS            reduce using rule 12 (chain -> value .)
+
+
+state 40
+
+    (13) value -> expression .
+    (16) expression -> expression . PLUS term
+    (17) expression -> expression . MINUS term
+
+  ! shift/reduce conflict for PLUS resolved as shift
+    $end            reduce using rule 13 (value -> expression .)
+    PLUS            shift and go to state 23
+    MINUS           shift and go to state 24
+
+  ! PLUS            [ reduce using rule 13 (value -> expression .) ]
+
+
+state 41
+
+    (5) var_boolean -> declare_any EQUAL boolean .
+
+    $end            reduce using rule 5 (var_boolean -> declare_any EQUAL boolean .)
+
+
+state 42
+
+    (27) boolean -> TRUE .
+
+    $end            reduce using rule 27 (boolean -> TRUE .)
+
+
+state 43
+
+    (28) boolean -> FALSE .
+
+    $end            reduce using rule 28 (boolean -> FALSE .)
+
+
+state 44
+
+    (6) var_boolean -> declare_boolean EQUAL boolean .
+
+    $end            reduce using rule 6 (var_boolean -> declare_boolean EQUAL boolean .)
+
+
+state 45
+
+    (7) declare_boolean -> prefix VARIABLE TWOPOINTS . VARBOOLEAN
+
+    VARBOOLEAN      shift and go to state 48
+
+
+state 46
+
+    (32) factor -> LPAREN expression RPAREN .
+
+    PRODUCT         reduce using rule 32 (factor -> LPAREN expression RPAREN .)
+    DIVIDE          reduce using rule 32 (factor -> LPAREN expression RPAREN .)
+    PLUS            reduce using rule 32 (factor -> LPAREN expression RPAREN .)
+    MINUS           reduce using rule 32 (factor -> LPAREN expression RPAREN .)
+    $end            reduce using rule 32 (factor -> LPAREN expression RPAREN .)
+    RPAREN          reduce using rule 32 (factor -> LPAREN expression RPAREN .)
+
+
+state 47
+
+    (11) chain -> termS PLUS . value
+    (13) value -> . expression
+    (14) value -> . string
+    (16) expression -> . expression PLUS term
+    (17) expression -> . expression MINUS term
+    (18) expression -> . term
+    (26) string -> . NORMSTRING1
+    (19) term -> . term PRODUCT factor
+    (20) term -> . term DIVIDE factor
+    (21) term -> . factor
+    (29) factor -> . NUMBER
+    (30) factor -> . FLOAT
+    (31) factor -> . VARIABLE
+    (32) factor -> . LPAREN expression RPAREN
+
+    NORMSTRING1     shift and go to state 13
+    NUMBER          shift and go to state 16
+    FLOAT           shift and go to state 17
+    VARIABLE        shift and go to state 15
+    LPAREN          shift and go to state 18
+
+    value                          shift and go to state 49
+    expression                     shift and go to state 40
+    string                         shift and go to state 50
+    term                           shift and go to state 8
+    factor                         shift and go to state 12
+
+state 48
+
+    (7) declare_boolean -> prefix VARIABLE TWOPOINTS VARBOOLEAN .
+
+    EQUAL           reduce using rule 7 (declare_boolean -> prefix VARIABLE TWOPOINTS VARBOOLEAN .)
+
+
+state 49
+
+    (11) chain -> termS PLUS value .
+
+    $end            reduce using rule 11 (chain -> termS PLUS value .)
+    PLUS            reduce using rule 11 (chain -> termS PLUS value .)
+
+
+state 50
+
+    (14) value -> string .
+
+    $end            reduce using rule 14 (value -> string .)
+    PLUS            reduce using rule 14 (value -> string .)
+
+WARNING: 
+WARNING: Conflicts:
+WARNING: 
+WARNING: shift/reduce conflict for PLUS in state 36 resolved as shift
+WARNING: shift/reduce conflict for PLUS in state 40 resolved as shift
