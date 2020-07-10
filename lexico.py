@@ -98,6 +98,7 @@ tokens = [
     'DOLLAR',
     'PRINT',
     'COMMENT',
+        'MULTICOMMENT'
 
 ] + list(reserved.values())
 
@@ -205,8 +206,13 @@ def t_PRINT(t):
     return t
 
 def t_COMMENT(t):
-    r'\/\/[a-z_][a-zA-Z_0-9\s]*'
+    r'\/\/[a-zA-Z_0-9\s]*'
     t.type = reserved.get(t.value,'COMMENT')    # Check for reserved words
+    return t
+
+def t_MULTICOMMENT(t):
+    r'\/\*(.|[\n\s])*\*\/'
+    t.type = reserved.get(t.value,'MULTICOMMENT')    # Check for reserved words
     return t
 
 def t_VARIABLE(t):
@@ -244,6 +250,8 @@ test_concat="var str1: string = \"Ana\";"+ "\nvar str2: string = \"Maria\";"+ "\
 
 test_for="for (let i = 0; i < 3; i++) {"+ "console.log (\"i:\" + i);" +"}"
 
+test_multiLineaComment="/*" +"\nThis is multi line comment."+"\nI am a comment. :)"+"\n*/"
+
 
 
 
@@ -273,7 +281,7 @@ test_boolean2 = "let b = (var1 <= 5)&&(var2 != 10)"
 
 
 tests=[test1_assignacion,test_has,test_join,test_concat,test_for,test_while,test_enum,test_set,test_split,test_enum2,test_tuple,
-       test_boolean,test_boolean2, test_comment,test_suma]
+       test_boolean,test_boolean2, test_comment,test_suma,test_multiLineaComment]
 
 
 for i in tests:
