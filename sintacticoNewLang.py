@@ -14,7 +14,9 @@ def p_statement_value(p):
     '''statement_value : expression
     | concatenate
     | declare
-    | assign'''
+    | assign
+    | expCond
+    | expOpLog'''
     p[0] = p[1]
 
 
@@ -152,6 +154,20 @@ def p_expression_decrement(p):
      | DECREMENT  term1'''
     p[0] = None
 
+def p_expression_opLogico(p):
+    '''expOpLog : expCond oplogico expCond
+    | factor_exprlog  oplogico factor_exprlog
+    | expression oplogico expression'''
+    p[0] = 77.7
+
+def p_exp_logica(p):
+    'factor_exprlog : LPAREN expCond RPAREN'
+    p[0] = p[2]
+
+def p_expression_condicional(p):
+    'expCond : expression operador expression'
+    p[0]= 66.6
+
 def p_term1(p):
     '''term1 : number
     | variable
@@ -173,8 +189,6 @@ def p_term_factor(p):
 def p_factor_expr(p):
     'factor_expr : LPAREN expression RPAREN'
     p[0] = p[2]
-
-
 
 #Terminals
 def p_prefix(p):
@@ -202,6 +216,20 @@ def p_boolean_value(p):
 def p_variable(p):
     'variable : VARIABLE'
     p[0] = 1
+
+
+def p_operador(p):
+    '''operador : GREATER
+      | LESS
+      | GREATEREQUAL
+      | LESSEQUAL
+      | EQUALTO
+      | NOTEQUALTO'''
+
+def p_operadorlogico(p):
+    '''oplogico : NEGATION
+      | AND
+      | OR'''
 
 
 # Error rule for syntax errors

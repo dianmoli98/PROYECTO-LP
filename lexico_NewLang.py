@@ -89,8 +89,8 @@ tokens = [
     'NOTEQUALTO',
     'INCREMENT',
     'DECREMENT',
-    'NEGATION',
 
+    'NEGATION',
     'AND',
     'OR',
 
