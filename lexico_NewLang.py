@@ -82,6 +82,8 @@ tokens = [
 
     'GREATER',
     'LESS',
+    'GREATEREQUAL',
+    'LESSEQUAL',
     'EQUAL',
     'EQUALTO',
     'NOTEQUALTO',
@@ -127,8 +129,10 @@ t_RKEY = r'\}'
 t_LCOMILLA = r'“'
 t_RCOMILLA = r'”'
 
-t_GREATER = r'>=?'
-t_LESS = r'<=?'
+t_GREATER = r'>'
+t_LESS = r'<'
+t_GREATEREQUAL = r'>='
+t_LESSEQUAL = r'<='
 t_EQUAL = r'='
 t_EQUALTO = r'=='
 t_NOTEQUALTO = r'!='
