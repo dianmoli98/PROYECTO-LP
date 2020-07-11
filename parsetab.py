@@ -6,9 +6,9 @@ _tabversion = '3.10'
 
 _lr_method = 'LALR'
 
-_lr_signature = 'ABS AND ANY ARRAY COMMA COMMENT CONST DECREMENT DIVIDE DOLLAR ELIF ELSE ENUM EQUAL EQUALTO FALSE FLOAT FOR FUNCTIONADD FUNCTIONCHARAT FUNCTIONCONCAT FUNCTIONFILTER FUNCTIONHAS FUNCTIONJOIN FUNCTIONSPLIT FUNMATH GREATER IF IN INCREMENT INSTANCEOF LBRACKET LCOMILLA LESS LET LKEY LPAREN MINUS MOD MULTICOMMENT MULTISTRING NEGATION NEW NORMSTRING1 NORMSTRING2 NOTEQUALTO NULL NUMBER OBJECTNAME OR PLUS POINT POINTCOMMA POW PRINT PRODUCT RBRACKET RCOMILLA RKEY ROUND RPAREN SET SPECIAL STATIC TRUE TWOPOINTS TYPEOF UNDEFINED VAR VARBOOLEAN VARIABLE VARNUMBER VAROBJECT VARSTRING WHILEall : statement\n    | concatenate\n    | assignassign : var_booleanvar_boolean : declare_any EQUAL boolean\n    | declare_boolean EQUAL booleandeclare_boolean : prefix VARIABLE TWOPOINTS VARBOOLEANdeclare_any : prefix VARIABLEconcatenate : termStermS : string PLUS chainchain : termS PLUS value\n    | valuevalue : expression\n    | stringstatement : expressionexpression : expression PLUS termexpression : expression MINUS termexpression : termterm : term PRODUCT factorterm : term DIVIDE factorterm : factorprefix : LET\n    | VAR\n    | STATIC\n    | CONSTstring : NORMSTRING1boolean : TRUE\n    | FALSEfactor : NUMBER\n    | FLOATfactor : VARIABLEfactor : LPAREN expression RPAREN'
+_lr_signature = 'ABS AND ANY ARRAY COMMA COMMENT CONST DECREMENT DIVIDE DOLLAR ELIF ELSE ENUM EQUAL EQUALTO FALSE FLOAT FOR FUNCTIONADD FUNCTIONCHARAT FUNCTIONCONCAT FUNCTIONFILTER FUNCTIONHAS FUNCTIONJOIN FUNCTIONSPLIT FUNMATH GREATER IF IN INCREMENT INSTANCEOF LBRACKET LCOMILLA LESS LET LKEY LPAREN MINUS MOD MULTICOMMENT MULTISTRING NEGATION NEW NORMSTRING1 NORMSTRING2 NOTEQUALTO NULL NUMBER OBJECTNAME OR PLUS POINT POINTCOMMA POW PRINT PRODUCT RBRACKET RCOMILLA RKEY ROUND RPAREN SET SPECIAL STATIC TRUE TWOPOINTS TYPEOF UNDEFINED VAR VARBOOLEAN VARIABLE VARNUMBER VAROBJECT VARSTRING WHILEstatement : statement_value\n    | statement_value POINTCOMMAstatement_value : expression\n    | concatenate\n    | declare\n    | assigndeclare : var_boolean\n    | var_number\n    | var_string\n    | declare_genericvar_number : declare_number EQUAL number_valuedeclare_number : declare_any TWOPOINTS VARNUMBERnumber_value : expressionvar_boolean : declare_boolean EQUAL boolean_valuedeclare_boolean : declare_any TWOPOINTS VARBOOLEANboolean_value : boolean\n    | variablevar_string : declare_string EQUAL string_valuedeclare_string : declare_any TWOPOINTS VARSTRINGstring_value : string\n    | variabledeclare_generic : declare_any EQUAL assign_valuedeclare_any : prefix VARIABLEassign : VARIABLE EQUAL assign_valueassign_value : expression\n    | boolean\n    | stringconcatenate : termStermS : string PLUS chainchain : termS PLUS value\n    | valuevalue : expression\n    | stringexpression : expression PLUS termexpression : expression MINUS termexpression : termterm : term PRODUCT termterm : term DIVIDE termterm : term1 INCREMENT\n    | INCREMENT  term1term : term1 DECREMENT\n     | DECREMENT  term1term1 : number\n    | variable\n    | groupgroup : LPAREN variable RPAREN\n        | LPAREN  number  RPARENterm : number\n    | factor_expr\n    | variablefactor_expr : LPAREN expression RPARENprefix : LET\n    | VAR\n    | STATIC\n    | CONSTnumber : NUMBER\n    | FLOATstring : NORMSTRING1boolean : TRUE\n    | FALSEvariable : VARIABLE'
     
-_lr_action_items = {'NORMSTRING1':([0,27,47,],[13,13,13,]),'NUMBER':([0,18,23,24,25,26,27,47,],[16,16,16,16,16,16,16,16,]),'FLOAT':([0,18,23,24,25,26,27,47,],[17,17,17,17,17,17,17,17,]),'VARIABLE':([0,14,18,19,20,21,22,23,24,25,26,27,47,],[15,30,15,-22,-23,-24,-25,15,15,15,15,15,15,]),'LPAREN':([0,18,23,24,25,26,27,47,],[18,18,18,18,18,18,18,18,]),'LET':([0,],[19,]),'VAR':([0,],[20,]),'STATIC':([0,],[21,]),'CONST':([0,],[22,]),'$end':([1,2,3,4,5,6,7,8,12,13,15,16,17,32,33,34,35,36,37,39,40,41,42,43,44,46,49,50,],[0,-1,-2,-3,-15,-9,-4,-18,-21,-26,-31,-29,-30,-16,-17,-19,-20,-14,-10,-12,-13,-5,-27,-28,-6,-32,-11,-14,]),'PLUS':([5,8,9,12,13,15,16,17,31,32,33,34,35,36,37,38,39,40,46,49,50,],[23,-18,27,-21,-26,-31,-29,-30,23,-16,-17,-19,-20,27,-10,47,-12,23,-32,-11,-14,]),'MINUS':([5,8,12,15,16,17,31,32,33,34,35,40,46,],[24,-18,-21,-31,-29,-30,24,-16,-17,-19,-20,24,-32,]),'RPAREN':([8,12,15,16,17,31,32,33,34,35,46,],[-18,-21,-31,-29,-30,46,-16,-17,-19,-20,-32,]),'PRODUCT':([8,12,15,16,17,32,33,34,35,46,],[25,-21,-31,-29,-30,25,25,-19,-20,-32,]),'DIVIDE':([8,12,15,16,17,32,33,34,35,46,],[26,-21,-31,-29,-30,26,26,-19,-20,-32,]),'EQUAL':([10,11,30,48,],[28,29,-8,-7,]),'TRUE':([28,29,],[42,42,]),'FALSE':([28,29,],[43,43,]),'TWOPOINTS':([30,],[45,]),'VARBOOLEAN':([45,],[48,]),}
+_lr_action_items = {'VARIABLE':([0,15,16,28,30,31,32,33,34,36,37,38,39,40,47,49,50,51,52,53,91,],[13,46,46,46,58,-52,-53,-54,-55,46,46,46,46,46,46,46,46,46,46,46,46,]),'INCREMENT':([0,13,14,17,19,25,26,27,28,36,37,38,39,40,46,49,51,53,56,57,89,90,91,],[15,-61,41,-43,-44,-45,-56,-57,15,15,15,15,15,15,-61,15,15,15,-44,-43,-46,-47,15,]),'DECREMENT':([0,13,14,17,19,25,26,27,28,36,37,38,39,40,46,49,51,53,56,57,89,90,91,],[16,-61,42,-43,-44,-45,-56,-57,16,16,16,16,16,16,-61,16,16,16,-44,-43,-46,-47,16,]),'NUMBER':([0,15,16,28,36,37,38,39,40,47,49,51,53,91,],[26,26,26,26,26,26,26,26,26,26,26,26,26,26,]),'FLOAT':([0,15,16,28,36,37,38,39,40,47,49,51,53,91,],[27,27,27,27,27,27,27,27,27,27,27,27,27,27,]),'LPAREN':([0,15,16,28,36,37,38,39,40,49,51,53,91,],[28,47,47,28,28,28,28,28,28,28,28,28,28,]),'NORMSTRING1':([0,40,49,52,53,91,],[29,29,29,29,29,29,]),'LET':([0,],[31,]),'VAR':([0,],[32,]),'STATIC':([0,],[33,]),'CONST':([0,],[34,]),'$end':([1,2,3,4,5,6,7,8,9,10,11,12,13,17,18,19,25,26,27,29,35,41,42,43,44,45,46,48,59,60,61,62,63,64,65,66,67,68,71,72,74,75,76,77,78,79,80,81,82,83,84,88,89,90,92,93,],[0,-1,-3,-4,-5,-6,-36,-28,-7,-8,-9,-10,-61,-48,-49,-50,-45,-56,-57,-58,-2,-39,-41,-40,-43,-44,-61,-42,-34,-35,-37,-38,-24,-25,-26,-27,-59,-60,-33,-29,-31,-32,-14,-16,-17,-11,-13,-18,-20,-21,-22,-51,-46,-47,-30,-33,]),'POINTCOMMA':([2,3,4,5,6,7,8,9,10,11,12,13,17,18,19,25,26,27,29,41,42,43,44,45,46,48,59,60,61,62,63,64,65,66,67,68,71,72,74,75,76,77,78,79,80,81,82,83,84,88,89,90,92,93,],[35,-3,-4,-5,-6,-36,-28,-7,-8,-9,-10,-61,-48,-49,-50,-45,-56,-57,-58,-39,-41,-40,-43,-44,-61,-42,-34,-35,-37,-38,-24,-25,-26,-27,-59,-60,-33,-29,-31,-32,-14,-16,-17,-11,-13,-18,-20,-21,-22,-51,-46,-47,-30,-33,]),'PLUS':([3,7,13,17,18,19,20,25,26,27,29,41,42,43,44,45,46,48,55,56,57,59,60,61,62,64,71,72,73,74,75,80,88,89,90,92,93,],[36,-36,-61,-48,-49,-50,49,-45,-56,-57,-58,-39,-41,-40,-43,-44,-61,-42,36,-50,-48,-34,-35,-37,-38,36,49,-29,91,-31,36,36,-51,-46,-47,-30,-33,]),'MINUS':([3,7,13,17,18,19,25,26,27,41,42,43,44,45,46,48,55,56,57,59,60,61,62,64,75,80,88,89,90,],[37,-36,-61,-48,-49,-50,-45,-56,-57,-39,-41,-40,-43,-44,-61,-42,37,-50,-48,-34,-35,-37,-38,37,37,37,-51,-46,-47,]),'RPAREN':([7,17,18,19,25,26,27,41,42,43,44,45,46,48,55,56,57,59,60,61,62,69,70,88,89,90,],[-36,-48,-49,-50,-45,-56,-57,-39,-41,-40,-43,-44,-61,-42,88,89,90,-34,-35,-37,-38,89,90,-51,-46,-47,]),'PRODUCT':([7,13,17,18,19,25,26,27,41,42,43,44,45,46,48,56,57,59,60,61,62,88,89,90,],[38,-61,-48,-49,-50,-45,-56,-57,-39,-41,-40,-43,-44,-61,-42,-50,-48,38,38,38,38,-51,-46,-47,]),'DIVIDE':([7,13,17,18,19,25,26,27,41,42,43,44,45,46,48,56,57,59,60,61,62,88,89,90,],[39,-61,-48,-49,-50,-45,-56,-57,-39,-41,-40,-43,-44,-61,-42,-50,-48,39,39,39,39,-51,-46,-47,]),'EQUAL':([13,21,22,23,24,58,85,86,87,],[40,50,51,52,53,-23,-15,-12,-19,]),'TWOPOINTS':([24,58,],[54,-23,]),'TRUE':([40,50,53,],[67,67,67,]),'FALSE':([40,50,53,],[68,68,68,]),'VARBOOLEAN':([54,],[85,]),'VARNUMBER':([54,],[86,]),'VARSTRING':([54,],[87,]),}
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -17,7 +17,7 @@ for _k, _v in _lr_action_items.items():
       _lr_action[_x][_k] = _y
 del _lr_action_items
 
-_lr_goto_items = {'all':([0,],[1,]),'statement':([0,],[2,]),'concatenate':([0,],[3,]),'assign':([0,],[4,]),'expression':([0,18,27,47,],[5,31,40,40,]),'termS':([0,27,],[6,38,]),'var_boolean':([0,],[7,]),'term':([0,18,23,24,27,47,],[8,8,32,33,8,8,]),'string':([0,27,47,],[9,36,50,]),'declare_any':([0,],[10,]),'declare_boolean':([0,],[11,]),'factor':([0,18,23,24,25,26,27,47,],[12,12,12,12,34,35,12,12,]),'prefix':([0,],[14,]),'chain':([27,],[37,]),'value':([27,47,],[39,49,]),'boolean':([28,29,],[41,44,]),}
+_lr_goto_items = {'statement':([0,],[1,]),'statement_value':([0,],[2,]),'expression':([0,28,40,49,51,53,91,],[3,55,64,75,80,64,75,]),'concatenate':([0,],[4,]),'declare':([0,],[5,]),'assign':([0,],[6,]),'term':([0,28,36,37,38,39,40,49,51,53,91,],[7,7,59,60,61,62,7,7,7,7,7,]),'termS':([0,49,],[8,73,]),'var_boolean':([0,],[9,]),'var_number':([0,],[10,]),'var_string':([0,],[11,]),'declare_generic':([0,],[12,]),'term1':([0,15,16,28,36,37,38,39,40,49,51,53,91,],[14,43,48,14,14,14,14,14,14,14,14,14,14,]),'number':([0,15,16,28,36,37,38,39,40,47,49,51,53,91,],[17,44,44,57,17,17,17,17,17,70,17,17,17,17,]),'factor_expr':([0,28,36,37,38,39,40,49,51,53,91,],[18,18,18,18,18,18,18,18,18,18,18,]),'variable':([0,15,16,28,36,37,38,39,40,47,49,50,51,52,53,91,],[19,45,45,56,19,19,19,19,19,69,19,78,19,83,19,19,]),'string':([0,40,49,52,53,91,],[20,66,71,82,66,93,]),'declare_boolean':([0,],[21,]),'declare_number':([0,],[22,]),'declare_string':([0,],[23,]),'declare_any':([0,],[24,]),'group':([0,15,16,28,36,37,38,39,40,49,51,53,91,],[25,25,25,25,25,25,25,25,25,25,25,25,25,]),'prefix':([0,],[30,]),'assign_value':([40,53,],[63,84,]),'boolean':([40,50,53,],[65,77,65,]),'chain':([49,],[72,]),'value':([49,91,],[74,92,]),'boolean_value':([50,],[76,]),'number_value':([51,],[79,]),'string_value':([52,],[81,]),}
 
 _lr_goto = {}
 for _k, _v in _lr_goto_items.items():
@@ -26,37 +26,66 @@ for _k, _v in _lr_goto_items.items():
        _lr_goto[_x][_k] = _y
 del _lr_goto_items
 _lr_productions = [
-  ("S' -> all","S'",1,None,None,None),
-  ('all -> statement','all',1,'p_all','sintacticoNewLang.py',7),
-  ('all -> concatenate','all',1,'p_all','sintacticoNewLang.py',8),
-  ('all -> assign','all',1,'p_all','sintacticoNewLang.py',9),
-  ('assign -> var_boolean','assign',1,'p_assign','sintacticoNewLang.py',14),
-  ('var_boolean -> declare_any EQUAL boolean','var_boolean',3,'p_var_boolean','sintacticoNewLang.py',19),
-  ('var_boolean -> declare_boolean EQUAL boolean','var_boolean',3,'p_var_boolean','sintacticoNewLang.py',20),
-  ('declare_boolean -> prefix VARIABLE TWOPOINTS VARBOOLEAN','declare_boolean',4,'p_declare_boolean','sintacticoNewLang.py',24),
-  ('declare_any -> prefix VARIABLE','declare_any',2,'p_declare_any','sintacticoNewLang.py',28),
-  ('concatenate -> termS','concatenate',1,'p_concatenate','sintacticoNewLang.py',32),
-  ('termS -> string PLUS chain','termS',3,'p_concatenate_termS','sintacticoNewLang.py',36),
-  ('chain -> termS PLUS value','chain',3,'p_chain','sintacticoNewLang.py',40),
-  ('chain -> value','chain',1,'p_chain','sintacticoNewLang.py',41),
-  ('value -> expression','value',1,'p_value','sintacticoNewLang.py',44),
-  ('value -> string','value',1,'p_value','sintacticoNewLang.py',45),
-  ('statement -> expression','statement',1,'p_statement_expression','sintacticoNewLang.py',49),
-  ('expression -> expression PLUS term','expression',3,'p_expression_plus','sintacticoNewLang.py',54),
-  ('expression -> expression MINUS term','expression',3,'p_expression_minus','sintacticoNewLang.py',59),
-  ('expression -> term','expression',1,'p_expression_term','sintacticoNewLang.py',64),
-  ('term -> term PRODUCT factor','term',3,'p_term_product','sintacticoNewLang.py',68),
-  ('term -> term DIVIDE factor','term',3,'p_term_div','sintacticoNewLang.py',73),
-  ('term -> factor','term',1,'p_term_factor','sintacticoNewLang.py',77),
-  ('prefix -> LET','prefix',1,'p_prefix','sintacticoNewLang.py',82),
-  ('prefix -> VAR','prefix',1,'p_prefix','sintacticoNewLang.py',83),
-  ('prefix -> STATIC','prefix',1,'p_prefix','sintacticoNewLang.py',84),
-  ('prefix -> CONST','prefix',1,'p_prefix','sintacticoNewLang.py',85),
-  ('string -> NORMSTRING1','string',1,'p_string','sintacticoNewLang.py',88),
-  ('boolean -> TRUE','boolean',1,'p_boolean_value','sintacticoNewLang.py',91),
-  ('boolean -> FALSE','boolean',1,'p_boolean_value','sintacticoNewLang.py',92),
-  ('factor -> NUMBER','factor',1,'p_factor_num','sintacticoNewLang.py',95),
-  ('factor -> FLOAT','factor',1,'p_factor_num','sintacticoNewLang.py',96),
-  ('factor -> VARIABLE','factor',1,'p_factor_var','sintacticoNewLang.py',100),
-  ('factor -> LPAREN expression RPAREN','factor',3,'p_factor_expr','sintacticoNewLang.py',104),
+  ("S' -> statement","S'",1,None,None,None),
+  ('statement -> statement_value','statement',1,'p_statement','sintacticoNewLang.py',8),
+  ('statement -> statement_value POINTCOMMA','statement',2,'p_statement','sintacticoNewLang.py',9),
+  ('statement_value -> expression','statement_value',1,'p_statement_value','sintacticoNewLang.py',14),
+  ('statement_value -> concatenate','statement_value',1,'p_statement_value','sintacticoNewLang.py',15),
+  ('statement_value -> declare','statement_value',1,'p_statement_value','sintacticoNewLang.py',16),
+  ('statement_value -> assign','statement_value',1,'p_statement_value','sintacticoNewLang.py',17),
+  ('declare -> var_boolean','declare',1,'p_declare','sintacticoNewLang.py',23),
+  ('declare -> var_number','declare',1,'p_declare','sintacticoNewLang.py',24),
+  ('declare -> var_string','declare',1,'p_declare','sintacticoNewLang.py',25),
+  ('declare -> declare_generic','declare',1,'p_declare','sintacticoNewLang.py',26),
+  ('var_number -> declare_number EQUAL number_value','var_number',3,'p_var_number','sintacticoNewLang.py',32),
+  ('declare_number -> declare_any TWOPOINTS VARNUMBER','declare_number',3,'p_declare_number','sintacticoNewLang.py',37),
+  ('number_value -> expression','number_value',1,'p_number_value','sintacticoNewLang.py',41),
+  ('var_boolean -> declare_boolean EQUAL boolean_value','var_boolean',3,'p_var_boolean','sintacticoNewLang.py',46),
+  ('declare_boolean -> declare_any TWOPOINTS VARBOOLEAN','declare_boolean',3,'p_declare_boolean','sintacticoNewLang.py',51),
+  ('boolean_value -> boolean','boolean_value',1,'p_declare_boolean_value','sintacticoNewLang.py',55),
+  ('boolean_value -> variable','boolean_value',1,'p_declare_boolean_value','sintacticoNewLang.py',56),
+  ('var_string -> declare_string EQUAL string_value','var_string',3,'p_var_string','sintacticoNewLang.py',61),
+  ('declare_string -> declare_any TWOPOINTS VARSTRING','declare_string',3,'p_declare_string','sintacticoNewLang.py',66),
+  ('string_value -> string','string_value',1,'p_string_value','sintacticoNewLang.py',70),
+  ('string_value -> variable','string_value',1,'p_string_value','sintacticoNewLang.py',71),
+  ('declare_generic -> declare_any EQUAL assign_value','declare_generic',3,'p_declare_generic','sintacticoNewLang.py',76),
+  ('declare_any -> prefix VARIABLE','declare_any',2,'p_declare_any','sintacticoNewLang.py',82),
+  ('assign -> VARIABLE EQUAL assign_value','assign',3,'p_assign','sintacticoNewLang.py',87),
+  ('assign_value -> expression','assign_value',1,'p_assign_value','sintacticoNewLang.py',92),
+  ('assign_value -> boolean','assign_value',1,'p_assign_value','sintacticoNewLang.py',93),
+  ('assign_value -> string','assign_value',1,'p_assign_value','sintacticoNewLang.py',94),
+  ('concatenate -> termS','concatenate',1,'p_concatenate','sintacticoNewLang.py',99),
+  ('termS -> string PLUS chain','termS',3,'p_concatenate_term','sintacticoNewLang.py',104),
+  ('chain -> termS PLUS value','chain',3,'p_chain','sintacticoNewLang.py',109),
+  ('chain -> value','chain',1,'p_chain','sintacticoNewLang.py',110),
+  ('value -> expression','value',1,'p_value','sintacticoNewLang.py',114),
+  ('value -> string','value',1,'p_value','sintacticoNewLang.py',115),
+  ('expression -> expression PLUS term','expression',3,'p_expression_plus','sintacticoNewLang.py',120),
+  ('expression -> expression MINUS term','expression',3,'p_expression_minus','sintacticoNewLang.py',125),
+  ('expression -> term','expression',1,'p_expression_term','sintacticoNewLang.py',130),
+  ('term -> term PRODUCT term','term',3,'p_term_product','sintacticoNewLang.py',135),
+  ('term -> term DIVIDE term','term',3,'p_term_div','sintacticoNewLang.py',140),
+  ('term -> term1 INCREMENT','term',2,'p_expression_increment','sintacticoNewLang.py',146),
+  ('term -> INCREMENT term1','term',2,'p_expression_increment','sintacticoNewLang.py',147),
+  ('term -> term1 DECREMENT','term',2,'p_expression_decrement','sintacticoNewLang.py',151),
+  ('term -> DECREMENT term1','term',2,'p_expression_decrement','sintacticoNewLang.py',152),
+  ('term1 -> number','term1',1,'p_term1','sintacticoNewLang.py',156),
+  ('term1 -> variable','term1',1,'p_term1','sintacticoNewLang.py',157),
+  ('term1 -> group','term1',1,'p_term1','sintacticoNewLang.py',158),
+  ('group -> LPAREN variable RPAREN','group',3,'p_group_expr','sintacticoNewLang.py',162),
+  ('group -> LPAREN number RPAREN','group',3,'p_group_expr','sintacticoNewLang.py',163),
+  ('term -> number','term',1,'p_term_factor','sintacticoNewLang.py',167),
+  ('term -> factor_expr','term',1,'p_term_factor','sintacticoNewLang.py',168),
+  ('term -> variable','term',1,'p_term_factor','sintacticoNewLang.py',169),
+  ('factor_expr -> LPAREN expression RPAREN','factor_expr',3,'p_factor_expr','sintacticoNewLang.py',174),
+  ('prefix -> LET','prefix',1,'p_prefix','sintacticoNewLang.py',181),
+  ('prefix -> VAR','prefix',1,'p_prefix','sintacticoNewLang.py',182),
+  ('prefix -> STATIC','prefix',1,'p_prefix','sintacticoNewLang.py',183),
+  ('prefix -> CONST','prefix',1,'p_prefix','sintacticoNewLang.py',184),
+  ('number -> NUMBER','number',1,'p_number','sintacticoNewLang.py',188),
+  ('number -> FLOAT','number',1,'p_number','sintacticoNewLang.py',189),
+  ('string -> NORMSTRING1','string',1,'p_string','sintacticoNewLang.py',194),
+  ('boolean -> TRUE','boolean',1,'p_boolean_value','sintacticoNewLang.py',198),
+  ('boolean -> FALSE','boolean',1,'p_boolean_value','sintacticoNewLang.py',199),
+  ('variable -> VARIABLE','variable',1,'p_variable','sintacticoNewLang.py',203),
 ]

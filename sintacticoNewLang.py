@@ -142,6 +142,27 @@ def p_term_div(p):
         p[0] = p[1] / p[3]
 
 
+def p_expression_increment(p):
+    '''term : term1 INCREMENT
+    | INCREMENT  term1'''
+    p[0]= None
+
+def p_expression_decrement(p):
+    '''term : term1 DECREMENT
+     | DECREMENT  term1'''
+    p[0] = None
+
+def p_term1(p):
+    '''term1 : number
+    | variable
+    | group'''
+    p[0] = p[1]
+
+def p_group_expr(p):
+    '''group : LPAREN variable RPAREN
+        | LPAREN  number  RPAREN'''
+    p[0] = p[2]
+
 def p_term_factor(p):
     '''term : number
     | factor_expr
@@ -152,6 +173,7 @@ def p_term_factor(p):
 def p_factor_expr(p):
     'factor_expr : LPAREN expression RPAREN'
     p[0] = p[2]
+
 
 
 #Terminals
