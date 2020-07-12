@@ -29,6 +29,8 @@ def p_declare(p):
     | var_number
     | var_string
     | var_enum
+    | var_null
+    | var_undefined
     | declare_array
     | declare_enum
     | declare_generic'''
@@ -114,6 +116,14 @@ def p_declare_generic_array(p):
 
 
 # Declaration of variables
+def p_declare_null(p):
+    'var_null : declare_any EQUAL NULL'
+    p[0] =110.10
+
+def p_declare_undefined(p):
+    'var_undefined : declare_any EQUAL UNDEFINED'
+    p[0] =120.20
+
 # Declaration of var_number
 def p_var_number(p):
     '''var_number : declare_number EQUAL number_value
@@ -412,6 +422,11 @@ def p_prefix(p):
     | STATIC
     | CONST'''
 
+def p_typedate(p):
+    '''typedate : VARNUMBER
+        | VARSTRING
+        | VARBOOLEAN
+        | ENUM'''
 
 def p_number(p):
     '''number : NUMBER

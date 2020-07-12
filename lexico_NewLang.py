@@ -101,7 +101,7 @@ tokens = [
     'DOLLAR',
     'PRINT',
     'COMMENT',
-        'MULTICOMMENT'
+    'MULTICOMMENT'
 
 ] + list(reserved.values())
 

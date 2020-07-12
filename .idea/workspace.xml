@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a8ed03b1-32b2-4f86-9dee-155e48412249" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lexico_NewLang.py" afterPath="$PROJECT_DIR$/lexico_NewLang.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/parser.out" afterPath="$PROJECT_DIR$/parser.out" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/parsetab.py" afterPath="$PROJECT_DIR$/parsetab.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sintacticoNewLang.py" afterPath="$PROJECT_DIR$/sintacticoNewLang.py" />
@@ -18,8 +19,8 @@
       <file leaf-file-name="lexico_NewLang.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/lexico_NewLang.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="31">
-              <caret line="137" column="10" lean-forward="false" selection-start-line="137" selection-start-column="2" selection-end-line="137" selection-end-column="12" />
+            <state relative-caret-position="1646">
+              <caret line="103" column="4" lean-forward="false" selection-start-line="103" selection-start-column="4" selection-end-line="103" selection-end-column="4" />
               <folding />
             </state>
           </provider>
@@ -28,8 +29,8 @@
       <file leaf-file-name="sintacticoNewLang.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/sintacticoNewLang.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1649">
-              <caret line="347" column="0" lean-forward="true" selection-start-line="347" selection-start-column="0" selection-end-line="347" selection-end-column="0" />
+            <state relative-caret-position="300">
+              <caret line="124" column="16" lean-forward="true" selection-start-line="124" selection-start-column="16" selection-end-line="124" selection-end-column="16" />
               <folding>
                 <element signature="e#0#23#0" expanded="true" />
               </folding>
@@ -43,6 +44,10 @@
     <findStrings>
       <find>assign</find>
       <find>group</find>
+      <find>let</find>
+      <find>prefix</find>
+      <find>declare_a</find>
+      <find>declare_any</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -154,7 +159,7 @@
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2526475" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.41706926" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18518518" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24962178" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -222,7 +227,7 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <marker date="1594517269579" expanded="true" signature="40898:40901" ph="..." />
+            <marker date="1594524532689" expanded="true" signature="42128:42131" ph="..." />
           </folding>
         </state>
       </provider>
@@ -240,7 +245,7 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <marker date="1594517269579" expanded="true" signature="40898:40901" ph="..." />
+            <marker date="1594524532689" expanded="true" signature="42128:42131" ph="..." />
           </folding>
         </state>
       </provider>
@@ -255,16 +260,16 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/lexico_NewLang.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="31">
-          <caret line="137" column="10" lean-forward="false" selection-start-line="137" selection-start-column="2" selection-end-line="137" selection-end-column="12" />
+        <state relative-caret-position="1646">
+          <caret line="103" column="4" lean-forward="false" selection-start-line="103" selection-start-column="4" selection-end-line="103" selection-end-column="4" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/sintacticoNewLang.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1649">
-          <caret line="347" column="0" lean-forward="true" selection-start-line="347" selection-start-column="0" selection-end-line="347" selection-end-column="0" />
+        <state relative-caret-position="300">
+          <caret line="124" column="16" lean-forward="true" selection-start-line="124" selection-start-column="16" selection-end-line="124" selection-end-column="16" />
           <folding>
             <element signature="e#0#23#0" expanded="true" />
           </folding>
