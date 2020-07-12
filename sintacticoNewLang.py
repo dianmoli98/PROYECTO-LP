@@ -16,7 +16,12 @@ def p_statement_value(p):
     | declare
     | assign
     | expCond
-    | expOpLog'''
+    | expOpLog
+    | expNeg
+    | expEq
+    | expNotEq
+    | exp_set
+    | funcionif'''
     p[0] = p[1]
 
 
@@ -26,6 +31,8 @@ def p_declare(p):
     | var_number
     | var_string
     | var_enum
+    | var_null
+    | var_undefined
     | declare_array
     | declare_enum
     | declare_generic'''
@@ -63,6 +70,24 @@ def p_enums_string(p):
 def p_enums_string_value(p):
     'enums_string_value : object_name EQUAL string'
 
+#if
+def p_condicionIf(p):
+    '''funcionif : IF LPAREN formIf RPAREN LKEY
+    '''
+    p[0] = 1000
+
+#for
+def p_condicionFor(p):
+    '''funcionfor : FOR LPAREN declare_any EQUAL NUMBER POINTCOMMA operador POINTCOMMA  RPAREN LKEY
+    '''
+    p[0] = 1000
+
+
+#Declaration of set
+def p_declare_Set(p):
+    'exp_set : declare_any EQUAL NEW SET LPAREN RPAREN'
+    p[0] = 600
+
 
 # Declaration of arrays
 def p_declare_array(p):
@@ -71,7 +96,6 @@ def p_declare_array(p):
     | declare_array_main_string
     | declare_generic_array'''
     p[0] = 400
-
 
 # Declaration of array_number
 def p_declare_array_main_number(p):
@@ -111,6 +135,14 @@ def p_declare_generic_array(p):
 
 
 # Declaration of variables
+def p_declare_null(p):
+    'var_null : declare_any EQUAL NULL'
+    p[0] =110.10
+
+def p_declare_undefined(p):
+    'var_undefined : declare_any EQUAL UNDEFINED'
+    p[0] =120.20
+
 # Declaration of var_number
 def p_var_number(p):
     '''var_number : declare_number EQUAL number_value
@@ -125,7 +157,8 @@ def p_declare_number(p):
 # Declaration of var boolean
 def p_var_boolean(p):
     '''var_boolean : declare_boolean EQUAL boolean_value
-    | declare_boolean'''
+    | declare_boolean
+    | declare_boolean EQUAL '''
     p[0] = 120
 
 
@@ -296,13 +329,9 @@ def p_value(p):
 # Math Operations
 def p_expression_plus(p):
     'expression : expression PLUS term'
-    p[0] = p[1] + p[3]
-
 
 def p_expression_minus(p):
     'expression : expression MINUS term'
-    p[0] = p[1] - p[3]
-
 
 def p_expression_term(p):
     'expression : term'
@@ -332,6 +361,26 @@ def p_expression_decrement(p):
     p[0] = None
 
 
+def p_negation(p):
+    '''expNeg : NEGATION expOpLog
+        | NEGATION factor_exprlog
+        | NEGATION boolean
+        | NEGATION LPAREN expOpLog RPAREN'''
+    p[0] = 88.8
+
+def p_equalto(p):
+    '''expEq : expCond EQUALTO expCond
+    | factor_exprlog  EQUALTO factor_exprlog
+    | expression EQUALTO expression  '''
+    p[0] = 99.9
+
+def p_notequal(p):
+    '''expNotEq : expCond NOTEQUALTO expCond
+    | factor_exprlog  NOTEQUALTO factor_exprlog
+    | expression NOTEQUALTO expression  '''
+    p[0] = 99.9
+
+
 #Operaciones Condicionales
 def p_expression_opLogico(p):
     '''expOpLog : expCond oplogico expCond
@@ -346,7 +395,8 @@ def p_exp_logica(p):
 
 
 def p_expression_condicional(p):
-    'expCond : expression operador expression'
+    '''expCond : expression operador expression
+    | LPAREN expression operador expression RPAREN'''
     p[0]= 66.6
 
 
@@ -370,7 +420,6 @@ def p_term_factor(p):
     | other_value'''
     p[0] = p[1]
 
-
 def p_factor_expr(p):
     'factor_expr : LPAREN expression RPAREN'
     p[0] = p[2]
@@ -382,6 +431,10 @@ def p_other_value(p):
     | enum_value
     | object_value'''
 
+#FUNCIONES IF
+def p_funcionif(p):
+    '''formIf : expCond
+       | expOpLog'''
 
 # Object value
 def p_object_value(p):
@@ -417,6 +470,11 @@ def p_prefix(p):
     | STATIC
     | CONST'''
 
+def p_typedate(p):
+    '''typedate : VARNUMBER
+        | VARSTRING
+        | VARBOOLEAN
+        | ENUM'''
 
 def p_number(p):
     '''number : NUMBER
@@ -454,8 +512,7 @@ def p_operador(p):
 
 
 def p_operadorlogico(p):
-    '''oplogico : NEGATION
-      | AND
+    '''oplogico : AND
       | OR'''
 
 
