@@ -327,7 +327,7 @@ def p_expression_condicional(p):
 def p_term1_expr(p):
     '''term1 : LPAREN group RPAREN
     | group'''
-    p[0] = p[2]
+    p[0] = 1
 
 
 def p_group_expr(p):
