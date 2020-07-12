@@ -16,7 +16,10 @@ def p_statement_value(p):
     | declare
     | assign
     | expCond
-    | expOpLog'''
+    | expOpLog
+    | expNeg
+    | expEq
+    | expNotEq'''
     p[0] = p[1]
 
 
@@ -154,6 +157,26 @@ def p_expression_decrement(p):
      | DECREMENT  term1'''
     p[0] = None
 
+def p_negation(p):
+    '''expNeg : NEGATION expOpLog
+        | NEGATION factor_exprlog
+        | NEGATION boolean
+        | NEGATION LPAREN expOpLog RPAREN'''
+    p[0] = 88.8
+
+def p_equalto(p):
+    '''expEq : expCond EQUALTO expCond
+    | factor_exprlog  EQUALTO factor_exprlog
+    | expression EQUALTO expression  '''
+    p[0] = 99.9
+
+def p_notequal(p):
+    '''expNotEq : expCond NOTEQUALTO expCond
+    | factor_exprlog  NOTEQUALTO factor_exprlog
+    | expression NOTEQUALTO expression  '''
+    p[0] = 99.9
+
+
 def p_expression_opLogico(p):
     '''expOpLog : expCond oplogico expCond
     | factor_exprlog  oplogico factor_exprlog
@@ -184,7 +207,6 @@ def p_term_factor(p):
     | factor_expr
     | variable'''
     p[0] = p[1]
-
 
 def p_factor_expr(p):
     'factor_expr : LPAREN expression RPAREN'
@@ -227,8 +249,7 @@ def p_operador(p):
       | NOTEQUALTO'''
 
 def p_operadorlogico(p):
-    '''oplogico : NEGATION
-      | AND
+    '''oplogico : AND
       | OR'''
 
 
