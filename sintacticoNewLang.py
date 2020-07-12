@@ -72,8 +72,16 @@ def p_enums_string_value(p):
 
 #if
 def p_condicionIf(p):
-    'funcionif : IF LPAREN formIf RPAREN LKEY'
+    '''funcionif : IF LPAREN formIf RPAREN LKEY
+    '''
     p[0] = 1000
+
+#for
+def p_condicionFor(p):
+    '''funcionfor : FOR LPAREN declare_any EQUAL NUMBER POINTCOMMA operador POINTCOMMA  RPAREN LKEY
+    '''
+    p[0] = 1000
+
 
 #Declaration of set
 def p_declare_Set(p):
@@ -149,7 +157,8 @@ def p_declare_number(p):
 # Declaration of var boolean
 def p_var_boolean(p):
     '''var_boolean : declare_boolean EQUAL boolean_value
-    | declare_boolean'''
+    | declare_boolean
+    | declare_boolean EQUAL '''
     p[0] = 120
 
 
@@ -298,13 +307,9 @@ def p_value(p):
 # Math Operations
 def p_expression_plus(p):
     'expression : expression PLUS term'
-    p[0] = p[1] + p[3]
-
 
 def p_expression_minus(p):
     'expression : expression MINUS term'
-    p[0] = p[1] - p[3]
-
 
 def p_expression_term(p):
     'expression : term'
@@ -400,13 +405,9 @@ def p_other_value(p):
     | object_value'''
 
 #FUNCIONES IF
-
 def p_funcionif(p):
     '''formIf : expCond
-       | expOpLog
-       | enum_value
-       | object_value'''
-
+       | expOpLog'''
 
 # Object value
 def p_object_value(p):
