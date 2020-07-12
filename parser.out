@@ -3,17 +3,14 @@ Created by PLY version 3.11 (http://www.dabeaz.com/ply)
 Unused terminals:
 
     ABS
-    AND
     ANY
     ARRAY
     COMMA
     COMMENT
-    DECREMENT
     DOLLAR
     ELIF
     ELSE
     ENUM
-    EQUALTO
     FOR
     FUNCTIONADD
     FUNCTIONCHARAT
@@ -23,27 +20,20 @@ Unused terminals:
     FUNCTIONJOIN
     FUNCTIONSPLIT
     FUNMATH
-    GREATER
     IF
     IN
-    INCREMENT
     INSTANCEOF
     LBRACKET
     LCOMILLA
-    LESS
     LKEY
     MOD
     MULTICOMMENT
     MULTISTRING
-    NEGATION
     NEW
     NORMSTRING2
-    NOTEQUALTO
     NULL
     OBJECTNAME
-    OR
     POINT
-    POINTCOMMA
     POW
     PRINT
     RBRACKET
@@ -54,66 +44,109 @@ Unused terminals:
     SPECIAL
     TYPEOF
     UNDEFINED
-    VARNUMBER
     VAROBJECT
-    VARSTRING
     WHILE
 
 Grammar
 
-Rule 0     S' -> all
-Rule 1     all -> statement
-Rule 2     all -> concatenate
-Rule 3     all -> assign
-Rule 4     assign -> var_boolean
-Rule 5     var_boolean -> declare_any EQUAL boolean
-Rule 6     var_boolean -> declare_boolean EQUAL boolean
-Rule 7     declare_boolean -> prefix VARIABLE TWOPOINTS VARBOOLEAN
-Rule 8     declare_any -> prefix VARIABLE
-Rule 9     concatenate -> termS
-Rule 10    termS -> string PLUS chain
-Rule 11    chain -> termS PLUS value
-Rule 12    chain -> value
-Rule 13    value -> expression
-Rule 14    value -> string
-Rule 15    statement -> expression
-Rule 16    expression -> expression PLUS term
-Rule 17    expression -> expression MINUS term
-Rule 18    expression -> term
-Rule 19    term -> term PRODUCT factor
-Rule 20    term -> term DIVIDE factor
-Rule 21    term -> factor
-Rule 22    prefix -> LET
-Rule 23    prefix -> VAR
-Rule 24    prefix -> STATIC
-Rule 25    prefix -> CONST
-Rule 26    string -> NORMSTRING1
-Rule 27    boolean -> TRUE
-Rule 28    boolean -> FALSE
-Rule 29    factor -> NUMBER
-Rule 30    factor -> FLOAT
-Rule 31    factor -> VARIABLE
-Rule 32    factor -> LPAREN expression RPAREN
+Rule 0     S' -> statement
+Rule 1     statement -> statement_value
+Rule 2     statement -> statement_value POINTCOMMA
+Rule 3     statement_value -> expression
+Rule 4     statement_value -> concatenate
+Rule 5     statement_value -> declare
+Rule 6     statement_value -> assign
+Rule 7     statement_value -> expCond
+Rule 8     statement_value -> expOpLog
+Rule 9     declare -> var_boolean
+Rule 10    declare -> var_number
+Rule 11    declare -> var_string
+Rule 12    declare -> declare_generic
+Rule 13    var_number -> declare_number EQUAL number_value
+Rule 14    declare_number -> declare_any TWOPOINTS VARNUMBER
+Rule 15    number_value -> expression
+Rule 16    var_boolean -> declare_boolean EQUAL boolean_value
+Rule 17    declare_boolean -> declare_any TWOPOINTS VARBOOLEAN
+Rule 18    boolean_value -> boolean
+Rule 19    boolean_value -> variable
+Rule 20    var_string -> declare_string EQUAL string_value
+Rule 21    declare_string -> declare_any TWOPOINTS VARSTRING
+Rule 22    string_value -> string
+Rule 23    string_value -> variable
+Rule 24    declare_generic -> declare_any EQUAL assign_value
+Rule 25    declare_any -> prefix VARIABLE
+Rule 26    assign -> VARIABLE EQUAL assign_value
+Rule 27    assign_value -> expression
+Rule 28    assign_value -> boolean
+Rule 29    assign_value -> string
+Rule 30    concatenate -> termS
+Rule 31    termS -> string PLUS chain
+Rule 32    chain -> termS PLUS value
+Rule 33    chain -> value
+Rule 34    value -> expression
+Rule 35    value -> string
+Rule 36    expression -> expression PLUS term
+Rule 37    expression -> expression MINUS term
+Rule 38    expression -> term
+Rule 39    term -> term PRODUCT term
+Rule 40    term -> term DIVIDE term
+Rule 41    term -> term1 INCREMENT
+Rule 42    term -> INCREMENT term1
+Rule 43    term -> term1 DECREMENT
+Rule 44    term -> DECREMENT term1
+Rule 45    expOpLog -> expCond oplogico expCond
+Rule 46    expOpLog -> factor_exprlog oplogico factor_exprlog
+Rule 47    expOpLog -> expression oplogico expression
+Rule 48    factor_exprlog -> LPAREN expCond RPAREN
+Rule 49    expCond -> expression operador expression
+Rule 50    term1 -> number
+Rule 51    term1 -> variable
+Rule 52    term1 -> group
+Rule 53    group -> LPAREN variable RPAREN
+Rule 54    group -> LPAREN number RPAREN
+Rule 55    term -> number
+Rule 56    term -> factor_expr
+Rule 57    term -> variable
+Rule 58    factor_expr -> LPAREN expression RPAREN
+Rule 59    prefix -> LET
+Rule 60    prefix -> VAR
+Rule 61    prefix -> STATIC
+Rule 62    prefix -> CONST
+Rule 63    number -> NUMBER
+Rule 64    number -> FLOAT
+Rule 65    string -> NORMSTRING1
+Rule 66    boolean -> TRUE
+Rule 67    boolean -> FALSE
+Rule 68    variable -> VARIABLE
+Rule 69    operador -> GREATER
+Rule 70    operador -> LESS
+Rule 71    operador -> GREATEREQUAL
+Rule 72    operador -> LESSEQUAL
+Rule 73    operador -> EQUALTO
+Rule 74    operador -> NOTEQUALTO
+Rule 75    oplogico -> NEGATION
+Rule 76    oplogico -> AND
+Rule 77    oplogico -> OR
 
 Terminals, with rules where they appear
 
 ABS                  : 
-AND                  : 
+AND                  : 76
 ANY                  : 
 ARRAY                : 
 COMMA                : 
 COMMENT              : 
-CONST                : 25
-DECREMENT            : 
-DIVIDE               : 20
+CONST                : 62
+DECREMENT            : 43 44
+DIVIDE               : 40
 DOLLAR               : 
 ELIF                 : 
 ELSE                 : 
 ENUM                 : 
-EQUAL                : 5 6
-EQUALTO              : 
-FALSE                : 28
-FLOAT                : 30
+EQUAL                : 13 16 20 24 26
+EQUALTO              : 73
+FALSE                : 67
+FLOAT                : 64
 FOR                  : 
 FUNCTIONADD          : 
 FUNCTIONCHARAT       : 
@@ -123,679 +156,2245 @@ FUNCTIONHAS          :
 FUNCTIONJOIN         : 
 FUNCTIONSPLIT        : 
 FUNMATH              : 
-GREATER              : 
+GREATER              : 69
+GREATEREQUAL         : 71
 IF                   : 
 IN                   : 
-INCREMENT            : 
+INCREMENT            : 41 42
 INSTANCEOF           : 
 LBRACKET             : 
 LCOMILLA             : 
-LESS                 : 
-LET                  : 22
+LESS                 : 70
+LESSEQUAL            : 72
+LET                  : 59
 LKEY                 : 
-LPAREN               : 32
-MINUS                : 17
+LPAREN               : 48 53 54 58
+MINUS                : 37
 MOD                  : 
 MULTICOMMENT         : 
 MULTISTRING          : 
-NEGATION             : 
+NEGATION             : 75
 NEW                  : 
-NORMSTRING1          : 26
+NORMSTRING1          : 65
 NORMSTRING2          : 
-NOTEQUALTO           : 
+NOTEQUALTO           : 74
 NULL                 : 
-NUMBER               : 29
+NUMBER               : 63
 OBJECTNAME           : 
-OR                   : 
-PLUS                 : 10 11 16
+OR                   : 77
+PLUS                 : 31 32 36
 POINT                : 
-POINTCOMMA           : 
+POINTCOMMA           : 2
 POW                  : 
 PRINT                : 
-PRODUCT              : 19
+PRODUCT              : 39
 RBRACKET             : 
 RCOMILLA             : 
 RKEY                 : 
 ROUND                : 
-RPAREN               : 32
+RPAREN               : 48 53 54 58
 SET                  : 
 SPECIAL              : 
-STATIC               : 24
-TRUE                 : 27
-TWOPOINTS            : 7
+STATIC               : 61
+TRUE                 : 66
+TWOPOINTS            : 14 17 21
 TYPEOF               : 
 UNDEFINED            : 
-VAR                  : 23
-VARBOOLEAN           : 7
-VARIABLE             : 7 8 31
-VARNUMBER            : 
+VAR                  : 60
+VARBOOLEAN           : 17
+VARIABLE             : 25 26 68
+VARNUMBER            : 14
 VAROBJECT            : 
-VARSTRING            : 
+VARSTRING            : 21
 WHILE                : 
 error                : 
 
 Nonterminals, with rules where they appear
 
-all                  : 0
-assign               : 3
-boolean              : 5 6
-chain                : 10
-concatenate          : 2
-declare_any          : 5
-declare_boolean      : 6
-expression           : 13 15 16 17 32
-factor               : 19 20 21
-prefix               : 7 8
-statement            : 1
-string               : 10 14
-term                 : 16 17 18 19 20
-termS                : 9 11
-value                : 11 12
-var_boolean          : 4
+assign               : 6
+assign_value         : 24 26
+boolean              : 18 28
+boolean_value        : 16
+chain                : 31
+concatenate          : 4
+declare              : 5
+declare_any          : 14 17 21 24
+declare_boolean      : 16
+declare_generic      : 12
+declare_number       : 13
+declare_string       : 20
+expCond              : 7 45 45 48
+expOpLog             : 8
+expression           : 3 15 27 34 36 37 47 47 49 49 58
+factor_expr          : 56
+factor_exprlog       : 46 46
+group                : 52
+number               : 50 54 55
+number_value         : 13
+operador             : 49
+oplogico             : 45 46 47
+prefix               : 25
+statement            : 0
+statement_value      : 1 2
+string               : 22 29 31 35
+string_value         : 20
+term                 : 36 37 38 39 39 40 40
+term1                : 41 42 43 44
+termS                : 30 32
+value                : 32 33
+var_boolean          : 9
+var_number           : 10
+var_string           : 11
+variable             : 19 23 51 53 57
 
 Parsing method: LALR
 
 state 0
 
-    (0) S' -> . all
-    (1) all -> . statement
-    (2) all -> . concatenate
-    (3) all -> . assign
-    (15) statement -> . expression
-    (9) concatenate -> . termS
-    (4) assign -> . var_boolean
-    (16) expression -> . expression PLUS term
-    (17) expression -> . expression MINUS term
-    (18) expression -> . term
-    (10) termS -> . string PLUS chain
-    (5) var_boolean -> . declare_any EQUAL boolean
-    (6) var_boolean -> . declare_boolean EQUAL boolean
-    (19) term -> . term PRODUCT factor
-    (20) term -> . term DIVIDE factor
-    (21) term -> . factor
-    (26) string -> . NORMSTRING1
-    (8) declare_any -> . prefix VARIABLE
-    (7) declare_boolean -> . prefix VARIABLE TWOPOINTS VARBOOLEAN
-    (29) factor -> . NUMBER
-    (30) factor -> . FLOAT
-    (31) factor -> . VARIABLE
-    (32) factor -> . LPAREN expression RPAREN
-    (22) prefix -> . LET
-    (23) prefix -> . VAR
-    (24) prefix -> . STATIC
-    (25) prefix -> . CONST
+    (0) S' -> . statement
+    (1) statement -> . statement_value
+    (2) statement -> . statement_value POINTCOMMA
+    (3) statement_value -> . expression
+    (4) statement_value -> . concatenate
+    (5) statement_value -> . declare
+    (6) statement_value -> . assign
+    (7) statement_value -> . expCond
+    (8) statement_value -> . expOpLog
+    (36) expression -> . expression PLUS term
+    (37) expression -> . expression MINUS term
+    (38) expression -> . term
+    (30) concatenate -> . termS
+    (9) declare -> . var_boolean
+    (10) declare -> . var_number
+    (11) declare -> . var_string
+    (12) declare -> . declare_generic
+    (26) assign -> . VARIABLE EQUAL assign_value
+    (49) expCond -> . expression operador expression
+    (45) expOpLog -> . expCond oplogico expCond
+    (46) expOpLog -> . factor_exprlog oplogico factor_exprlog
+    (47) expOpLog -> . expression oplogico expression
+    (39) term -> . term PRODUCT term
+    (40) term -> . term DIVIDE term
+    (41) term -> . term1 INCREMENT
+    (42) term -> . INCREMENT term1
+    (43) term -> . term1 DECREMENT
+    (44) term -> . DECREMENT term1
+    (55) term -> . number
+    (56) term -> . factor_expr
+    (57) term -> . variable
+    (31) termS -> . string PLUS chain
+    (16) var_boolean -> . declare_boolean EQUAL boolean_value
+    (13) var_number -> . declare_number EQUAL number_value
+    (20) var_string -> . declare_string EQUAL string_value
+    (24) declare_generic -> . declare_any EQUAL assign_value
+    (48) factor_exprlog -> . LPAREN expCond RPAREN
+    (50) term1 -> . number
+    (51) term1 -> . variable
+    (52) term1 -> . group
+    (63) number -> . NUMBER
+    (64) number -> . FLOAT
+    (58) factor_expr -> . LPAREN expression RPAREN
+    (68) variable -> . VARIABLE
+    (65) string -> . NORMSTRING1
+    (17) declare_boolean -> . declare_any TWOPOINTS VARBOOLEAN
+    (14) declare_number -> . declare_any TWOPOINTS VARNUMBER
+    (21) declare_string -> . declare_any TWOPOINTS VARSTRING
+    (25) declare_any -> . prefix VARIABLE
+    (53) group -> . LPAREN variable RPAREN
+    (54) group -> . LPAREN number RPAREN
+    (59) prefix -> . LET
+    (60) prefix -> . VAR
+    (61) prefix -> . STATIC
+    (62) prefix -> . CONST
 
-    NORMSTRING1     shift and go to state 13
-    NUMBER          shift and go to state 16
-    FLOAT           shift and go to state 17
     VARIABLE        shift and go to state 15
-    LPAREN          shift and go to state 18
-    LET             shift and go to state 19
-    VAR             shift and go to state 20
-    STATIC          shift and go to state 21
-    CONST           shift and go to state 22
+    INCREMENT       shift and go to state 18
+    DECREMENT       shift and go to state 19
+    LPAREN          shift and go to state 28
+    NUMBER          shift and go to state 30
+    FLOAT           shift and go to state 31
+    NORMSTRING1     shift and go to state 32
+    LET             shift and go to state 34
+    VAR             shift and go to state 35
+    STATIC          shift and go to state 36
+    CONST           shift and go to state 37
 
-    all                            shift and go to state 1
-    statement                      shift and go to state 2
-    concatenate                    shift and go to state 3
-    assign                         shift and go to state 4
-    expression                     shift and go to state 5
-    termS                          shift and go to state 6
-    var_boolean                    shift and go to state 7
-    term                           shift and go to state 8
-    string                         shift and go to state 9
-    declare_any                    shift and go to state 10
-    declare_boolean                shift and go to state 11
-    factor                         shift and go to state 12
-    prefix                         shift and go to state 14
+    statement                      shift and go to state 1
+    statement_value                shift and go to state 2
+    expression                     shift and go to state 3
+    concatenate                    shift and go to state 4
+    declare                        shift and go to state 5
+    assign                         shift and go to state 6
+    expCond                        shift and go to state 7
+    expOpLog                       shift and go to state 8
+    term                           shift and go to state 9
+    termS                          shift and go to state 10
+    var_boolean                    shift and go to state 11
+    var_number                     shift and go to state 12
+    var_string                     shift and go to state 13
+    declare_generic                shift and go to state 14
+    factor_exprlog                 shift and go to state 16
+    term1                          shift and go to state 17
+    number                         shift and go to state 20
+    factor_expr                    shift and go to state 21
+    variable                       shift and go to state 22
+    string                         shift and go to state 23
+    declare_boolean                shift and go to state 24
+    declare_number                 shift and go to state 25
+    declare_string                 shift and go to state 26
+    declare_any                    shift and go to state 27
+    group                          shift and go to state 29
+    prefix                         shift and go to state 33
 
 state 1
 
-    (0) S' -> all .
+    (0) S' -> statement .
 
 
 
 state 2
 
-    (1) all -> statement .
+    (1) statement -> statement_value .
+    (2) statement -> statement_value . POINTCOMMA
 
-    $end            reduce using rule 1 (all -> statement .)
+    $end            reduce using rule 1 (statement -> statement_value .)
+    POINTCOMMA      shift and go to state 38
 
 
 state 3
 
-    (2) all -> concatenate .
+    (3) statement_value -> expression .
+    (36) expression -> expression . PLUS term
+    (37) expression -> expression . MINUS term
+    (49) expCond -> expression . operador expression
+    (47) expOpLog -> expression . oplogico expression
+    (69) operador -> . GREATER
+    (70) operador -> . LESS
+    (71) operador -> . GREATEREQUAL
+    (72) operador -> . LESSEQUAL
+    (73) operador -> . EQUALTO
+    (74) operador -> . NOTEQUALTO
+    (75) oplogico -> . NEGATION
+    (76) oplogico -> . AND
+    (77) oplogico -> . OR
 
-    $end            reduce using rule 2 (all -> concatenate .)
+    POINTCOMMA      reduce using rule 3 (statement_value -> expression .)
+    $end            reduce using rule 3 (statement_value -> expression .)
+    PLUS            shift and go to state 39
+    MINUS           shift and go to state 40
+    GREATER         shift and go to state 43
+    LESS            shift and go to state 44
+    GREATEREQUAL    shift and go to state 45
+    LESSEQUAL       shift and go to state 46
+    EQUALTO         shift and go to state 47
+    NOTEQUALTO      shift and go to state 48
+    NEGATION        shift and go to state 49
+    AND             shift and go to state 50
+    OR              shift and go to state 51
 
+    operador                       shift and go to state 41
+    oplogico                       shift and go to state 42
 
 state 4
 
-    (3) all -> assign .
+    (4) statement_value -> concatenate .
 
-    $end            reduce using rule 3 (all -> assign .)
+    POINTCOMMA      reduce using rule 4 (statement_value -> concatenate .)
+    $end            reduce using rule 4 (statement_value -> concatenate .)
 
 
 state 5
 
-    (15) statement -> expression .
-    (16) expression -> expression . PLUS term
-    (17) expression -> expression . MINUS term
+    (5) statement_value -> declare .
 
-    $end            reduce using rule 15 (statement -> expression .)
-    PLUS            shift and go to state 23
-    MINUS           shift and go to state 24
+    POINTCOMMA      reduce using rule 5 (statement_value -> declare .)
+    $end            reduce using rule 5 (statement_value -> declare .)
 
 
 state 6
 
-    (9) concatenate -> termS .
+    (6) statement_value -> assign .
 
-    $end            reduce using rule 9 (concatenate -> termS .)
+    POINTCOMMA      reduce using rule 6 (statement_value -> assign .)
+    $end            reduce using rule 6 (statement_value -> assign .)
 
 
 state 7
 
-    (4) assign -> var_boolean .
+    (7) statement_value -> expCond .
+    (45) expOpLog -> expCond . oplogico expCond
+    (75) oplogico -> . NEGATION
+    (76) oplogico -> . AND
+    (77) oplogico -> . OR
 
-    $end            reduce using rule 4 (assign -> var_boolean .)
+    POINTCOMMA      reduce using rule 7 (statement_value -> expCond .)
+    $end            reduce using rule 7 (statement_value -> expCond .)
+    NEGATION        shift and go to state 49
+    AND             shift and go to state 50
+    OR              shift and go to state 51
 
+    oplogico                       shift and go to state 52
 
 state 8
 
-    (18) expression -> term .
-    (19) term -> term . PRODUCT factor
-    (20) term -> term . DIVIDE factor
+    (8) statement_value -> expOpLog .
 
-    PLUS            reduce using rule 18 (expression -> term .)
-    MINUS           reduce using rule 18 (expression -> term .)
-    $end            reduce using rule 18 (expression -> term .)
-    RPAREN          reduce using rule 18 (expression -> term .)
-    PRODUCT         shift and go to state 25
-    DIVIDE          shift and go to state 26
+    POINTCOMMA      reduce using rule 8 (statement_value -> expOpLog .)
+    $end            reduce using rule 8 (statement_value -> expOpLog .)
 
 
 state 9
 
-    (10) termS -> string . PLUS chain
+    (38) expression -> term .
+    (39) term -> term . PRODUCT term
+    (40) term -> term . DIVIDE term
 
-    PLUS            shift and go to state 27
+    PLUS            reduce using rule 38 (expression -> term .)
+    MINUS           reduce using rule 38 (expression -> term .)
+    GREATER         reduce using rule 38 (expression -> term .)
+    LESS            reduce using rule 38 (expression -> term .)
+    GREATEREQUAL    reduce using rule 38 (expression -> term .)
+    LESSEQUAL       reduce using rule 38 (expression -> term .)
+    EQUALTO         reduce using rule 38 (expression -> term .)
+    NOTEQUALTO      reduce using rule 38 (expression -> term .)
+    NEGATION        reduce using rule 38 (expression -> term .)
+    AND             reduce using rule 38 (expression -> term .)
+    OR              reduce using rule 38 (expression -> term .)
+    POINTCOMMA      reduce using rule 38 (expression -> term .)
+    $end            reduce using rule 38 (expression -> term .)
+    RPAREN          reduce using rule 38 (expression -> term .)
+    PRODUCT         shift and go to state 53
+    DIVIDE          shift and go to state 54
 
 
 state 10
 
-    (5) var_boolean -> declare_any . EQUAL boolean
+    (30) concatenate -> termS .
 
-    EQUAL           shift and go to state 28
+    POINTCOMMA      reduce using rule 30 (concatenate -> termS .)
+    $end            reduce using rule 30 (concatenate -> termS .)
 
 
 state 11
 
-    (6) var_boolean -> declare_boolean . EQUAL boolean
+    (9) declare -> var_boolean .
 
-    EQUAL           shift and go to state 29
+    POINTCOMMA      reduce using rule 9 (declare -> var_boolean .)
+    $end            reduce using rule 9 (declare -> var_boolean .)
 
 
 state 12
 
-    (21) term -> factor .
+    (10) declare -> var_number .
 
-    PRODUCT         reduce using rule 21 (term -> factor .)
-    DIVIDE          reduce using rule 21 (term -> factor .)
-    PLUS            reduce using rule 21 (term -> factor .)
-    MINUS           reduce using rule 21 (term -> factor .)
-    $end            reduce using rule 21 (term -> factor .)
-    RPAREN          reduce using rule 21 (term -> factor .)
+    POINTCOMMA      reduce using rule 10 (declare -> var_number .)
+    $end            reduce using rule 10 (declare -> var_number .)
 
 
 state 13
 
-    (26) string -> NORMSTRING1 .
+    (11) declare -> var_string .
 
-    PLUS            reduce using rule 26 (string -> NORMSTRING1 .)
-    $end            reduce using rule 26 (string -> NORMSTRING1 .)
+    POINTCOMMA      reduce using rule 11 (declare -> var_string .)
+    $end            reduce using rule 11 (declare -> var_string .)
 
 
 state 14
 
-    (8) declare_any -> prefix . VARIABLE
-    (7) declare_boolean -> prefix . VARIABLE TWOPOINTS VARBOOLEAN
+    (12) declare -> declare_generic .
 
-    VARIABLE        shift and go to state 30
+    POINTCOMMA      reduce using rule 12 (declare -> declare_generic .)
+    $end            reduce using rule 12 (declare -> declare_generic .)
 
 
 state 15
 
-    (31) factor -> VARIABLE .
+    (26) assign -> VARIABLE . EQUAL assign_value
+    (68) variable -> VARIABLE .
 
-    PRODUCT         reduce using rule 31 (factor -> VARIABLE .)
-    DIVIDE          reduce using rule 31 (factor -> VARIABLE .)
-    PLUS            reduce using rule 31 (factor -> VARIABLE .)
-    MINUS           reduce using rule 31 (factor -> VARIABLE .)
-    $end            reduce using rule 31 (factor -> VARIABLE .)
-    RPAREN          reduce using rule 31 (factor -> VARIABLE .)
+    EQUAL           shift and go to state 55
+    PRODUCT         reduce using rule 68 (variable -> VARIABLE .)
+    DIVIDE          reduce using rule 68 (variable -> VARIABLE .)
+    PLUS            reduce using rule 68 (variable -> VARIABLE .)
+    MINUS           reduce using rule 68 (variable -> VARIABLE .)
+    GREATER         reduce using rule 68 (variable -> VARIABLE .)
+    LESS            reduce using rule 68 (variable -> VARIABLE .)
+    GREATEREQUAL    reduce using rule 68 (variable -> VARIABLE .)
+    LESSEQUAL       reduce using rule 68 (variable -> VARIABLE .)
+    EQUALTO         reduce using rule 68 (variable -> VARIABLE .)
+    NOTEQUALTO      reduce using rule 68 (variable -> VARIABLE .)
+    NEGATION        reduce using rule 68 (variable -> VARIABLE .)
+    AND             reduce using rule 68 (variable -> VARIABLE .)
+    OR              reduce using rule 68 (variable -> VARIABLE .)
+    POINTCOMMA      reduce using rule 68 (variable -> VARIABLE .)
+    $end            reduce using rule 68 (variable -> VARIABLE .)
+    INCREMENT       reduce using rule 68 (variable -> VARIABLE .)
+    DECREMENT       reduce using rule 68 (variable -> VARIABLE .)
 
 
 state 16
 
-    (29) factor -> NUMBER .
+    (46) expOpLog -> factor_exprlog . oplogico factor_exprlog
+    (75) oplogico -> . NEGATION
+    (76) oplogico -> . AND
+    (77) oplogico -> . OR
 
-    PRODUCT         reduce using rule 29 (factor -> NUMBER .)
-    DIVIDE          reduce using rule 29 (factor -> NUMBER .)
-    PLUS            reduce using rule 29 (factor -> NUMBER .)
-    MINUS           reduce using rule 29 (factor -> NUMBER .)
-    $end            reduce using rule 29 (factor -> NUMBER .)
-    RPAREN          reduce using rule 29 (factor -> NUMBER .)
+    NEGATION        shift and go to state 49
+    AND             shift and go to state 50
+    OR              shift and go to state 51
 
+    oplogico                       shift and go to state 56
 
 state 17
 
-    (30) factor -> FLOAT .
+    (41) term -> term1 . INCREMENT
+    (43) term -> term1 . DECREMENT
 
-    PRODUCT         reduce using rule 30 (factor -> FLOAT .)
-    DIVIDE          reduce using rule 30 (factor -> FLOAT .)
-    PLUS            reduce using rule 30 (factor -> FLOAT .)
-    MINUS           reduce using rule 30 (factor -> FLOAT .)
-    $end            reduce using rule 30 (factor -> FLOAT .)
-    RPAREN          reduce using rule 30 (factor -> FLOAT .)
+    INCREMENT       shift and go to state 57
+    DECREMENT       shift and go to state 58
 
 
 state 18
 
-    (32) factor -> LPAREN . expression RPAREN
-    (16) expression -> . expression PLUS term
-    (17) expression -> . expression MINUS term
-    (18) expression -> . term
-    (19) term -> . term PRODUCT factor
-    (20) term -> . term DIVIDE factor
-    (21) term -> . factor
-    (29) factor -> . NUMBER
-    (30) factor -> . FLOAT
-    (31) factor -> . VARIABLE
-    (32) factor -> . LPAREN expression RPAREN
+    (42) term -> INCREMENT . term1
+    (50) term1 -> . number
+    (51) term1 -> . variable
+    (52) term1 -> . group
+    (63) number -> . NUMBER
+    (64) number -> . FLOAT
+    (68) variable -> . VARIABLE
+    (53) group -> . LPAREN variable RPAREN
+    (54) group -> . LPAREN number RPAREN
 
-    NUMBER          shift and go to state 16
-    FLOAT           shift and go to state 17
-    VARIABLE        shift and go to state 15
-    LPAREN          shift and go to state 18
+    NUMBER          shift and go to state 30
+    FLOAT           shift and go to state 31
+    VARIABLE        shift and go to state 62
+    LPAREN          shift and go to state 63
 
-    expression                     shift and go to state 31
-    term                           shift and go to state 8
-    factor                         shift and go to state 12
+    term1                          shift and go to state 59
+    number                         shift and go to state 60
+    variable                       shift and go to state 61
+    group                          shift and go to state 29
 
 state 19
 
-    (22) prefix -> LET .
+    (44) term -> DECREMENT . term1
+    (50) term1 -> . number
+    (51) term1 -> . variable
+    (52) term1 -> . group
+    (63) number -> . NUMBER
+    (64) number -> . FLOAT
+    (68) variable -> . VARIABLE
+    (53) group -> . LPAREN variable RPAREN
+    (54) group -> . LPAREN number RPAREN
 
-    VARIABLE        reduce using rule 22 (prefix -> LET .)
+    NUMBER          shift and go to state 30
+    FLOAT           shift and go to state 31
+    VARIABLE        shift and go to state 62
+    LPAREN          shift and go to state 63
 
+    term1                          shift and go to state 64
+    number                         shift and go to state 60
+    variable                       shift and go to state 61
+    group                          shift and go to state 29
 
 state 20
 
-    (23) prefix -> VAR .
+    (55) term -> number .
+    (50) term1 -> number .
 
-    VARIABLE        reduce using rule 23 (prefix -> VAR .)
+    PRODUCT         reduce using rule 55 (term -> number .)
+    DIVIDE          reduce using rule 55 (term -> number .)
+    PLUS            reduce using rule 55 (term -> number .)
+    MINUS           reduce using rule 55 (term -> number .)
+    GREATER         reduce using rule 55 (term -> number .)
+    LESS            reduce using rule 55 (term -> number .)
+    GREATEREQUAL    reduce using rule 55 (term -> number .)
+    LESSEQUAL       reduce using rule 55 (term -> number .)
+    EQUALTO         reduce using rule 55 (term -> number .)
+    NOTEQUALTO      reduce using rule 55 (term -> number .)
+    NEGATION        reduce using rule 55 (term -> number .)
+    AND             reduce using rule 55 (term -> number .)
+    OR              reduce using rule 55 (term -> number .)
+    POINTCOMMA      reduce using rule 55 (term -> number .)
+    $end            reduce using rule 55 (term -> number .)
+    RPAREN          reduce using rule 55 (term -> number .)
+    INCREMENT       reduce using rule 50 (term1 -> number .)
+    DECREMENT       reduce using rule 50 (term1 -> number .)
 
 
 state 21
 
-    (24) prefix -> STATIC .
+    (56) term -> factor_expr .
 
-    VARIABLE        reduce using rule 24 (prefix -> STATIC .)
+    PRODUCT         reduce using rule 56 (term -> factor_expr .)
+    DIVIDE          reduce using rule 56 (term -> factor_expr .)
+    PLUS            reduce using rule 56 (term -> factor_expr .)
+    MINUS           reduce using rule 56 (term -> factor_expr .)
+    GREATER         reduce using rule 56 (term -> factor_expr .)
+    LESS            reduce using rule 56 (term -> factor_expr .)
+    GREATEREQUAL    reduce using rule 56 (term -> factor_expr .)
+    LESSEQUAL       reduce using rule 56 (term -> factor_expr .)
+    EQUALTO         reduce using rule 56 (term -> factor_expr .)
+    NOTEQUALTO      reduce using rule 56 (term -> factor_expr .)
+    NEGATION        reduce using rule 56 (term -> factor_expr .)
+    AND             reduce using rule 56 (term -> factor_expr .)
+    OR              reduce using rule 56 (term -> factor_expr .)
+    POINTCOMMA      reduce using rule 56 (term -> factor_expr .)
+    $end            reduce using rule 56 (term -> factor_expr .)
+    RPAREN          reduce using rule 56 (term -> factor_expr .)
 
 
 state 22
 
-    (25) prefix -> CONST .
+    (57) term -> variable .
+    (51) term1 -> variable .
 
-    VARIABLE        reduce using rule 25 (prefix -> CONST .)
+    PRODUCT         reduce using rule 57 (term -> variable .)
+    DIVIDE          reduce using rule 57 (term -> variable .)
+    PLUS            reduce using rule 57 (term -> variable .)
+    MINUS           reduce using rule 57 (term -> variable .)
+    GREATER         reduce using rule 57 (term -> variable .)
+    LESS            reduce using rule 57 (term -> variable .)
+    GREATEREQUAL    reduce using rule 57 (term -> variable .)
+    LESSEQUAL       reduce using rule 57 (term -> variable .)
+    EQUALTO         reduce using rule 57 (term -> variable .)
+    NOTEQUALTO      reduce using rule 57 (term -> variable .)
+    NEGATION        reduce using rule 57 (term -> variable .)
+    AND             reduce using rule 57 (term -> variable .)
+    OR              reduce using rule 57 (term -> variable .)
+    POINTCOMMA      reduce using rule 57 (term -> variable .)
+    $end            reduce using rule 57 (term -> variable .)
+    RPAREN          reduce using rule 57 (term -> variable .)
+    INCREMENT       reduce using rule 51 (term1 -> variable .)
+    DECREMENT       reduce using rule 51 (term1 -> variable .)
 
 
 state 23
 
-    (16) expression -> expression PLUS . term
-    (19) term -> . term PRODUCT factor
-    (20) term -> . term DIVIDE factor
-    (21) term -> . factor
-    (29) factor -> . NUMBER
-    (30) factor -> . FLOAT
-    (31) factor -> . VARIABLE
-    (32) factor -> . LPAREN expression RPAREN
+    (31) termS -> string . PLUS chain
 
-    NUMBER          shift and go to state 16
-    FLOAT           shift and go to state 17
-    VARIABLE        shift and go to state 15
-    LPAREN          shift and go to state 18
+    PLUS            shift and go to state 65
 
-    term                           shift and go to state 32
-    factor                         shift and go to state 12
 
 state 24
 
-    (17) expression -> expression MINUS . term
-    (19) term -> . term PRODUCT factor
-    (20) term -> . term DIVIDE factor
-    (21) term -> . factor
-    (29) factor -> . NUMBER
-    (30) factor -> . FLOAT
-    (31) factor -> . VARIABLE
-    (32) factor -> . LPAREN expression RPAREN
+    (16) var_boolean -> declare_boolean . EQUAL boolean_value
 
-    NUMBER          shift and go to state 16
-    FLOAT           shift and go to state 17
-    VARIABLE        shift and go to state 15
-    LPAREN          shift and go to state 18
+    EQUAL           shift and go to state 66
 
-    term                           shift and go to state 33
-    factor                         shift and go to state 12
 
 state 25
 
-    (19) term -> term PRODUCT . factor
-    (29) factor -> . NUMBER
-    (30) factor -> . FLOAT
-    (31) factor -> . VARIABLE
-    (32) factor -> . LPAREN expression RPAREN
+    (13) var_number -> declare_number . EQUAL number_value
 
-    NUMBER          shift and go to state 16
-    FLOAT           shift and go to state 17
-    VARIABLE        shift and go to state 15
-    LPAREN          shift and go to state 18
+    EQUAL           shift and go to state 67
 
-    factor                         shift and go to state 34
 
 state 26
 
-    (20) term -> term DIVIDE . factor
-    (29) factor -> . NUMBER
-    (30) factor -> . FLOAT
-    (31) factor -> . VARIABLE
-    (32) factor -> . LPAREN expression RPAREN
+    (20) var_string -> declare_string . EQUAL string_value
 
-    NUMBER          shift and go to state 16
-    FLOAT           shift and go to state 17
-    VARIABLE        shift and go to state 15
-    LPAREN          shift and go to state 18
+    EQUAL           shift and go to state 68
 
-    factor                         shift and go to state 35
 
 state 27
 
-    (10) termS -> string PLUS . chain
-    (11) chain -> . termS PLUS value
-    (12) chain -> . value
-    (10) termS -> . string PLUS chain
-    (13) value -> . expression
-    (14) value -> . string
-    (26) string -> . NORMSTRING1
-    (16) expression -> . expression PLUS term
-    (17) expression -> . expression MINUS term
-    (18) expression -> . term
-    (19) term -> . term PRODUCT factor
-    (20) term -> . term DIVIDE factor
-    (21) term -> . factor
-    (29) factor -> . NUMBER
-    (30) factor -> . FLOAT
-    (31) factor -> . VARIABLE
-    (32) factor -> . LPAREN expression RPAREN
+    (24) declare_generic -> declare_any . EQUAL assign_value
+    (17) declare_boolean -> declare_any . TWOPOINTS VARBOOLEAN
+    (14) declare_number -> declare_any . TWOPOINTS VARNUMBER
+    (21) declare_string -> declare_any . TWOPOINTS VARSTRING
 
-    NORMSTRING1     shift and go to state 13
-    NUMBER          shift and go to state 16
-    FLOAT           shift and go to state 17
-    VARIABLE        shift and go to state 15
-    LPAREN          shift and go to state 18
+    EQUAL           shift and go to state 69
+    TWOPOINTS       shift and go to state 70
 
-    string                         shift and go to state 36
-    chain                          shift and go to state 37
-    termS                          shift and go to state 38
-    value                          shift and go to state 39
-    expression                     shift and go to state 40
-    term                           shift and go to state 8
-    factor                         shift and go to state 12
 
 state 28
 
-    (5) var_boolean -> declare_any EQUAL . boolean
-    (27) boolean -> . TRUE
-    (28) boolean -> . FALSE
+    (48) factor_exprlog -> LPAREN . expCond RPAREN
+    (58) factor_expr -> LPAREN . expression RPAREN
+    (53) group -> LPAREN . variable RPAREN
+    (54) group -> LPAREN . number RPAREN
+    (49) expCond -> . expression operador expression
+    (36) expression -> . expression PLUS term
+    (37) expression -> . expression MINUS term
+    (38) expression -> . term
+    (68) variable -> . VARIABLE
+    (63) number -> . NUMBER
+    (64) number -> . FLOAT
+    (39) term -> . term PRODUCT term
+    (40) term -> . term DIVIDE term
+    (41) term -> . term1 INCREMENT
+    (42) term -> . INCREMENT term1
+    (43) term -> . term1 DECREMENT
+    (44) term -> . DECREMENT term1
+    (55) term -> . number
+    (56) term -> . factor_expr
+    (57) term -> . variable
+    (50) term1 -> . number
+    (51) term1 -> . variable
+    (52) term1 -> . group
+    (58) factor_expr -> . LPAREN expression RPAREN
+    (53) group -> . LPAREN variable RPAREN
+    (54) group -> . LPAREN number RPAREN
 
-    TRUE            shift and go to state 42
-    FALSE           shift and go to state 43
+    VARIABLE        shift and go to state 62
+    NUMBER          shift and go to state 30
+    FLOAT           shift and go to state 31
+    INCREMENT       shift and go to state 18
+    DECREMENT       shift and go to state 19
+    LPAREN          shift and go to state 71
 
-    boolean                        shift and go to state 41
+    expCond                        shift and go to state 72
+    expression                     shift and go to state 73
+    variable                       shift and go to state 74
+    number                         shift and go to state 75
+    term                           shift and go to state 9
+    term1                          shift and go to state 17
+    factor_expr                    shift and go to state 21
+    group                          shift and go to state 29
 
 state 29
 
-    (6) var_boolean -> declare_boolean EQUAL . boolean
-    (27) boolean -> . TRUE
-    (28) boolean -> . FALSE
+    (52) term1 -> group .
 
-    TRUE            shift and go to state 42
-    FALSE           shift and go to state 43
+    INCREMENT       reduce using rule 52 (term1 -> group .)
+    DECREMENT       reduce using rule 52 (term1 -> group .)
+    PRODUCT         reduce using rule 52 (term1 -> group .)
+    DIVIDE          reduce using rule 52 (term1 -> group .)
+    PLUS            reduce using rule 52 (term1 -> group .)
+    MINUS           reduce using rule 52 (term1 -> group .)
+    GREATER         reduce using rule 52 (term1 -> group .)
+    LESS            reduce using rule 52 (term1 -> group .)
+    GREATEREQUAL    reduce using rule 52 (term1 -> group .)
+    LESSEQUAL       reduce using rule 52 (term1 -> group .)
+    EQUALTO         reduce using rule 52 (term1 -> group .)
+    NOTEQUALTO      reduce using rule 52 (term1 -> group .)
+    NEGATION        reduce using rule 52 (term1 -> group .)
+    AND             reduce using rule 52 (term1 -> group .)
+    OR              reduce using rule 52 (term1 -> group .)
+    POINTCOMMA      reduce using rule 52 (term1 -> group .)
+    $end            reduce using rule 52 (term1 -> group .)
+    RPAREN          reduce using rule 52 (term1 -> group .)
 
-    boolean                        shift and go to state 44
 
 state 30
 
-    (8) declare_any -> prefix VARIABLE .
-    (7) declare_boolean -> prefix VARIABLE . TWOPOINTS VARBOOLEAN
+    (63) number -> NUMBER .
 
-    EQUAL           reduce using rule 8 (declare_any -> prefix VARIABLE .)
-    TWOPOINTS       shift and go to state 45
+    PRODUCT         reduce using rule 63 (number -> NUMBER .)
+    DIVIDE          reduce using rule 63 (number -> NUMBER .)
+    PLUS            reduce using rule 63 (number -> NUMBER .)
+    MINUS           reduce using rule 63 (number -> NUMBER .)
+    GREATER         reduce using rule 63 (number -> NUMBER .)
+    LESS            reduce using rule 63 (number -> NUMBER .)
+    GREATEREQUAL    reduce using rule 63 (number -> NUMBER .)
+    LESSEQUAL       reduce using rule 63 (number -> NUMBER .)
+    EQUALTO         reduce using rule 63 (number -> NUMBER .)
+    NOTEQUALTO      reduce using rule 63 (number -> NUMBER .)
+    NEGATION        reduce using rule 63 (number -> NUMBER .)
+    AND             reduce using rule 63 (number -> NUMBER .)
+    OR              reduce using rule 63 (number -> NUMBER .)
+    POINTCOMMA      reduce using rule 63 (number -> NUMBER .)
+    $end            reduce using rule 63 (number -> NUMBER .)
+    INCREMENT       reduce using rule 63 (number -> NUMBER .)
+    DECREMENT       reduce using rule 63 (number -> NUMBER .)
+    RPAREN          reduce using rule 63 (number -> NUMBER .)
 
 
 state 31
 
-    (32) factor -> LPAREN expression . RPAREN
-    (16) expression -> expression . PLUS term
-    (17) expression -> expression . MINUS term
+    (64) number -> FLOAT .
 
-    RPAREN          shift and go to state 46
-    PLUS            shift and go to state 23
-    MINUS           shift and go to state 24
+    PRODUCT         reduce using rule 64 (number -> FLOAT .)
+    DIVIDE          reduce using rule 64 (number -> FLOAT .)
+    PLUS            reduce using rule 64 (number -> FLOAT .)
+    MINUS           reduce using rule 64 (number -> FLOAT .)
+    GREATER         reduce using rule 64 (number -> FLOAT .)
+    LESS            reduce using rule 64 (number -> FLOAT .)
+    GREATEREQUAL    reduce using rule 64 (number -> FLOAT .)
+    LESSEQUAL       reduce using rule 64 (number -> FLOAT .)
+    EQUALTO         reduce using rule 64 (number -> FLOAT .)
+    NOTEQUALTO      reduce using rule 64 (number -> FLOAT .)
+    NEGATION        reduce using rule 64 (number -> FLOAT .)
+    AND             reduce using rule 64 (number -> FLOAT .)
+    OR              reduce using rule 64 (number -> FLOAT .)
+    POINTCOMMA      reduce using rule 64 (number -> FLOAT .)
+    $end            reduce using rule 64 (number -> FLOAT .)
+    INCREMENT       reduce using rule 64 (number -> FLOAT .)
+    DECREMENT       reduce using rule 64 (number -> FLOAT .)
+    RPAREN          reduce using rule 64 (number -> FLOAT .)
 
 
 state 32
 
-    (16) expression -> expression PLUS term .
-    (19) term -> term . PRODUCT factor
-    (20) term -> term . DIVIDE factor
+    (65) string -> NORMSTRING1 .
 
-    PLUS            reduce using rule 16 (expression -> expression PLUS term .)
-    MINUS           reduce using rule 16 (expression -> expression PLUS term .)
-    $end            reduce using rule 16 (expression -> expression PLUS term .)
-    RPAREN          reduce using rule 16 (expression -> expression PLUS term .)
-    PRODUCT         shift and go to state 25
-    DIVIDE          shift and go to state 26
+    PLUS            reduce using rule 65 (string -> NORMSTRING1 .)
+    POINTCOMMA      reduce using rule 65 (string -> NORMSTRING1 .)
+    $end            reduce using rule 65 (string -> NORMSTRING1 .)
 
 
 state 33
 
-    (17) expression -> expression MINUS term .
-    (19) term -> term . PRODUCT factor
-    (20) term -> term . DIVIDE factor
+    (25) declare_any -> prefix . VARIABLE
 
-    PLUS            reduce using rule 17 (expression -> expression MINUS term .)
-    MINUS           reduce using rule 17 (expression -> expression MINUS term .)
-    $end            reduce using rule 17 (expression -> expression MINUS term .)
-    RPAREN          reduce using rule 17 (expression -> expression MINUS term .)
-    PRODUCT         shift and go to state 25
-    DIVIDE          shift and go to state 26
+    VARIABLE        shift and go to state 76
 
 
 state 34
 
-    (19) term -> term PRODUCT factor .
+    (59) prefix -> LET .
 
-    PRODUCT         reduce using rule 19 (term -> term PRODUCT factor .)
-    DIVIDE          reduce using rule 19 (term -> term PRODUCT factor .)
-    PLUS            reduce using rule 19 (term -> term PRODUCT factor .)
-    MINUS           reduce using rule 19 (term -> term PRODUCT factor .)
-    $end            reduce using rule 19 (term -> term PRODUCT factor .)
-    RPAREN          reduce using rule 19 (term -> term PRODUCT factor .)
+    VARIABLE        reduce using rule 59 (prefix -> LET .)
 
 
 state 35
 
-    (20) term -> term DIVIDE factor .
+    (60) prefix -> VAR .
 
-    PRODUCT         reduce using rule 20 (term -> term DIVIDE factor .)
-    DIVIDE          reduce using rule 20 (term -> term DIVIDE factor .)
-    PLUS            reduce using rule 20 (term -> term DIVIDE factor .)
-    MINUS           reduce using rule 20 (term -> term DIVIDE factor .)
-    $end            reduce using rule 20 (term -> term DIVIDE factor .)
-    RPAREN          reduce using rule 20 (term -> term DIVIDE factor .)
+    VARIABLE        reduce using rule 60 (prefix -> VAR .)
 
 
 state 36
 
-    (10) termS -> string . PLUS chain
-    (14) value -> string .
+    (61) prefix -> STATIC .
 
-  ! shift/reduce conflict for PLUS resolved as shift
-    PLUS            shift and go to state 27
-    $end            reduce using rule 14 (value -> string .)
-
-  ! PLUS            [ reduce using rule 14 (value -> string .) ]
+    VARIABLE        reduce using rule 61 (prefix -> STATIC .)
 
 
 state 37
 
-    (10) termS -> string PLUS chain .
+    (62) prefix -> CONST .
 
-    $end            reduce using rule 10 (termS -> string PLUS chain .)
-    PLUS            reduce using rule 10 (termS -> string PLUS chain .)
+    VARIABLE        reduce using rule 62 (prefix -> CONST .)
 
 
 state 38
 
-    (11) chain -> termS . PLUS value
+    (2) statement -> statement_value POINTCOMMA .
 
-    PLUS            shift and go to state 47
+    $end            reduce using rule 2 (statement -> statement_value POINTCOMMA .)
 
 
 state 39
 
-    (12) chain -> value .
+    (36) expression -> expression PLUS . term
+    (39) term -> . term PRODUCT term
+    (40) term -> . term DIVIDE term
+    (41) term -> . term1 INCREMENT
+    (42) term -> . INCREMENT term1
+    (43) term -> . term1 DECREMENT
+    (44) term -> . DECREMENT term1
+    (55) term -> . number
+    (56) term -> . factor_expr
+    (57) term -> . variable
+    (50) term1 -> . number
+    (51) term1 -> . variable
+    (52) term1 -> . group
+    (63) number -> . NUMBER
+    (64) number -> . FLOAT
+    (58) factor_expr -> . LPAREN expression RPAREN
+    (68) variable -> . VARIABLE
+    (53) group -> . LPAREN variable RPAREN
+    (54) group -> . LPAREN number RPAREN
 
-    $end            reduce using rule 12 (chain -> value .)
-    PLUS            reduce using rule 12 (chain -> value .)
+    INCREMENT       shift and go to state 18
+    DECREMENT       shift and go to state 19
+    NUMBER          shift and go to state 30
+    FLOAT           shift and go to state 31
+    LPAREN          shift and go to state 71
+    VARIABLE        shift and go to state 62
 
+    term                           shift and go to state 77
+    term1                          shift and go to state 17
+    number                         shift and go to state 20
+    factor_expr                    shift and go to state 21
+    variable                       shift and go to state 22
+    group                          shift and go to state 29
 
 state 40
 
-    (13) value -> expression .
-    (16) expression -> expression . PLUS term
-    (17) expression -> expression . MINUS term
+    (37) expression -> expression MINUS . term
+    (39) term -> . term PRODUCT term
+    (40) term -> . term DIVIDE term
+    (41) term -> . term1 INCREMENT
+    (42) term -> . INCREMENT term1
+    (43) term -> . term1 DECREMENT
+    (44) term -> . DECREMENT term1
+    (55) term -> . number
+    (56) term -> . factor_expr
+    (57) term -> . variable
+    (50) term1 -> . number
+    (51) term1 -> . variable
+    (52) term1 -> . group
+    (63) number -> . NUMBER
+    (64) number -> . FLOAT
+    (58) factor_expr -> . LPAREN expression RPAREN
+    (68) variable -> . VARIABLE
+    (53) group -> . LPAREN variable RPAREN
+    (54) group -> . LPAREN number RPAREN
 
-  ! shift/reduce conflict for PLUS resolved as shift
-    $end            reduce using rule 13 (value -> expression .)
-    PLUS            shift and go to state 23
-    MINUS           shift and go to state 24
+    INCREMENT       shift and go to state 18
+    DECREMENT       shift and go to state 19
+    NUMBER          shift and go to state 30
+    FLOAT           shift and go to state 31
+    LPAREN          shift and go to state 71
+    VARIABLE        shift and go to state 62
 
-  ! PLUS            [ reduce using rule 13 (value -> expression .) ]
-
+    term                           shift and go to state 78
+    term1                          shift and go to state 17
+    number                         shift and go to state 20
+    factor_expr                    shift and go to state 21
+    variable                       shift and go to state 22
+    group                          shift and go to state 29
 
 state 41
 
-    (5) var_boolean -> declare_any EQUAL boolean .
+    (49) expCond -> expression operador . expression
+    (36) expression -> . expression PLUS term
+    (37) expression -> . expression MINUS term
+    (38) expression -> . term
+    (39) term -> . term PRODUCT term
+    (40) term -> . term DIVIDE term
+    (41) term -> . term1 INCREMENT
+    (42) term -> . INCREMENT term1
+    (43) term -> . term1 DECREMENT
+    (44) term -> . DECREMENT term1
+    (55) term -> . number
+    (56) term -> . factor_expr
+    (57) term -> . variable
+    (50) term1 -> . number
+    (51) term1 -> . variable
+    (52) term1 -> . group
+    (63) number -> . NUMBER
+    (64) number -> . FLOAT
+    (58) factor_expr -> . LPAREN expression RPAREN
+    (68) variable -> . VARIABLE
+    (53) group -> . LPAREN variable RPAREN
+    (54) group -> . LPAREN number RPAREN
 
-    $end            reduce using rule 5 (var_boolean -> declare_any EQUAL boolean .)
+    INCREMENT       shift and go to state 18
+    DECREMENT       shift and go to state 19
+    NUMBER          shift and go to state 30
+    FLOAT           shift and go to state 31
+    LPAREN          shift and go to state 71
+    VARIABLE        shift and go to state 62
 
+    expression                     shift and go to state 79
+    term                           shift and go to state 9
+    term1                          shift and go to state 17
+    number                         shift and go to state 20
+    factor_expr                    shift and go to state 21
+    variable                       shift and go to state 22
+    group                          shift and go to state 29
 
 state 42
 
-    (27) boolean -> TRUE .
+    (47) expOpLog -> expression oplogico . expression
+    (36) expression -> . expression PLUS term
+    (37) expression -> . expression MINUS term
+    (38) expression -> . term
+    (39) term -> . term PRODUCT term
+    (40) term -> . term DIVIDE term
+    (41) term -> . term1 INCREMENT
+    (42) term -> . INCREMENT term1
+    (43) term -> . term1 DECREMENT
+    (44) term -> . DECREMENT term1
+    (55) term -> . number
+    (56) term -> . factor_expr
+    (57) term -> . variable
+    (50) term1 -> . number
+    (51) term1 -> . variable
+    (52) term1 -> . group
+    (63) number -> . NUMBER
+    (64) number -> . FLOAT
+    (58) factor_expr -> . LPAREN expression RPAREN
+    (68) variable -> . VARIABLE
+    (53) group -> . LPAREN variable RPAREN
+    (54) group -> . LPAREN number RPAREN
 
-    $end            reduce using rule 27 (boolean -> TRUE .)
+    INCREMENT       shift and go to state 18
+    DECREMENT       shift and go to state 19
+    NUMBER          shift and go to state 30
+    FLOAT           shift and go to state 31
+    LPAREN          shift and go to state 71
+    VARIABLE        shift and go to state 62
 
+    expression                     shift and go to state 80
+    term                           shift and go to state 9
+    term1                          shift and go to state 17
+    number                         shift and go to state 20
+    factor_expr                    shift and go to state 21
+    variable                       shift and go to state 22
+    group                          shift and go to state 29
 
 state 43
 
-    (28) boolean -> FALSE .
+    (69) operador -> GREATER .
 
-    $end            reduce using rule 28 (boolean -> FALSE .)
+    INCREMENT       reduce using rule 69 (operador -> GREATER .)
+    DECREMENT       reduce using rule 69 (operador -> GREATER .)
+    NUMBER          reduce using rule 69 (operador -> GREATER .)
+    FLOAT           reduce using rule 69 (operador -> GREATER .)
+    LPAREN          reduce using rule 69 (operador -> GREATER .)
+    VARIABLE        reduce using rule 69 (operador -> GREATER .)
 
 
 state 44
 
-    (6) var_boolean -> declare_boolean EQUAL boolean .
+    (70) operador -> LESS .
 
-    $end            reduce using rule 6 (var_boolean -> declare_boolean EQUAL boolean .)
+    INCREMENT       reduce using rule 70 (operador -> LESS .)
+    DECREMENT       reduce using rule 70 (operador -> LESS .)
+    NUMBER          reduce using rule 70 (operador -> LESS .)
+    FLOAT           reduce using rule 70 (operador -> LESS .)
+    LPAREN          reduce using rule 70 (operador -> LESS .)
+    VARIABLE        reduce using rule 70 (operador -> LESS .)
 
 
 state 45
 
-    (7) declare_boolean -> prefix VARIABLE TWOPOINTS . VARBOOLEAN
+    (71) operador -> GREATEREQUAL .
 
-    VARBOOLEAN      shift and go to state 48
+    INCREMENT       reduce using rule 71 (operador -> GREATEREQUAL .)
+    DECREMENT       reduce using rule 71 (operador -> GREATEREQUAL .)
+    NUMBER          reduce using rule 71 (operador -> GREATEREQUAL .)
+    FLOAT           reduce using rule 71 (operador -> GREATEREQUAL .)
+    LPAREN          reduce using rule 71 (operador -> GREATEREQUAL .)
+    VARIABLE        reduce using rule 71 (operador -> GREATEREQUAL .)
 
 
 state 46
 
-    (32) factor -> LPAREN expression RPAREN .
+    (72) operador -> LESSEQUAL .
 
-    PRODUCT         reduce using rule 32 (factor -> LPAREN expression RPAREN .)
-    DIVIDE          reduce using rule 32 (factor -> LPAREN expression RPAREN .)
-    PLUS            reduce using rule 32 (factor -> LPAREN expression RPAREN .)
-    MINUS           reduce using rule 32 (factor -> LPAREN expression RPAREN .)
-    $end            reduce using rule 32 (factor -> LPAREN expression RPAREN .)
-    RPAREN          reduce using rule 32 (factor -> LPAREN expression RPAREN .)
+    INCREMENT       reduce using rule 72 (operador -> LESSEQUAL .)
+    DECREMENT       reduce using rule 72 (operador -> LESSEQUAL .)
+    NUMBER          reduce using rule 72 (operador -> LESSEQUAL .)
+    FLOAT           reduce using rule 72 (operador -> LESSEQUAL .)
+    LPAREN          reduce using rule 72 (operador -> LESSEQUAL .)
+    VARIABLE        reduce using rule 72 (operador -> LESSEQUAL .)
 
 
 state 47
 
-    (11) chain -> termS PLUS . value
-    (13) value -> . expression
-    (14) value -> . string
-    (16) expression -> . expression PLUS term
-    (17) expression -> . expression MINUS term
-    (18) expression -> . term
-    (26) string -> . NORMSTRING1
-    (19) term -> . term PRODUCT factor
-    (20) term -> . term DIVIDE factor
-    (21) term -> . factor
-    (29) factor -> . NUMBER
-    (30) factor -> . FLOAT
-    (31) factor -> . VARIABLE
-    (32) factor -> . LPAREN expression RPAREN
+    (73) operador -> EQUALTO .
 
-    NORMSTRING1     shift and go to state 13
-    NUMBER          shift and go to state 16
-    FLOAT           shift and go to state 17
-    VARIABLE        shift and go to state 15
-    LPAREN          shift and go to state 18
+    INCREMENT       reduce using rule 73 (operador -> EQUALTO .)
+    DECREMENT       reduce using rule 73 (operador -> EQUALTO .)
+    NUMBER          reduce using rule 73 (operador -> EQUALTO .)
+    FLOAT           reduce using rule 73 (operador -> EQUALTO .)
+    LPAREN          reduce using rule 73 (operador -> EQUALTO .)
+    VARIABLE        reduce using rule 73 (operador -> EQUALTO .)
 
-    value                          shift and go to state 49
-    expression                     shift and go to state 40
-    string                         shift and go to state 50
-    term                           shift and go to state 8
-    factor                         shift and go to state 12
 
 state 48
 
-    (7) declare_boolean -> prefix VARIABLE TWOPOINTS VARBOOLEAN .
+    (74) operador -> NOTEQUALTO .
 
-    EQUAL           reduce using rule 7 (declare_boolean -> prefix VARIABLE TWOPOINTS VARBOOLEAN .)
+    INCREMENT       reduce using rule 74 (operador -> NOTEQUALTO .)
+    DECREMENT       reduce using rule 74 (operador -> NOTEQUALTO .)
+    NUMBER          reduce using rule 74 (operador -> NOTEQUALTO .)
+    FLOAT           reduce using rule 74 (operador -> NOTEQUALTO .)
+    LPAREN          reduce using rule 74 (operador -> NOTEQUALTO .)
+    VARIABLE        reduce using rule 74 (operador -> NOTEQUALTO .)
 
 
 state 49
 
-    (11) chain -> termS PLUS value .
+    (75) oplogico -> NEGATION .
 
-    $end            reduce using rule 11 (chain -> termS PLUS value .)
-    PLUS            reduce using rule 11 (chain -> termS PLUS value .)
+    INCREMENT       reduce using rule 75 (oplogico -> NEGATION .)
+    DECREMENT       reduce using rule 75 (oplogico -> NEGATION .)
+    NUMBER          reduce using rule 75 (oplogico -> NEGATION .)
+    FLOAT           reduce using rule 75 (oplogico -> NEGATION .)
+    LPAREN          reduce using rule 75 (oplogico -> NEGATION .)
+    VARIABLE        reduce using rule 75 (oplogico -> NEGATION .)
 
 
 state 50
 
-    (14) value -> string .
+    (76) oplogico -> AND .
 
-    $end            reduce using rule 14 (value -> string .)
-    PLUS            reduce using rule 14 (value -> string .)
+    INCREMENT       reduce using rule 76 (oplogico -> AND .)
+    DECREMENT       reduce using rule 76 (oplogico -> AND .)
+    NUMBER          reduce using rule 76 (oplogico -> AND .)
+    FLOAT           reduce using rule 76 (oplogico -> AND .)
+    LPAREN          reduce using rule 76 (oplogico -> AND .)
+    VARIABLE        reduce using rule 76 (oplogico -> AND .)
+
+
+state 51
+
+    (77) oplogico -> OR .
+
+    INCREMENT       reduce using rule 77 (oplogico -> OR .)
+    DECREMENT       reduce using rule 77 (oplogico -> OR .)
+    NUMBER          reduce using rule 77 (oplogico -> OR .)
+    FLOAT           reduce using rule 77 (oplogico -> OR .)
+    LPAREN          reduce using rule 77 (oplogico -> OR .)
+    VARIABLE        reduce using rule 77 (oplogico -> OR .)
+
+
+state 52
+
+    (45) expOpLog -> expCond oplogico . expCond
+    (49) expCond -> . expression operador expression
+    (36) expression -> . expression PLUS term
+    (37) expression -> . expression MINUS term
+    (38) expression -> . term
+    (39) term -> . term PRODUCT term
+    (40) term -> . term DIVIDE term
+    (41) term -> . term1 INCREMENT
+    (42) term -> . INCREMENT term1
+    (43) term -> . term1 DECREMENT
+    (44) term -> . DECREMENT term1
+    (55) term -> . number
+    (56) term -> . factor_expr
+    (57) term -> . variable
+    (50) term1 -> . number
+    (51) term1 -> . variable
+    (52) term1 -> . group
+    (63) number -> . NUMBER
+    (64) number -> . FLOAT
+    (58) factor_expr -> . LPAREN expression RPAREN
+    (68) variable -> . VARIABLE
+    (53) group -> . LPAREN variable RPAREN
+    (54) group -> . LPAREN number RPAREN
+
+    INCREMENT       shift and go to state 18
+    DECREMENT       shift and go to state 19
+    NUMBER          shift and go to state 30
+    FLOAT           shift and go to state 31
+    LPAREN          shift and go to state 71
+    VARIABLE        shift and go to state 62
+
+    expCond                        shift and go to state 81
+    expression                     shift and go to state 82
+    term                           shift and go to state 9
+    term1                          shift and go to state 17
+    number                         shift and go to state 20
+    factor_expr                    shift and go to state 21
+    variable                       shift and go to state 22
+    group                          shift and go to state 29
+
+state 53
+
+    (39) term -> term PRODUCT . term
+    (39) term -> . term PRODUCT term
+    (40) term -> . term DIVIDE term
+    (41) term -> . term1 INCREMENT
+    (42) term -> . INCREMENT term1
+    (43) term -> . term1 DECREMENT
+    (44) term -> . DECREMENT term1
+    (55) term -> . number
+    (56) term -> . factor_expr
+    (57) term -> . variable
+    (50) term1 -> . number
+    (51) term1 -> . variable
+    (52) term1 -> . group
+    (63) number -> . NUMBER
+    (64) number -> . FLOAT
+    (58) factor_expr -> . LPAREN expression RPAREN
+    (68) variable -> . VARIABLE
+    (53) group -> . LPAREN variable RPAREN
+    (54) group -> . LPAREN number RPAREN
+
+    INCREMENT       shift and go to state 18
+    DECREMENT       shift and go to state 19
+    NUMBER          shift and go to state 30
+    FLOAT           shift and go to state 31
+    LPAREN          shift and go to state 71
+    VARIABLE        shift and go to state 62
+
+    term                           shift and go to state 83
+    term1                          shift and go to state 17
+    number                         shift and go to state 20
+    factor_expr                    shift and go to state 21
+    variable                       shift and go to state 22
+    group                          shift and go to state 29
+
+state 54
+
+    (40) term -> term DIVIDE . term
+    (39) term -> . term PRODUCT term
+    (40) term -> . term DIVIDE term
+    (41) term -> . term1 INCREMENT
+    (42) term -> . INCREMENT term1
+    (43) term -> . term1 DECREMENT
+    (44) term -> . DECREMENT term1
+    (55) term -> . number
+    (56) term -> . factor_expr
+    (57) term -> . variable
+    (50) term1 -> . number
+    (51) term1 -> . variable
+    (52) term1 -> . group
+    (63) number -> . NUMBER
+    (64) number -> . FLOAT
+    (58) factor_expr -> . LPAREN expression RPAREN
+    (68) variable -> . VARIABLE
+    (53) group -> . LPAREN variable RPAREN
+    (54) group -> . LPAREN number RPAREN
+
+    INCREMENT       shift and go to state 18
+    DECREMENT       shift and go to state 19
+    NUMBER          shift and go to state 30
+    FLOAT           shift and go to state 31
+    LPAREN          shift and go to state 71
+    VARIABLE        shift and go to state 62
+
+    term                           shift and go to state 84
+    term1                          shift and go to state 17
+    number                         shift and go to state 20
+    factor_expr                    shift and go to state 21
+    variable                       shift and go to state 22
+    group                          shift and go to state 29
+
+state 55
+
+    (26) assign -> VARIABLE EQUAL . assign_value
+    (27) assign_value -> . expression
+    (28) assign_value -> . boolean
+    (29) assign_value -> . string
+    (36) expression -> . expression PLUS term
+    (37) expression -> . expression MINUS term
+    (38) expression -> . term
+    (66) boolean -> . TRUE
+    (67) boolean -> . FALSE
+    (65) string -> . NORMSTRING1
+    (39) term -> . term PRODUCT term
+    (40) term -> . term DIVIDE term
+    (41) term -> . term1 INCREMENT
+    (42) term -> . INCREMENT term1
+    (43) term -> . term1 DECREMENT
+    (44) term -> . DECREMENT term1
+    (55) term -> . number
+    (56) term -> . factor_expr
+    (57) term -> . variable
+    (50) term1 -> . number
+    (51) term1 -> . variable
+    (52) term1 -> . group
+    (63) number -> . NUMBER
+    (64) number -> . FLOAT
+    (58) factor_expr -> . LPAREN expression RPAREN
+    (68) variable -> . VARIABLE
+    (53) group -> . LPAREN variable RPAREN
+    (54) group -> . LPAREN number RPAREN
+
+    TRUE            shift and go to state 89
+    FALSE           shift and go to state 90
+    NORMSTRING1     shift and go to state 32
+    INCREMENT       shift and go to state 18
+    DECREMENT       shift and go to state 19
+    NUMBER          shift and go to state 30
+    FLOAT           shift and go to state 31
+    LPAREN          shift and go to state 71
+    VARIABLE        shift and go to state 62
+
+    assign_value                   shift and go to state 85
+    expression                     shift and go to state 86
+    boolean                        shift and go to state 87
+    string                         shift and go to state 88
+    term                           shift and go to state 9
+    term1                          shift and go to state 17
+    number                         shift and go to state 20
+    factor_expr                    shift and go to state 21
+    variable                       shift and go to state 22
+    group                          shift and go to state 29
+
+state 56
+
+    (46) expOpLog -> factor_exprlog oplogico . factor_exprlog
+    (48) factor_exprlog -> . LPAREN expCond RPAREN
+
+    LPAREN          shift and go to state 92
+
+    factor_exprlog                 shift and go to state 91
+
+state 57
+
+    (41) term -> term1 INCREMENT .
+
+    PRODUCT         reduce using rule 41 (term -> term1 INCREMENT .)
+    DIVIDE          reduce using rule 41 (term -> term1 INCREMENT .)
+    PLUS            reduce using rule 41 (term -> term1 INCREMENT .)
+    MINUS           reduce using rule 41 (term -> term1 INCREMENT .)
+    GREATER         reduce using rule 41 (term -> term1 INCREMENT .)
+    LESS            reduce using rule 41 (term -> term1 INCREMENT .)
+    GREATEREQUAL    reduce using rule 41 (term -> term1 INCREMENT .)
+    LESSEQUAL       reduce using rule 41 (term -> term1 INCREMENT .)
+    EQUALTO         reduce using rule 41 (term -> term1 INCREMENT .)
+    NOTEQUALTO      reduce using rule 41 (term -> term1 INCREMENT .)
+    NEGATION        reduce using rule 41 (term -> term1 INCREMENT .)
+    AND             reduce using rule 41 (term -> term1 INCREMENT .)
+    OR              reduce using rule 41 (term -> term1 INCREMENT .)
+    POINTCOMMA      reduce using rule 41 (term -> term1 INCREMENT .)
+    $end            reduce using rule 41 (term -> term1 INCREMENT .)
+    RPAREN          reduce using rule 41 (term -> term1 INCREMENT .)
+
+
+state 58
+
+    (43) term -> term1 DECREMENT .
+
+    PRODUCT         reduce using rule 43 (term -> term1 DECREMENT .)
+    DIVIDE          reduce using rule 43 (term -> term1 DECREMENT .)
+    PLUS            reduce using rule 43 (term -> term1 DECREMENT .)
+    MINUS           reduce using rule 43 (term -> term1 DECREMENT .)
+    GREATER         reduce using rule 43 (term -> term1 DECREMENT .)
+    LESS            reduce using rule 43 (term -> term1 DECREMENT .)
+    GREATEREQUAL    reduce using rule 43 (term -> term1 DECREMENT .)
+    LESSEQUAL       reduce using rule 43 (term -> term1 DECREMENT .)
+    EQUALTO         reduce using rule 43 (term -> term1 DECREMENT .)
+    NOTEQUALTO      reduce using rule 43 (term -> term1 DECREMENT .)
+    NEGATION        reduce using rule 43 (term -> term1 DECREMENT .)
+    AND             reduce using rule 43 (term -> term1 DECREMENT .)
+    OR              reduce using rule 43 (term -> term1 DECREMENT .)
+    POINTCOMMA      reduce using rule 43 (term -> term1 DECREMENT .)
+    $end            reduce using rule 43 (term -> term1 DECREMENT .)
+    RPAREN          reduce using rule 43 (term -> term1 DECREMENT .)
+
+
+state 59
+
+    (42) term -> INCREMENT term1 .
+
+    PRODUCT         reduce using rule 42 (term -> INCREMENT term1 .)
+    DIVIDE          reduce using rule 42 (term -> INCREMENT term1 .)
+    PLUS            reduce using rule 42 (term -> INCREMENT term1 .)
+    MINUS           reduce using rule 42 (term -> INCREMENT term1 .)
+    GREATER         reduce using rule 42 (term -> INCREMENT term1 .)
+    LESS            reduce using rule 42 (term -> INCREMENT term1 .)
+    GREATEREQUAL    reduce using rule 42 (term -> INCREMENT term1 .)
+    LESSEQUAL       reduce using rule 42 (term -> INCREMENT term1 .)
+    EQUALTO         reduce using rule 42 (term -> INCREMENT term1 .)
+    NOTEQUALTO      reduce using rule 42 (term -> INCREMENT term1 .)
+    NEGATION        reduce using rule 42 (term -> INCREMENT term1 .)
+    AND             reduce using rule 42 (term -> INCREMENT term1 .)
+    OR              reduce using rule 42 (term -> INCREMENT term1 .)
+    POINTCOMMA      reduce using rule 42 (term -> INCREMENT term1 .)
+    $end            reduce using rule 42 (term -> INCREMENT term1 .)
+    RPAREN          reduce using rule 42 (term -> INCREMENT term1 .)
+
+
+state 60
+
+    (50) term1 -> number .
+
+    PRODUCT         reduce using rule 50 (term1 -> number .)
+    DIVIDE          reduce using rule 50 (term1 -> number .)
+    PLUS            reduce using rule 50 (term1 -> number .)
+    MINUS           reduce using rule 50 (term1 -> number .)
+    GREATER         reduce using rule 50 (term1 -> number .)
+    LESS            reduce using rule 50 (term1 -> number .)
+    GREATEREQUAL    reduce using rule 50 (term1 -> number .)
+    LESSEQUAL       reduce using rule 50 (term1 -> number .)
+    EQUALTO         reduce using rule 50 (term1 -> number .)
+    NOTEQUALTO      reduce using rule 50 (term1 -> number .)
+    NEGATION        reduce using rule 50 (term1 -> number .)
+    AND             reduce using rule 50 (term1 -> number .)
+    OR              reduce using rule 50 (term1 -> number .)
+    POINTCOMMA      reduce using rule 50 (term1 -> number .)
+    $end            reduce using rule 50 (term1 -> number .)
+    RPAREN          reduce using rule 50 (term1 -> number .)
+
+
+state 61
+
+    (51) term1 -> variable .
+
+    PRODUCT         reduce using rule 51 (term1 -> variable .)
+    DIVIDE          reduce using rule 51 (term1 -> variable .)
+    PLUS            reduce using rule 51 (term1 -> variable .)
+    MINUS           reduce using rule 51 (term1 -> variable .)
+    GREATER         reduce using rule 51 (term1 -> variable .)
+    LESS            reduce using rule 51 (term1 -> variable .)
+    GREATEREQUAL    reduce using rule 51 (term1 -> variable .)
+    LESSEQUAL       reduce using rule 51 (term1 -> variable .)
+    EQUALTO         reduce using rule 51 (term1 -> variable .)
+    NOTEQUALTO      reduce using rule 51 (term1 -> variable .)
+    NEGATION        reduce using rule 51 (term1 -> variable .)
+    AND             reduce using rule 51 (term1 -> variable .)
+    OR              reduce using rule 51 (term1 -> variable .)
+    POINTCOMMA      reduce using rule 51 (term1 -> variable .)
+    $end            reduce using rule 51 (term1 -> variable .)
+    RPAREN          reduce using rule 51 (term1 -> variable .)
+
+
+state 62
+
+    (68) variable -> VARIABLE .
+
+    PRODUCT         reduce using rule 68 (variable -> VARIABLE .)
+    DIVIDE          reduce using rule 68 (variable -> VARIABLE .)
+    PLUS            reduce using rule 68 (variable -> VARIABLE .)
+    MINUS           reduce using rule 68 (variable -> VARIABLE .)
+    GREATER         reduce using rule 68 (variable -> VARIABLE .)
+    LESS            reduce using rule 68 (variable -> VARIABLE .)
+    GREATEREQUAL    reduce using rule 68 (variable -> VARIABLE .)
+    LESSEQUAL       reduce using rule 68 (variable -> VARIABLE .)
+    EQUALTO         reduce using rule 68 (variable -> VARIABLE .)
+    NOTEQUALTO      reduce using rule 68 (variable -> VARIABLE .)
+    NEGATION        reduce using rule 68 (variable -> VARIABLE .)
+    AND             reduce using rule 68 (variable -> VARIABLE .)
+    OR              reduce using rule 68 (variable -> VARIABLE .)
+    POINTCOMMA      reduce using rule 68 (variable -> VARIABLE .)
+    $end            reduce using rule 68 (variable -> VARIABLE .)
+    RPAREN          reduce using rule 68 (variable -> VARIABLE .)
+    INCREMENT       reduce using rule 68 (variable -> VARIABLE .)
+    DECREMENT       reduce using rule 68 (variable -> VARIABLE .)
+
+
+state 63
+
+    (53) group -> LPAREN . variable RPAREN
+    (54) group -> LPAREN . number RPAREN
+    (68) variable -> . VARIABLE
+    (63) number -> . NUMBER
+    (64) number -> . FLOAT
+
+    VARIABLE        shift and go to state 62
+    NUMBER          shift and go to state 30
+    FLOAT           shift and go to state 31
+
+    variable                       shift and go to state 93
+    number                         shift and go to state 94
+
+state 64
+
+    (44) term -> DECREMENT term1 .
+
+    PRODUCT         reduce using rule 44 (term -> DECREMENT term1 .)
+    DIVIDE          reduce using rule 44 (term -> DECREMENT term1 .)
+    PLUS            reduce using rule 44 (term -> DECREMENT term1 .)
+    MINUS           reduce using rule 44 (term -> DECREMENT term1 .)
+    GREATER         reduce using rule 44 (term -> DECREMENT term1 .)
+    LESS            reduce using rule 44 (term -> DECREMENT term1 .)
+    GREATEREQUAL    reduce using rule 44 (term -> DECREMENT term1 .)
+    LESSEQUAL       reduce using rule 44 (term -> DECREMENT term1 .)
+    EQUALTO         reduce using rule 44 (term -> DECREMENT term1 .)
+    NOTEQUALTO      reduce using rule 44 (term -> DECREMENT term1 .)
+    NEGATION        reduce using rule 44 (term -> DECREMENT term1 .)
+    AND             reduce using rule 44 (term -> DECREMENT term1 .)
+    OR              reduce using rule 44 (term -> DECREMENT term1 .)
+    POINTCOMMA      reduce using rule 44 (term -> DECREMENT term1 .)
+    $end            reduce using rule 44 (term -> DECREMENT term1 .)
+    RPAREN          reduce using rule 44 (term -> DECREMENT term1 .)
+
+
+state 65
+
+    (31) termS -> string PLUS . chain
+    (32) chain -> . termS PLUS value
+    (33) chain -> . value
+    (31) termS -> . string PLUS chain
+    (34) value -> . expression
+    (35) value -> . string
+    (65) string -> . NORMSTRING1
+    (36) expression -> . expression PLUS term
+    (37) expression -> . expression MINUS term
+    (38) expression -> . term
+    (39) term -> . term PRODUCT term
+    (40) term -> . term DIVIDE term
+    (41) term -> . term1 INCREMENT
+    (42) term -> . INCREMENT term1
+    (43) term -> . term1 DECREMENT
+    (44) term -> . DECREMENT term1
+    (55) term -> . number
+    (56) term -> . factor_expr
+    (57) term -> . variable
+    (50) term1 -> . number
+    (51) term1 -> . variable
+    (52) term1 -> . group
+    (63) number -> . NUMBER
+    (64) number -> . FLOAT
+    (58) factor_expr -> . LPAREN expression RPAREN
+    (68) variable -> . VARIABLE
+    (53) group -> . LPAREN variable RPAREN
+    (54) group -> . LPAREN number RPAREN
+
+    NORMSTRING1     shift and go to state 32
+    INCREMENT       shift and go to state 18
+    DECREMENT       shift and go to state 19
+    NUMBER          shift and go to state 30
+    FLOAT           shift and go to state 31
+    LPAREN          shift and go to state 71
+    VARIABLE        shift and go to state 62
+
+    string                         shift and go to state 95
+    chain                          shift and go to state 96
+    termS                          shift and go to state 97
+    value                          shift and go to state 98
+    expression                     shift and go to state 99
+    term                           shift and go to state 9
+    term1                          shift and go to state 17
+    number                         shift and go to state 20
+    factor_expr                    shift and go to state 21
+    variable                       shift and go to state 22
+    group                          shift and go to state 29
+
+state 66
+
+    (16) var_boolean -> declare_boolean EQUAL . boolean_value
+    (18) boolean_value -> . boolean
+    (19) boolean_value -> . variable
+    (66) boolean -> . TRUE
+    (67) boolean -> . FALSE
+    (68) variable -> . VARIABLE
+
+    TRUE            shift and go to state 89
+    FALSE           shift and go to state 90
+    VARIABLE        shift and go to state 62
+
+    boolean_value                  shift and go to state 100
+    boolean                        shift and go to state 101
+    variable                       shift and go to state 102
+
+state 67
+
+    (13) var_number -> declare_number EQUAL . number_value
+    (15) number_value -> . expression
+    (36) expression -> . expression PLUS term
+    (37) expression -> . expression MINUS term
+    (38) expression -> . term
+    (39) term -> . term PRODUCT term
+    (40) term -> . term DIVIDE term
+    (41) term -> . term1 INCREMENT
+    (42) term -> . INCREMENT term1
+    (43) term -> . term1 DECREMENT
+    (44) term -> . DECREMENT term1
+    (55) term -> . number
+    (56) term -> . factor_expr
+    (57) term -> . variable
+    (50) term1 -> . number
+    (51) term1 -> . variable
+    (52) term1 -> . group
+    (63) number -> . NUMBER
+    (64) number -> . FLOAT
+    (58) factor_expr -> . LPAREN expression RPAREN
+    (68) variable -> . VARIABLE
+    (53) group -> . LPAREN variable RPAREN
+    (54) group -> . LPAREN number RPAREN
+
+    INCREMENT       shift and go to state 18
+    DECREMENT       shift and go to state 19
+    NUMBER          shift and go to state 30
+    FLOAT           shift and go to state 31
+    LPAREN          shift and go to state 71
+    VARIABLE        shift and go to state 62
+
+    number_value                   shift and go to state 103
+    expression                     shift and go to state 104
+    term                           shift and go to state 9
+    term1                          shift and go to state 17
+    number                         shift and go to state 20
+    factor_expr                    shift and go to state 21
+    variable                       shift and go to state 22
+    group                          shift and go to state 29
+
+state 68
+
+    (20) var_string -> declare_string EQUAL . string_value
+    (22) string_value -> . string
+    (23) string_value -> . variable
+    (65) string -> . NORMSTRING1
+    (68) variable -> . VARIABLE
+
+    NORMSTRING1     shift and go to state 32
+    VARIABLE        shift and go to state 62
+
+    string_value                   shift and go to state 105
+    string                         shift and go to state 106
+    variable                       shift and go to state 107
+
+state 69
+
+    (24) declare_generic -> declare_any EQUAL . assign_value
+    (27) assign_value -> . expression
+    (28) assign_value -> . boolean
+    (29) assign_value -> . string
+    (36) expression -> . expression PLUS term
+    (37) expression -> . expression MINUS term
+    (38) expression -> . term
+    (66) boolean -> . TRUE
+    (67) boolean -> . FALSE
+    (65) string -> . NORMSTRING1
+    (39) term -> . term PRODUCT term
+    (40) term -> . term DIVIDE term
+    (41) term -> . term1 INCREMENT
+    (42) term -> . INCREMENT term1
+    (43) term -> . term1 DECREMENT
+    (44) term -> . DECREMENT term1
+    (55) term -> . number
+    (56) term -> . factor_expr
+    (57) term -> . variable
+    (50) term1 -> . number
+    (51) term1 -> . variable
+    (52) term1 -> . group
+    (63) number -> . NUMBER
+    (64) number -> . FLOAT
+    (58) factor_expr -> . LPAREN expression RPAREN
+    (68) variable -> . VARIABLE
+    (53) group -> . LPAREN variable RPAREN
+    (54) group -> . LPAREN number RPAREN
+
+    TRUE            shift and go to state 89
+    FALSE           shift and go to state 90
+    NORMSTRING1     shift and go to state 32
+    INCREMENT       shift and go to state 18
+    DECREMENT       shift and go to state 19
+    NUMBER          shift and go to state 30
+    FLOAT           shift and go to state 31
+    LPAREN          shift and go to state 71
+    VARIABLE        shift and go to state 62
+
+    assign_value                   shift and go to state 108
+    expression                     shift and go to state 86
+    boolean                        shift and go to state 87
+    string                         shift and go to state 88
+    term                           shift and go to state 9
+    term1                          shift and go to state 17
+    number                         shift and go to state 20
+    factor_expr                    shift and go to state 21
+    variable                       shift and go to state 22
+    group                          shift and go to state 29
+
+state 70
+
+    (17) declare_boolean -> declare_any TWOPOINTS . VARBOOLEAN
+    (14) declare_number -> declare_any TWOPOINTS . VARNUMBER
+    (21) declare_string -> declare_any TWOPOINTS . VARSTRING
+
+    VARBOOLEAN      shift and go to state 109
+    VARNUMBER       shift and go to state 110
+    VARSTRING       shift and go to state 111
+
+
+state 71
+
+    (58) factor_expr -> LPAREN . expression RPAREN
+    (53) group -> LPAREN . variable RPAREN
+    (54) group -> LPAREN . number RPAREN
+    (36) expression -> . expression PLUS term
+    (37) expression -> . expression MINUS term
+    (38) expression -> . term
+    (68) variable -> . VARIABLE
+    (63) number -> . NUMBER
+    (64) number -> . FLOAT
+    (39) term -> . term PRODUCT term
+    (40) term -> . term DIVIDE term
+    (41) term -> . term1 INCREMENT
+    (42) term -> . INCREMENT term1
+    (43) term -> . term1 DECREMENT
+    (44) term -> . DECREMENT term1
+    (55) term -> . number
+    (56) term -> . factor_expr
+    (57) term -> . variable
+    (50) term1 -> . number
+    (51) term1 -> . variable
+    (52) term1 -> . group
+    (58) factor_expr -> . LPAREN expression RPAREN
+    (53) group -> . LPAREN variable RPAREN
+    (54) group -> . LPAREN number RPAREN
+
+    VARIABLE        shift and go to state 62
+    NUMBER          shift and go to state 30
+    FLOAT           shift and go to state 31
+    INCREMENT       shift and go to state 18
+    DECREMENT       shift and go to state 19
+    LPAREN          shift and go to state 71
+
+    expression                     shift and go to state 112
+    variable                       shift and go to state 74
+    number                         shift and go to state 75
+    term                           shift and go to state 9
+    term1                          shift and go to state 17
+    factor_expr                    shift and go to state 21
+    group                          shift and go to state 29
+
+state 72
+
+    (48) factor_exprlog -> LPAREN expCond . RPAREN
+
+    RPAREN          shift and go to state 113
+
+
+state 73
+
+    (58) factor_expr -> LPAREN expression . RPAREN
+    (49) expCond -> expression . operador expression
+    (36) expression -> expression . PLUS term
+    (37) expression -> expression . MINUS term
+    (69) operador -> . GREATER
+    (70) operador -> . LESS
+    (71) operador -> . GREATEREQUAL
+    (72) operador -> . LESSEQUAL
+    (73) operador -> . EQUALTO
+    (74) operador -> . NOTEQUALTO
+
+    RPAREN          shift and go to state 114
+    PLUS            shift and go to state 39
+    MINUS           shift and go to state 40
+    GREATER         shift and go to state 43
+    LESS            shift and go to state 44
+    GREATEREQUAL    shift and go to state 45
+    LESSEQUAL       shift and go to state 46
+    EQUALTO         shift and go to state 47
+    NOTEQUALTO      shift and go to state 48
+
+    operador                       shift and go to state 41
+
+state 74
+
+    (53) group -> LPAREN variable . RPAREN
+    (57) term -> variable .
+    (51) term1 -> variable .
+
+  ! shift/reduce conflict for RPAREN resolved as shift
+    RPAREN          shift and go to state 115
+    PRODUCT         reduce using rule 57 (term -> variable .)
+    DIVIDE          reduce using rule 57 (term -> variable .)
+    PLUS            reduce using rule 57 (term -> variable .)
+    MINUS           reduce using rule 57 (term -> variable .)
+    GREATER         reduce using rule 57 (term -> variable .)
+    LESS            reduce using rule 57 (term -> variable .)
+    GREATEREQUAL    reduce using rule 57 (term -> variable .)
+    LESSEQUAL       reduce using rule 57 (term -> variable .)
+    EQUALTO         reduce using rule 57 (term -> variable .)
+    NOTEQUALTO      reduce using rule 57 (term -> variable .)
+    INCREMENT       reduce using rule 51 (term1 -> variable .)
+    DECREMENT       reduce using rule 51 (term1 -> variable .)
+
+  ! RPAREN          [ reduce using rule 57 (term -> variable .) ]
+
+
+state 75
+
+    (54) group -> LPAREN number . RPAREN
+    (55) term -> number .
+    (50) term1 -> number .
+
+  ! shift/reduce conflict for RPAREN resolved as shift
+    RPAREN          shift and go to state 116
+    PRODUCT         reduce using rule 55 (term -> number .)
+    DIVIDE          reduce using rule 55 (term -> number .)
+    PLUS            reduce using rule 55 (term -> number .)
+    MINUS           reduce using rule 55 (term -> number .)
+    GREATER         reduce using rule 55 (term -> number .)
+    LESS            reduce using rule 55 (term -> number .)
+    GREATEREQUAL    reduce using rule 55 (term -> number .)
+    LESSEQUAL       reduce using rule 55 (term -> number .)
+    EQUALTO         reduce using rule 55 (term -> number .)
+    NOTEQUALTO      reduce using rule 55 (term -> number .)
+    INCREMENT       reduce using rule 50 (term1 -> number .)
+    DECREMENT       reduce using rule 50 (term1 -> number .)
+
+  ! RPAREN          [ reduce using rule 55 (term -> number .) ]
+
+
+state 76
+
+    (25) declare_any -> prefix VARIABLE .
+
+    EQUAL           reduce using rule 25 (declare_any -> prefix VARIABLE .)
+    TWOPOINTS       reduce using rule 25 (declare_any -> prefix VARIABLE .)
+
+
+state 77
+
+    (36) expression -> expression PLUS term .
+    (39) term -> term . PRODUCT term
+    (40) term -> term . DIVIDE term
+
+    PLUS            reduce using rule 36 (expression -> expression PLUS term .)
+    MINUS           reduce using rule 36 (expression -> expression PLUS term .)
+    GREATER         reduce using rule 36 (expression -> expression PLUS term .)
+    LESS            reduce using rule 36 (expression -> expression PLUS term .)
+    GREATEREQUAL    reduce using rule 36 (expression -> expression PLUS term .)
+    LESSEQUAL       reduce using rule 36 (expression -> expression PLUS term .)
+    EQUALTO         reduce using rule 36 (expression -> expression PLUS term .)
+    NOTEQUALTO      reduce using rule 36 (expression -> expression PLUS term .)
+    NEGATION        reduce using rule 36 (expression -> expression PLUS term .)
+    AND             reduce using rule 36 (expression -> expression PLUS term .)
+    OR              reduce using rule 36 (expression -> expression PLUS term .)
+    POINTCOMMA      reduce using rule 36 (expression -> expression PLUS term .)
+    $end            reduce using rule 36 (expression -> expression PLUS term .)
+    RPAREN          reduce using rule 36 (expression -> expression PLUS term .)
+    PRODUCT         shift and go to state 53
+    DIVIDE          shift and go to state 54
+
+
+state 78
+
+    (37) expression -> expression MINUS term .
+    (39) term -> term . PRODUCT term
+    (40) term -> term . DIVIDE term
+
+    PLUS            reduce using rule 37 (expression -> expression MINUS term .)
+    MINUS           reduce using rule 37 (expression -> expression MINUS term .)
+    GREATER         reduce using rule 37 (expression -> expression MINUS term .)
+    LESS            reduce using rule 37 (expression -> expression MINUS term .)
+    GREATEREQUAL    reduce using rule 37 (expression -> expression MINUS term .)
+    LESSEQUAL       reduce using rule 37 (expression -> expression MINUS term .)
+    EQUALTO         reduce using rule 37 (expression -> expression MINUS term .)
+    NOTEQUALTO      reduce using rule 37 (expression -> expression MINUS term .)
+    NEGATION        reduce using rule 37 (expression -> expression MINUS term .)
+    AND             reduce using rule 37 (expression -> expression MINUS term .)
+    OR              reduce using rule 37 (expression -> expression MINUS term .)
+    POINTCOMMA      reduce using rule 37 (expression -> expression MINUS term .)
+    $end            reduce using rule 37 (expression -> expression MINUS term .)
+    RPAREN          reduce using rule 37 (expression -> expression MINUS term .)
+    PRODUCT         shift and go to state 53
+    DIVIDE          shift and go to state 54
+
+
+state 79
+
+    (49) expCond -> expression operador expression .
+    (36) expression -> expression . PLUS term
+    (37) expression -> expression . MINUS term
+
+    NEGATION        reduce using rule 49 (expCond -> expression operador expression .)
+    AND             reduce using rule 49 (expCond -> expression operador expression .)
+    OR              reduce using rule 49 (expCond -> expression operador expression .)
+    POINTCOMMA      reduce using rule 49 (expCond -> expression operador expression .)
+    $end            reduce using rule 49 (expCond -> expression operador expression .)
+    RPAREN          reduce using rule 49 (expCond -> expression operador expression .)
+    PLUS            shift and go to state 39
+    MINUS           shift and go to state 40
+
+
+state 80
+
+    (47) expOpLog -> expression oplogico expression .
+    (36) expression -> expression . PLUS term
+    (37) expression -> expression . MINUS term
+
+    POINTCOMMA      reduce using rule 47 (expOpLog -> expression oplogico expression .)
+    $end            reduce using rule 47 (expOpLog -> expression oplogico expression .)
+    PLUS            shift and go to state 39
+    MINUS           shift and go to state 40
+
+
+state 81
+
+    (45) expOpLog -> expCond oplogico expCond .
+
+    POINTCOMMA      reduce using rule 45 (expOpLog -> expCond oplogico expCond .)
+    $end            reduce using rule 45 (expOpLog -> expCond oplogico expCond .)
+
+
+state 82
+
+    (49) expCond -> expression . operador expression
+    (36) expression -> expression . PLUS term
+    (37) expression -> expression . MINUS term
+    (69) operador -> . GREATER
+    (70) operador -> . LESS
+    (71) operador -> . GREATEREQUAL
+    (72) operador -> . LESSEQUAL
+    (73) operador -> . EQUALTO
+    (74) operador -> . NOTEQUALTO
+
+    PLUS            shift and go to state 39
+    MINUS           shift and go to state 40
+    GREATER         shift and go to state 43
+    LESS            shift and go to state 44
+    GREATEREQUAL    shift and go to state 45
+    LESSEQUAL       shift and go to state 46
+    EQUALTO         shift and go to state 47
+    NOTEQUALTO      shift and go to state 48
+
+    operador                       shift and go to state 41
+
+state 83
+
+    (39) term -> term PRODUCT term .
+    (39) term -> term . PRODUCT term
+    (40) term -> term . DIVIDE term
+
+  ! shift/reduce conflict for PRODUCT resolved as shift
+  ! shift/reduce conflict for DIVIDE resolved as shift
+    PLUS            reduce using rule 39 (term -> term PRODUCT term .)
+    MINUS           reduce using rule 39 (term -> term PRODUCT term .)
+    GREATER         reduce using rule 39 (term -> term PRODUCT term .)
+    LESS            reduce using rule 39 (term -> term PRODUCT term .)
+    GREATEREQUAL    reduce using rule 39 (term -> term PRODUCT term .)
+    LESSEQUAL       reduce using rule 39 (term -> term PRODUCT term .)
+    EQUALTO         reduce using rule 39 (term -> term PRODUCT term .)
+    NOTEQUALTO      reduce using rule 39 (term -> term PRODUCT term .)
+    NEGATION        reduce using rule 39 (term -> term PRODUCT term .)
+    AND             reduce using rule 39 (term -> term PRODUCT term .)
+    OR              reduce using rule 39 (term -> term PRODUCT term .)
+    POINTCOMMA      reduce using rule 39 (term -> term PRODUCT term .)
+    $end            reduce using rule 39 (term -> term PRODUCT term .)
+    RPAREN          reduce using rule 39 (term -> term PRODUCT term .)
+    PRODUCT         shift and go to state 53
+    DIVIDE          shift and go to state 54
+
+  ! PRODUCT         [ reduce using rule 39 (term -> term PRODUCT term .) ]
+  ! DIVIDE          [ reduce using rule 39 (term -> term PRODUCT term .) ]
+
+
+state 84
+
+    (40) term -> term DIVIDE term .
+    (39) term -> term . PRODUCT term
+    (40) term -> term . DIVIDE term
+
+  ! shift/reduce conflict for PRODUCT resolved as shift
+  ! shift/reduce conflict for DIVIDE resolved as shift
+    PLUS            reduce using rule 40 (term -> term DIVIDE term .)
+    MINUS           reduce using rule 40 (term -> term DIVIDE term .)
+    GREATER         reduce using rule 40 (term -> term DIVIDE term .)
+    LESS            reduce using rule 40 (term -> term DIVIDE term .)
+    GREATEREQUAL    reduce using rule 40 (term -> term DIVIDE term .)
+    LESSEQUAL       reduce using rule 40 (term -> term DIVIDE term .)
+    EQUALTO         reduce using rule 40 (term -> term DIVIDE term .)
+    NOTEQUALTO      reduce using rule 40 (term -> term DIVIDE term .)
+    NEGATION        reduce using rule 40 (term -> term DIVIDE term .)
+    AND             reduce using rule 40 (term -> term DIVIDE term .)
+    OR              reduce using rule 40 (term -> term DIVIDE term .)
+    POINTCOMMA      reduce using rule 40 (term -> term DIVIDE term .)
+    $end            reduce using rule 40 (term -> term DIVIDE term .)
+    RPAREN          reduce using rule 40 (term -> term DIVIDE term .)
+    PRODUCT         shift and go to state 53
+    DIVIDE          shift and go to state 54
+
+  ! PRODUCT         [ reduce using rule 40 (term -> term DIVIDE term .) ]
+  ! DIVIDE          [ reduce using rule 40 (term -> term DIVIDE term .) ]
+
+
+state 85
+
+    (26) assign -> VARIABLE EQUAL assign_value .
+
+    POINTCOMMA      reduce using rule 26 (assign -> VARIABLE EQUAL assign_value .)
+    $end            reduce using rule 26 (assign -> VARIABLE EQUAL assign_value .)
+
+
+state 86
+
+    (27) assign_value -> expression .
+    (36) expression -> expression . PLUS term
+    (37) expression -> expression . MINUS term
+
+    POINTCOMMA      reduce using rule 27 (assign_value -> expression .)
+    $end            reduce using rule 27 (assign_value -> expression .)
+    PLUS            shift and go to state 39
+    MINUS           shift and go to state 40
+
+
+state 87
+
+    (28) assign_value -> boolean .
+
+    POINTCOMMA      reduce using rule 28 (assign_value -> boolean .)
+    $end            reduce using rule 28 (assign_value -> boolean .)
+
+
+state 88
+
+    (29) assign_value -> string .
+
+    POINTCOMMA      reduce using rule 29 (assign_value -> string .)
+    $end            reduce using rule 29 (assign_value -> string .)
+
+
+state 89
+
+    (66) boolean -> TRUE .
+
+    POINTCOMMA      reduce using rule 66 (boolean -> TRUE .)
+    $end            reduce using rule 66 (boolean -> TRUE .)
+
+
+state 90
+
+    (67) boolean -> FALSE .
+
+    POINTCOMMA      reduce using rule 67 (boolean -> FALSE .)
+    $end            reduce using rule 67 (boolean -> FALSE .)
+
+
+state 91
+
+    (46) expOpLog -> factor_exprlog oplogico factor_exprlog .
+
+    POINTCOMMA      reduce using rule 46 (expOpLog -> factor_exprlog oplogico factor_exprlog .)
+    $end            reduce using rule 46 (expOpLog -> factor_exprlog oplogico factor_exprlog .)
+
+
+state 92
+
+    (48) factor_exprlog -> LPAREN . expCond RPAREN
+    (49) expCond -> . expression operador expression
+    (36) expression -> . expression PLUS term
+    (37) expression -> . expression MINUS term
+    (38) expression -> . term
+    (39) term -> . term PRODUCT term
+    (40) term -> . term DIVIDE term
+    (41) term -> . term1 INCREMENT
+    (42) term -> . INCREMENT term1
+    (43) term -> . term1 DECREMENT
+    (44) term -> . DECREMENT term1
+    (55) term -> . number
+    (56) term -> . factor_expr
+    (57) term -> . variable
+    (50) term1 -> . number
+    (51) term1 -> . variable
+    (52) term1 -> . group
+    (63) number -> . NUMBER
+    (64) number -> . FLOAT
+    (58) factor_expr -> . LPAREN expression RPAREN
+    (68) variable -> . VARIABLE
+    (53) group -> . LPAREN variable RPAREN
+    (54) group -> . LPAREN number RPAREN
+
+    INCREMENT       shift and go to state 18
+    DECREMENT       shift and go to state 19
+    NUMBER          shift and go to state 30
+    FLOAT           shift and go to state 31
+    LPAREN          shift and go to state 71
+    VARIABLE        shift and go to state 62
+
+    expCond                        shift and go to state 72
+    expression                     shift and go to state 82
+    term                           shift and go to state 9
+    term1                          shift and go to state 17
+    number                         shift and go to state 20
+    factor_expr                    shift and go to state 21
+    variable                       shift and go to state 22
+    group                          shift and go to state 29
+
+state 93
+
+    (53) group -> LPAREN variable . RPAREN
+
+    RPAREN          shift and go to state 115
+
+
+state 94
+
+    (54) group -> LPAREN number . RPAREN
+
+    RPAREN          shift and go to state 116
+
+
+state 95
+
+    (31) termS -> string . PLUS chain
+    (35) value -> string .
+
+  ! shift/reduce conflict for PLUS resolved as shift
+    PLUS            shift and go to state 65
+    POINTCOMMA      reduce using rule 35 (value -> string .)
+    $end            reduce using rule 35 (value -> string .)
+
+  ! PLUS            [ reduce using rule 35 (value -> string .) ]
+
+
+state 96
+
+    (31) termS -> string PLUS chain .
+
+    POINTCOMMA      reduce using rule 31 (termS -> string PLUS chain .)
+    $end            reduce using rule 31 (termS -> string PLUS chain .)
+    PLUS            reduce using rule 31 (termS -> string PLUS chain .)
+
+
+state 97
+
+    (32) chain -> termS . PLUS value
+
+    PLUS            shift and go to state 117
+
+
+state 98
+
+    (33) chain -> value .
+
+    POINTCOMMA      reduce using rule 33 (chain -> value .)
+    $end            reduce using rule 33 (chain -> value .)
+    PLUS            reduce using rule 33 (chain -> value .)
+
+
+state 99
+
+    (34) value -> expression .
+    (36) expression -> expression . PLUS term
+    (37) expression -> expression . MINUS term
+
+  ! shift/reduce conflict for PLUS resolved as shift
+    POINTCOMMA      reduce using rule 34 (value -> expression .)
+    $end            reduce using rule 34 (value -> expression .)
+    PLUS            shift and go to state 39
+    MINUS           shift and go to state 40
+
+  ! PLUS            [ reduce using rule 34 (value -> expression .) ]
+
+
+state 100
+
+    (16) var_boolean -> declare_boolean EQUAL boolean_value .
+
+    POINTCOMMA      reduce using rule 16 (var_boolean -> declare_boolean EQUAL boolean_value .)
+    $end            reduce using rule 16 (var_boolean -> declare_boolean EQUAL boolean_value .)
+
+
+state 101
+
+    (18) boolean_value -> boolean .
+
+    POINTCOMMA      reduce using rule 18 (boolean_value -> boolean .)
+    $end            reduce using rule 18 (boolean_value -> boolean .)
+
+
+state 102
+
+    (19) boolean_value -> variable .
+
+    POINTCOMMA      reduce using rule 19 (boolean_value -> variable .)
+    $end            reduce using rule 19 (boolean_value -> variable .)
+
+
+state 103
+
+    (13) var_number -> declare_number EQUAL number_value .
+
+    POINTCOMMA      reduce using rule 13 (var_number -> declare_number EQUAL number_value .)
+    $end            reduce using rule 13 (var_number -> declare_number EQUAL number_value .)
+
+
+state 104
+
+    (15) number_value -> expression .
+    (36) expression -> expression . PLUS term
+    (37) expression -> expression . MINUS term
+
+    POINTCOMMA      reduce using rule 15 (number_value -> expression .)
+    $end            reduce using rule 15 (number_value -> expression .)
+    PLUS            shift and go to state 39
+    MINUS           shift and go to state 40
+
+
+state 105
+
+    (20) var_string -> declare_string EQUAL string_value .
+
+    POINTCOMMA      reduce using rule 20 (var_string -> declare_string EQUAL string_value .)
+    $end            reduce using rule 20 (var_string -> declare_string EQUAL string_value .)
+
+
+state 106
+
+    (22) string_value -> string .
+
+    POINTCOMMA      reduce using rule 22 (string_value -> string .)
+    $end            reduce using rule 22 (string_value -> string .)
+
+
+state 107
+
+    (23) string_value -> variable .
+
+    POINTCOMMA      reduce using rule 23 (string_value -> variable .)
+    $end            reduce using rule 23 (string_value -> variable .)
+
+
+state 108
+
+    (24) declare_generic -> declare_any EQUAL assign_value .
+
+    POINTCOMMA      reduce using rule 24 (declare_generic -> declare_any EQUAL assign_value .)
+    $end            reduce using rule 24 (declare_generic -> declare_any EQUAL assign_value .)
+
+
+state 109
+
+    (17) declare_boolean -> declare_any TWOPOINTS VARBOOLEAN .
+
+    EQUAL           reduce using rule 17 (declare_boolean -> declare_any TWOPOINTS VARBOOLEAN .)
+
+
+state 110
+
+    (14) declare_number -> declare_any TWOPOINTS VARNUMBER .
+
+    EQUAL           reduce using rule 14 (declare_number -> declare_any TWOPOINTS VARNUMBER .)
+
+
+state 111
+
+    (21) declare_string -> declare_any TWOPOINTS VARSTRING .
+
+    EQUAL           reduce using rule 21 (declare_string -> declare_any TWOPOINTS VARSTRING .)
+
+
+state 112
+
+    (58) factor_expr -> LPAREN expression . RPAREN
+    (36) expression -> expression . PLUS term
+    (37) expression -> expression . MINUS term
+
+    RPAREN          shift and go to state 114
+    PLUS            shift and go to state 39
+    MINUS           shift and go to state 40
+
+
+state 113
+
+    (48) factor_exprlog -> LPAREN expCond RPAREN .
+
+    NEGATION        reduce using rule 48 (factor_exprlog -> LPAREN expCond RPAREN .)
+    AND             reduce using rule 48 (factor_exprlog -> LPAREN expCond RPAREN .)
+    OR              reduce using rule 48 (factor_exprlog -> LPAREN expCond RPAREN .)
+    POINTCOMMA      reduce using rule 48 (factor_exprlog -> LPAREN expCond RPAREN .)
+    $end            reduce using rule 48 (factor_exprlog -> LPAREN expCond RPAREN .)
+
+
+state 114
+
+    (58) factor_expr -> LPAREN expression RPAREN .
+
+    PRODUCT         reduce using rule 58 (factor_expr -> LPAREN expression RPAREN .)
+    DIVIDE          reduce using rule 58 (factor_expr -> LPAREN expression RPAREN .)
+    PLUS            reduce using rule 58 (factor_expr -> LPAREN expression RPAREN .)
+    MINUS           reduce using rule 58 (factor_expr -> LPAREN expression RPAREN .)
+    GREATER         reduce using rule 58 (factor_expr -> LPAREN expression RPAREN .)
+    LESS            reduce using rule 58 (factor_expr -> LPAREN expression RPAREN .)
+    GREATEREQUAL    reduce using rule 58 (factor_expr -> LPAREN expression RPAREN .)
+    LESSEQUAL       reduce using rule 58 (factor_expr -> LPAREN expression RPAREN .)
+    EQUALTO         reduce using rule 58 (factor_expr -> LPAREN expression RPAREN .)
+    NOTEQUALTO      reduce using rule 58 (factor_expr -> LPAREN expression RPAREN .)
+    NEGATION        reduce using rule 58 (factor_expr -> LPAREN expression RPAREN .)
+    AND             reduce using rule 58 (factor_expr -> LPAREN expression RPAREN .)
+    OR              reduce using rule 58 (factor_expr -> LPAREN expression RPAREN .)
+    POINTCOMMA      reduce using rule 58 (factor_expr -> LPAREN expression RPAREN .)
+    $end            reduce using rule 58 (factor_expr -> LPAREN expression RPAREN .)
+    RPAREN          reduce using rule 58 (factor_expr -> LPAREN expression RPAREN .)
+
+
+state 115
+
+    (53) group -> LPAREN variable RPAREN .
+
+    INCREMENT       reduce using rule 53 (group -> LPAREN variable RPAREN .)
+    DECREMENT       reduce using rule 53 (group -> LPAREN variable RPAREN .)
+    PRODUCT         reduce using rule 53 (group -> LPAREN variable RPAREN .)
+    DIVIDE          reduce using rule 53 (group -> LPAREN variable RPAREN .)
+    PLUS            reduce using rule 53 (group -> LPAREN variable RPAREN .)
+    MINUS           reduce using rule 53 (group -> LPAREN variable RPAREN .)
+    GREATER         reduce using rule 53 (group -> LPAREN variable RPAREN .)
+    LESS            reduce using rule 53 (group -> LPAREN variable RPAREN .)
+    GREATEREQUAL    reduce using rule 53 (group -> LPAREN variable RPAREN .)
+    LESSEQUAL       reduce using rule 53 (group -> LPAREN variable RPAREN .)
+    EQUALTO         reduce using rule 53 (group -> LPAREN variable RPAREN .)
+    NOTEQUALTO      reduce using rule 53 (group -> LPAREN variable RPAREN .)
+    NEGATION        reduce using rule 53 (group -> LPAREN variable RPAREN .)
+    AND             reduce using rule 53 (group -> LPAREN variable RPAREN .)
+    OR              reduce using rule 53 (group -> LPAREN variable RPAREN .)
+    POINTCOMMA      reduce using rule 53 (group -> LPAREN variable RPAREN .)
+    $end            reduce using rule 53 (group -> LPAREN variable RPAREN .)
+    RPAREN          reduce using rule 53 (group -> LPAREN variable RPAREN .)
+
+
+state 116
+
+    (54) group -> LPAREN number RPAREN .
+
+    INCREMENT       reduce using rule 54 (group -> LPAREN number RPAREN .)
+    DECREMENT       reduce using rule 54 (group -> LPAREN number RPAREN .)
+    PRODUCT         reduce using rule 54 (group -> LPAREN number RPAREN .)
+    DIVIDE          reduce using rule 54 (group -> LPAREN number RPAREN .)
+    PLUS            reduce using rule 54 (group -> LPAREN number RPAREN .)
+    MINUS           reduce using rule 54 (group -> LPAREN number RPAREN .)
+    GREATER         reduce using rule 54 (group -> LPAREN number RPAREN .)
+    LESS            reduce using rule 54 (group -> LPAREN number RPAREN .)
+    GREATEREQUAL    reduce using rule 54 (group -> LPAREN number RPAREN .)
+    LESSEQUAL       reduce using rule 54 (group -> LPAREN number RPAREN .)
+    EQUALTO         reduce using rule 54 (group -> LPAREN number RPAREN .)
+    NOTEQUALTO      reduce using rule 54 (group -> LPAREN number RPAREN .)
+    NEGATION        reduce using rule 54 (group -> LPAREN number RPAREN .)
+    AND             reduce using rule 54 (group -> LPAREN number RPAREN .)
+    OR              reduce using rule 54 (group -> LPAREN number RPAREN .)
+    POINTCOMMA      reduce using rule 54 (group -> LPAREN number RPAREN .)
+    $end            reduce using rule 54 (group -> LPAREN number RPAREN .)
+    RPAREN          reduce using rule 54 (group -> LPAREN number RPAREN .)
+
+
+state 117
+
+    (32) chain -> termS PLUS . value
+    (34) value -> . expression
+    (35) value -> . string
+    (36) expression -> . expression PLUS term
+    (37) expression -> . expression MINUS term
+    (38) expression -> . term
+    (65) string -> . NORMSTRING1
+    (39) term -> . term PRODUCT term
+    (40) term -> . term DIVIDE term
+    (41) term -> . term1 INCREMENT
+    (42) term -> . INCREMENT term1
+    (43) term -> . term1 DECREMENT
+    (44) term -> . DECREMENT term1
+    (55) term -> . number
+    (56) term -> . factor_expr
+    (57) term -> . variable
+    (50) term1 -> . number
+    (51) term1 -> . variable
+    (52) term1 -> . group
+    (63) number -> . NUMBER
+    (64) number -> . FLOAT
+    (58) factor_expr -> . LPAREN expression RPAREN
+    (68) variable -> . VARIABLE
+    (53) group -> . LPAREN variable RPAREN
+    (54) group -> . LPAREN number RPAREN
+
+    NORMSTRING1     shift and go to state 32
+    INCREMENT       shift and go to state 18
+    DECREMENT       shift and go to state 19
+    NUMBER          shift and go to state 30
+    FLOAT           shift and go to state 31
+    LPAREN          shift and go to state 71
+    VARIABLE        shift and go to state 62
+
+    value                          shift and go to state 118
+    expression                     shift and go to state 99
+    string                         shift and go to state 119
+    term                           shift and go to state 9
+    term1                          shift and go to state 17
+    number                         shift and go to state 20
+    factor_expr                    shift and go to state 21
+    variable                       shift and go to state 22
+    group                          shift and go to state 29
+
+state 118
+
+    (32) chain -> termS PLUS value .
+
+    POINTCOMMA      reduce using rule 32 (chain -> termS PLUS value .)
+    $end            reduce using rule 32 (chain -> termS PLUS value .)
+    PLUS            reduce using rule 32 (chain -> termS PLUS value .)
+
+
+state 119
+
+    (35) value -> string .
+
+    POINTCOMMA      reduce using rule 35 (value -> string .)
+    $end            reduce using rule 35 (value -> string .)
+    PLUS            reduce using rule 35 (value -> string .)
 
 WARNING: 
 WARNING: Conflicts:
 WARNING: 
-WARNING: shift/reduce conflict for PLUS in state 36 resolved as shift
-WARNING: shift/reduce conflict for PLUS in state 40 resolved as shift
+WARNING: shift/reduce conflict for RPAREN in state 74 resolved as shift
+WARNING: shift/reduce conflict for RPAREN in state 75 resolved as shift
+WARNING: shift/reduce conflict for PRODUCT in state 83 resolved as shift
+WARNING: shift/reduce conflict for DIVIDE in state 83 resolved as shift
+WARNING: shift/reduce conflict for PRODUCT in state 84 resolved as shift
+WARNING: shift/reduce conflict for DIVIDE in state 84 resolved as shift
+WARNING: shift/reduce conflict for PLUS in state 95 resolved as shift
+WARNING: shift/reduce conflict for PLUS in state 99 resolved as shift

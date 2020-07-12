@@ -14,7 +14,9 @@ def p_statement_value(p):
     '''statement_value : expression
     | concatenate
     | declare
-    | assign'''
+    | assign
+    | expCond
+    | expOpLog'''
     p[0] = p[1]
 
 
@@ -296,6 +298,46 @@ def p_term_div(p):
         p[0] = p[1] / p[3]
 
 
+def p_expression_increment(p):
+    '''term : term1 INCREMENT
+    | INCREMENT  term1'''
+    p[0]= None
+
+def p_expression_decrement(p):
+    '''term : term1 DECREMENT
+     | DECREMENT  term1'''
+    p[0] = None
+
+#Operaciones Condicionales
+def p_expression_opLogico(p):
+    '''expOpLog : expCond oplogico expCond
+    | factor_exprlog  oplogico factor_exprlog
+    | expression oplogico expression'''
+    p[0] = 77.7
+
+def p_exp_logica(p):
+    'factor_exprlog : LPAREN expCond RPAREN'
+    p[0] = p[2]
+
+def p_expression_condicional(p):
+    'expCond : expression operador expression'
+    p[0]= 66.6
+
+
+def p_term1_expr(p):
+    '''term1 : LPAREN group RPAREN
+    | group'''
+    p[0] = p[2]
+
+
+def p_group_expr(p):
+    '''group : number
+    | variable
+    | array_value
+    | object_value'''
+    p[0] = p[1]
+
+
 def p_term_factor(p):
     '''term : number
     | factor_expr
@@ -374,6 +416,21 @@ def p_variable(p):
 
 def p_object_name(p):
     'object_name : OBJECTNAME'
+
+
+def p_operador(p):
+    '''operador : GREATER
+      | LESS
+      | GREATEREQUAL
+      | LESSEQUAL
+      | EQUALTO
+      | NOTEQUALTO'''
+
+
+def p_operadorlogico(p):
+    '''oplogico : NEGATION
+      | AND
+      | OR'''
 
 
 # Error rule for syntax errors
