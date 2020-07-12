@@ -182,18 +182,40 @@ def p_assign_variable(p):
 
 # Assign array_value
 def p_assign_array(p):
-    'assign_array : array_value EQUAL assign_value'
+    'assign_array : array_value EQUAL general_value'
 
 
 # Assign object value
 def p_assign_object_value(p):
-    '''assign_object_value : object_value_form1 EQUAL assign_value
+    '''assign_object_value : object_value_form1 EQUAL general_value
     | object_value_form1 EQUAL list_types
-    | object_value_form2 EQUAL assign_value'''
+    | object_value_form2 EQUAL general_value'''
 
 
+# Valores posibles para variables
 def p_assign_value(p):
-    '''assign_value : expression
+    '''assign_value : general_value
+    | object_definition'''
+
+
+# Definicion de un objeto
+def p_object_definition(p):
+    'object_definition : LKEY attributes RKEY'
+
+
+def p_attributes_line(p):
+    '''attributes : attributes COMMA attribute
+    | attribute'''
+
+
+def p_attribute(p):
+    '''attribute : variable TWOPOINTS general_value
+    | variable TWOPOINTS list_types'''
+
+
+# Valor: String, operacion matematica, boolean
+def p_general_value(p):
+    '''general_value : expression
     | boolean
     | string'''
 
@@ -303,10 +325,12 @@ def p_expression_increment(p):
     | INCREMENT  term1'''
     p[0]= None
 
+
 def p_expression_decrement(p):
     '''term : term1 DECREMENT
      | DECREMENT  term1'''
     p[0] = None
+
 
 #Operaciones Condicionales
 def p_expression_opLogico(p):
@@ -315,9 +339,11 @@ def p_expression_opLogico(p):
     | expression oplogico expression'''
     p[0] = 77.7
 
+
 def p_exp_logica(p):
     'factor_exprlog : LPAREN expCond RPAREN'
     p[0] = p[2]
+
 
 def p_expression_condicional(p):
     'expCond : expression operador expression'
