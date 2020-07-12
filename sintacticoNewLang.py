@@ -19,7 +19,9 @@ def p_statement_value(p):
     | expOpLog
     | expNeg
     | expEq
-    | expNotEq'''
+    | expNotEq
+    | exp_set
+    | funcionif'''
     p[0] = p[1]
 
 
@@ -68,6 +70,16 @@ def p_enums_string(p):
 def p_enums_string_value(p):
     'enums_string_value : object_name EQUAL string'
 
+#if
+def p_condicionIf(p):
+    'funcionif : IF LPAREN formIf RPAREN LKEY'
+    p[0] = 1000
+
+#Declaration of set
+def p_declare_Set(p):
+    'exp_set : declare_any EQUAL NEW SET LPAREN RPAREN POINTCOMMA'
+    p[0] = 600
+
 
 # Declaration of arrays
 def p_declare_array(p):
@@ -76,7 +88,6 @@ def p_declare_array(p):
     | declare_array_main_string
     | declare_generic_array'''
     p[0] = 400
-
 
 # Declaration of array_number
 def p_declare_array_main_number(p):
@@ -352,7 +363,8 @@ def p_exp_logica(p):
     p[0] = p[2]
 
 def p_expression_condicional(p):
-    'expCond : expression operador expression'
+    '''expCond : expression operador expression
+    | LPAREN expression operador expression RPAREN'''
     p[0]= 66.6
 
 
@@ -386,6 +398,14 @@ def p_other_value(p):
     | array_value
     | enum_value
     | object_value'''
+
+#FUNCIONES IF
+
+def p_funcionif(p):
+    '''formIf : expCond
+       | expOpLog
+       | enum_value
+       | object_value'''
 
 
 # Object value
