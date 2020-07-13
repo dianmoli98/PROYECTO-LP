@@ -718,7 +718,7 @@ def p_error(p):
 #enum Animal {enum Animal {Perro =1, Gato,}                          NO SALE
 #var nombre2 = “Nombre:” + name + “\n” + “Apellido:” + lastname;      NOSALE
 #var age = “Edad:” + (edad +1);                                      NO SALE
-#console.log (x);                                                    NO SALE
+#console.log (x);                                                  
 #let result: boolean = var1 == var2 || var1>=var3;                   NO SALE
 #let result: boolean =! var1;                                        NO SAEL
 #var str = new String("Ana");  #                                      NO SALE
