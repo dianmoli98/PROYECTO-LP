@@ -178,7 +178,8 @@ def p_declare_undefined(p):
 def p_var_number(p):
     '''var_number : declare_number EQUAL number_value
     | declare_number EQUAL funcionmath
-    | declare_number'''
+    | declare_number
+    | declare_number EQUAL expression'''
     p[0] = 110
 
 
@@ -407,7 +408,8 @@ def p_negation(p):
     '''expNeg : NEGATION expOpLog
         | NEGATION factor_exprlog
         | NEGATION boolean
-        | NEGATION LPAREN expOpLog RPAREN'''
+        | NEGATION LPAREN expOpLog RPAREN
+        '''
     p[0] = 88.8
 
 def p_equalto(p):
@@ -570,9 +572,13 @@ def p_funcionMath(p):
     | mathRound
     | mathPow'''
 
+def p_math_abs_declare(p):
+    'mathAbs : declare_any EQUAL mathAbs'
+
 def p_math_abs(p):
     '''mathAbs : FUNMATH POINT  ABS LPAREN VARIABLE RPAREN
-    | FUNMATH POINT  ABS LPAREN number_value RPAREN'''
+    | FUNMATH POINT  ABS LPAREN number_value RPAREN
+    | FUNMATH POINT  ABS LPAREN MINUS  number_value RPAREN'''
 
 def p_math_round(p):
     '''mathRound : FUNMATH POINT  ROUND LPAREN VARIABLE RPAREN
@@ -613,9 +619,14 @@ def p_array_concat(p):
     '''arrayConcat : VARIABLE POINT FUNCTIONCONCAT LPAREN VARIABLE RPAREN
     | VARIABLE POINT FUNCTIONCONCAT LPAREN list_types RPAREN'''
 
+def p_array_join_declare(p):
+    '''arrayJoin : declare_any arrayJoin
+    | declare_any arrayJoin POINTCOMMA'''
+
 def p_array_join(p):
     '''arrayJoin : VARIABLE POINT FUNCTIONJOIN LPAREN VARIABLE RPAREN
-    | VARIABLE POINT FUNCTIONJOIN LPAREN string RPAREN'''
+    | VARIABLE POINT FUNCTIONJOIN LPAREN string RPAREN
+    '''
 
 def p_array_filter(p):
     '''arrayFilter : VARIABLE POINT FUNCTIONFILTER LPAREN VARIABLE RPAREN'''
@@ -641,6 +652,73 @@ def p_conjunto_has(p):
 def p_error(p):
     print("Syntax error in input!: "+str(p))
 
+#PRUEBASS
+#let eye = 10;
+#var numero=18;
+#let eye: number = 10;
+#let x: number = 40;
+#let var1: number= 50;
+#let var1: number= 9;
+#let result: boolean= var1== var2;
+#var eye = 10;
+#let color: string = "blue";
+#var color2 = 'red';
+#let name: string='Hola';
+#var str1: string = "Ana";
+
+#let list: number [] = [1,2,3];
+#let x: Array<string> = ["Hola","Hola2"]
+#var arreglo2 = ["Lopez","Damian"];
+#var arreglo= [ 1 , 2,3,4,8];
+#let set1 = new Set ();
+#enum Color {Amarrillo, Azul, Rojo}
+
+#let c: Color = Color.Rojo;
+#let a: Animal = Animal. Perro;
+
+#contador++;
+#--numero;
+#index--;
+
+#var nombre = "Marlon" + "Lindao";
+#var name = "Marlon"
+
+#var numberAbs = Math.abs(-3);
+#var numberRound = Math.round(2.6);
+#var numberPow = Math.pow (4,2);
+
+#1 < 5 && 7>=6
+#(1 < 5)&&(7>=6)
+#! (1 < 5 && 7>=6)
+
+#str.charAt(0);
+#var str3: string = str1.concat(str2);
+#var result = arreglo1.join(",");
+#var result = str.split(" ");
+#var result = arreglo.filter(isLess);
+#arreglo.filter(isLess);
+
+#set1.add(1);
+#let result:boolean =set1.has(1);
+
+
+#let result: number= var1-var2;
+#let result: number= var1-var2+var3;
+#let result: number= (var1-var2)+var3;
+#let va2r: boolean = true;
+
+# var tupla: [string, number] = ["Hola",4]                           NO coge
+#enum Animal {enum Animal {Perro =1, Gato,}                          NO SALE
+#var nombre2 = “Nombre:” + name + “\n” + “Apellido:” + lastname;      NOSALE
+#var age = “Edad:” + (edad +1);                                      NO SALE
+#console.log (x);                                                    NO SALE
+#let result: boolean = var1 == var2 || var1>=var3;                   NO SALE
+#let result: boolean =! var1;                                        NO SAEL
+#var str = new String("Ana");  #                                      NO SALE
+#function isLess(element, index, array)                              NO SALE
+# if (5>6) {                                                         NO SALE
+#for (let i = 0; i < 3; i++) {                                       NO SALE
+#while (i==5) {                                                      NO SALE
 
 # Build the parser
 parser = yacc.yacc()
@@ -653,3 +731,4 @@ while True:
     if not s: continue
     result = parser.parse(s)
     print(result)
+
