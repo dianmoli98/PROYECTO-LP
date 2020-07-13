@@ -316,18 +316,16 @@ def p_string_value(p):
 
 # ConcatenationString--Review
 def p_concatenate(p):
-    'concatenate : termS'
-    p[0] = 300
+    '''concatenate : string PLUS termS
+    | termS PLUS string
+    | termS PLUS string PLUS termS'''
+    p[0] = 600
 
 
 def p_concatenate_term(p):
-    'termS : string PLUS chain'
-    p[0] = 1.0
-
-
-def p_chain(p):
-    '''chain : termS PLUS value
+    '''termS : termS PLUS value
     | value'''
+    p[0] = 1.0
 
 
 def p_value(p):
