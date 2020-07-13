@@ -174,9 +174,10 @@ def p_declare_undefined(p):
     'var_undefined : declare_any EQUAL UNDEFINED'
     p[0] =120.20
 
-# Declaration of var_number
+# Declaration of var_number add funcionmath
 def p_var_number(p):
     '''var_number : declare_number EQUAL number_value
+    | declare_number EQUAL funcionmath
     | declare_number'''
     p[0] = 110
 
@@ -554,6 +555,26 @@ def p_operador(p):
 def p_operadorlogico(p):
     '''oplogico : AND
       | OR'''
+
+#Math Funciones
+def p_funcionMath(p):
+    '''funcionmath : mathAbs
+    | mathRound
+    | mathPow'''
+
+def p_math_abs(p):
+    '''mathAbs : FUNMATH POINT  ABS LPAREN VARIABLE RPAREN
+    | FUNMATH POINT  ABS LPAREN number_value RPAREN'''
+
+def p_math_round(p):
+    '''mathRound : FUNMATH POINT  ROUND LPAREN VARIABLE RPAREN
+    | FUNMATH POINT  ROUND LPAREN number_value RPAREN'''
+
+def p_math_pow(p):
+    '''mathPow : FUNMATH POINT  POW LPAREN VARIABLE COMMA VARIABLE RPAREN
+    | FUNMATH POINT  POW LPAREN number_value COMMA number_value RPAREN
+    | FUNMATH POINT  POW LPAREN VARIABLE COMMA number_value RPAREN
+    | FUNMATH POINT  POW LPAREN number_value COMMA VARIABLE RPAREN'''
 
 
 # Error rule for syntax errors
