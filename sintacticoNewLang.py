@@ -707,8 +707,7 @@ def p_error(p):
 # var tupla: [string, number] = ["Hola",4]                           NO coge
 #enum Animal {enum Animal {Perro =1, Gato,}                          NO SALE
 #var nombre2 = “Nombre:” + name + “\n” + “Apellido:” + lastname;      NOSALE
-#var age = “Edad:” + (edad +1);                                      NO SALE
-#console.log (x);                                                  
+#var age = “Edad:” + (edad +1);                                      NO SALE                                                
 #let result: boolean = var1 == var2 || var1>=var3;                   NO SALE
 #let result: boolean =! var1;                                        NO SAEL
 #var str = new String("Ana");  #                                      NO SALE
@@ -721,6 +720,7 @@ def p_error(p):
 # if (5>6) { } elif(i==1){}elif(i==1){console.log("F")}else{}
 #for (let i = 0; i < 3; i++) { }                                    
 #while (i==5) {str.charAt(0);}                                              
+#console.log (x);  
 
 #str.charAt(0);
 #var str3: string = str1.concat(str2);
