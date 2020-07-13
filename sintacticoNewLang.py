@@ -241,6 +241,7 @@ def p_assign(p):
 # Assign variable
 def p_assign_variable(p):
     '''assign_variable : variable EQUAL assign_value
+    | variable EQUAL funciones
     | variable EQUAL list_types'''
 
 
@@ -468,6 +469,7 @@ def p_factor_expr(p):
 
 def p_other_value(p):
     '''other_value : variable
+    | funciones
     | array_value
     | enum_value
     | object_value'''
@@ -555,6 +557,11 @@ def p_operador(p):
 def p_operadorlogico(p):
     '''oplogico : AND
       | OR'''
+#funciones
+def p_funciones(p):
+    '''funciones : funcionmath
+    | funcionString
+    | funcionArray'''
 
 #Math Funciones
 def p_funcionMath(p):
@@ -576,6 +583,41 @@ def p_math_pow(p):
     | FUNMATH POINT  POW LPAREN VARIABLE COMMA number_value RPAREN
     | FUNMATH POINT  POW LPAREN number_value COMMA VARIABLE RPAREN'''
 
+#String Funciones
+def p_funcionesString(p):
+    '''funcionString : stringCharAt
+    | stringConcat
+    | stringSplit'''
+
+def p_string_charAt(p):
+    '''stringCharAt : VARIABLE POINT FUNCTIONCHARAT LPAREN VARIABLE RPAREN
+    | VARIABLE POINT FUNCTIONCHARAT LPAREN number_value RPAREN'''
+
+def p_string_concat(p):
+    '''stringConcat : VARIABLE POINT FUNCTIONCONCAT LPAREN VARIABLE RPAREN
+    | VARIABLE POINT FUNCTIONCONCAT LPAREN string RPAREN
+    '''
+def p_string_split(p):
+    '''stringSplit : VARIABLE POINT FUNCTIONSPLIT LPAREN VARIABLE RPAREN
+    | VARIABLE POINT FUNCTIONSPLIT LPAREN string RPAREN
+    '''
+
+#Arrays funciones
+def p_funcionesArray(p):
+    '''funcionArray : arrayFilter
+    | arrayConcat
+    | arrayJoin'''
+
+def p_array_concat(p):
+    '''arrayConcat : VARIABLE POINT FUNCTIONCONCAT LPAREN VARIABLE RPAREN
+    | VARIABLE POINT FUNCTIONCONCAT LPAREN list_types RPAREN'''
+
+def p_array_join(p):
+    '''arrayJoin : VARIABLE POINT FUNCTIONJOIN LPAREN VARIABLE RPAREN
+    | VARIABLE POINT FUNCTIONJOIN LPAREN string RPAREN'''
+
+def p_array_filter(p):
+    '''arrayFilter : VARIABLE POINT FUNCTIONFILTER LPAREN VARIABLE RPAREN'''
 
 # Error rule for syntax errors
 def p_error(p):
