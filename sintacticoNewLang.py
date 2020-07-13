@@ -21,13 +21,19 @@ def p_statement_value(p):
     | expEq
     | expNotEq
     | exp_set
-    | statement_control'''
+    | statement_control
+    | comments'''
     p[0] = p[1]
 
 def p_statement_control(p):
     '''statement_control : funcionif
     | funcionwhile
     | funcionfor'''
+
+#comentarios
+def p_declarationcomments(p):
+    '''comments : COMMENT
+    | MULTICOMMENT'''
 
 # Declaration of Variables, Array and Enum
 def p_declare(p):
