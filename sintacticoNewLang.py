@@ -698,16 +698,6 @@ def p_error(p):
 #(1 < 5)&&(7>=6)
 #! (1 < 5 && 7>=6)
 
-#str.charAt(0);
-#var str3: string = str1.concat(str2);
-#var result = arreglo1.join(",");
-#var result = str.split(" ");
-#var result = arreglo.filter(isLess);
-#arreglo.filter(isLess);
-
-#set1.add(1);
-#let result:boolean =set1.has(1);
-
 
 #let result: number= var1-var2;
 #let result: number= var1-var2+var3;
@@ -723,9 +713,24 @@ def p_error(p):
 #let result: boolean =! var1;                                        NO SAEL
 #var str = new String("Ana");  #                                      NO SALE
 #function isLess(element, index, array)                              NO SALE
-# if (5>6) {                                                         NO SALE
+
+## Pruebas Dennys Lopez
+
+# if (5>6) { }
+# if (5>6) { } elif(i==1){}else{}
+# if (5>6) { } elif(i==1){}elif(i==1){console.log("F")}else{}
 #for (let i = 0; i < 3; i++) { }                                    
 #while (i==5) {str.charAt(0);}                                              
+
+#str.charAt(0);
+#var str3: string = str1.concat(str2);
+#var result = arreglo1.join(",");
+#var result = str.split(" ");
+#var result = arreglo.filter(isLess);
+#arreglo.filter(isLess);
+
+#set1.add(1);
+#let result:boolean =set1.has(1);
 
 # Build the parser
 parser = yacc.yacc()
