@@ -21,9 +21,19 @@ def p_statement_value(p):
     | expEq
     | expNotEq
     | exp_set
-    | funcionif'''
+    | statement_control
+    | comments'''
     p[0] = p[1]
 
+def p_statement_control(p):
+    '''statement_control : funcionif
+    | funcionwhile
+    | funcionfor'''
+
+#comentarios
+def p_declarationcomments(p):
+    '''comments : COMMENT
+    | MULTICOMMENT'''
 
 # Declaration of Variables, Array and Enum
 def p_declare(p):
@@ -72,16 +82,37 @@ def p_enums_string_value(p):
 
 #if
 def p_condicionIf(p):
-    '''funcionif : IF LPAREN formIf RPAREN LKEY
+    '''funcionif : IF LPAREN formLog RPAREN substatement
+    | IF LPAREN formLog RPAREN substatement funcionelif
+    | IF LPAREN formLog RPAREN substatement funcionelif funcionelse
+    | IF LPAREN formLog RPAREN substatement funcionelse
     '''
     p[0] = 1000
+
+#elif
+def p_condicionElif(p):
+    '''funcionelif : ELIF LPAREN formLog RPAREN substatement
+    | ELIF LPAREN formLog RPAREN substatement funcionelif '''
+
+#else
+def p_condicionElse(p):
+    '''funcionelse : ELSE substatement'''
 
 #for
 def p_condicionFor(p):
-    '''funcionfor : FOR LPAREN declare_any EQUAL NUMBER POINTCOMMA operador POINTCOMMA  RPAREN LKEY
+    '''funcionfor : FOR LPAREN declare_any EQUAL number_value POINTCOMMA formLog POINTCOMMA VARIABLE operador RPAREN substatement
+    | FOR LPAREN VARIABLE EQUAL number_value POINTCOMMA formLog POINTCOMMA VARIABLE operador RPAREN substatement
     '''
     p[0] = 1000
 
+
+#While
+def p_condicionWhile(p):
+    '''funcionwhile : WHILE LPAREN formLog RPAREN substatement
+    '''
+def p_subStatement(p):
+    '''substatement : LKEY statement RKEY
+    | LKEY RKEY'''
 
 #Declaration of set
 def p_declare_Set(p):
@@ -143,9 +174,10 @@ def p_declare_undefined(p):
     'var_undefined : declare_any EQUAL UNDEFINED'
     p[0] =120.20
 
-# Declaration of var_number
+# Declaration of var_number add funcionmath
 def p_var_number(p):
     '''var_number : declare_number EQUAL number_value
+    | declare_number EQUAL funcionmath
     | declare_number'''
     p[0] = 110
 
@@ -209,6 +241,7 @@ def p_assign(p):
 # Assign variable
 def p_assign_variable(p):
     '''assign_variable : variable EQUAL assign_value
+    | variable EQUAL funciones
     | variable EQUAL list_types'''
 
 
@@ -436,13 +469,14 @@ def p_factor_expr(p):
 
 def p_other_value(p):
     '''other_value : variable
+    | funciones
     | array_value
     | enum_value
     | object_value'''
 
 #FUNCIONES IF
-def p_funcionif(p):
-    '''formIf : expCond
+def p_funcionLog(p):
+    '''formLog : expCond
        | expOpLog'''
 
 # Object value
@@ -523,7 +557,85 @@ def p_operador(p):
 def p_operadorlogico(p):
     '''oplogico : AND
       | OR'''
+#funciones
+def p_funciones(p):
+    '''funciones : funcionmath
+    | funcionString
+    | funcionArray
+    | funcionConjunto'''
 
+#Math Funciones
+def p_funcionMath(p):
+    '''funcionmath : mathAbs
+    | mathRound
+    | mathPow'''
+
+def p_math_abs(p):
+    '''mathAbs : FUNMATH POINT  ABS LPAREN VARIABLE RPAREN
+    | FUNMATH POINT  ABS LPAREN number_value RPAREN'''
+
+def p_math_round(p):
+    '''mathRound : FUNMATH POINT  ROUND LPAREN VARIABLE RPAREN
+    | FUNMATH POINT  ROUND LPAREN number_value RPAREN'''
+
+def p_math_pow(p):
+    '''mathPow : FUNMATH POINT  POW LPAREN VARIABLE COMMA VARIABLE RPAREN
+    | FUNMATH POINT  POW LPAREN number_value COMMA number_value RPAREN
+    | FUNMATH POINT  POW LPAREN VARIABLE COMMA number_value RPAREN
+    | FUNMATH POINT  POW LPAREN number_value COMMA VARIABLE RPAREN'''
+
+#String Funciones
+def p_funcionesString(p):
+    '''funcionString : stringCharAt
+    | stringConcat
+    | stringSplit'''
+
+def p_string_charAt(p):
+    '''stringCharAt : VARIABLE POINT FUNCTIONCHARAT LPAREN VARIABLE RPAREN
+    | VARIABLE POINT FUNCTIONCHARAT LPAREN number_value RPAREN'''
+
+def p_string_concat(p):
+    '''stringConcat : VARIABLE POINT FUNCTIONCONCAT LPAREN VARIABLE RPAREN
+    | VARIABLE POINT FUNCTIONCONCAT LPAREN string RPAREN
+    '''
+def p_string_split(p):
+    '''stringSplit : VARIABLE POINT FUNCTIONSPLIT LPAREN VARIABLE RPAREN
+    | VARIABLE POINT FUNCTIONSPLIT LPAREN string RPAREN
+    '''
+
+#Arrays funciones
+def p_funcionesArray(p):
+    '''funcionArray : arrayFilter
+    | arrayConcat
+    | arrayJoin'''
+
+def p_array_concat(p):
+    '''arrayConcat : VARIABLE POINT FUNCTIONCONCAT LPAREN VARIABLE RPAREN
+    | VARIABLE POINT FUNCTIONCONCAT LPAREN list_types RPAREN'''
+
+def p_array_join(p):
+    '''arrayJoin : VARIABLE POINT FUNCTIONJOIN LPAREN VARIABLE RPAREN
+    | VARIABLE POINT FUNCTIONJOIN LPAREN string RPAREN'''
+
+def p_array_filter(p):
+    '''arrayFilter : VARIABLE POINT FUNCTIONFILTER LPAREN VARIABLE RPAREN'''
+
+#conjuntos Funciones
+def p_funcionesConjuntos(p):
+    '''funcionConjunto : conjuntoAdd
+    | conjuntoHas'''
+
+def p_conjunto_add(p):
+    '''conjuntoAdd : VARIABLE POINT FUNCTIONADD LPAREN VARIABLE RPAREN
+    | VARIABLE POINT FUNCTIONADD LPAREN number_value RPAREN
+    | VARIABLE POINT FUNCTIONADD LPAREN boolean_value RPAREN
+    | VARIABLE POINT FUNCTIONADD LPAREN string RPAREN'''
+
+def p_conjunto_has(p):
+    '''conjuntoHas : VARIABLE POINT FUNCTIONHAS LPAREN VARIABLE RPAREN
+    | VARIABLE POINT FUNCTIONHAS LPAREN number_value RPAREN
+    | VARIABLE POINT FUNCTIONHAS LPAREN boolean_value RPAREN
+    | VARIABLE POINT FUNCTIONHAS LPAREN string RPAREN'''
 
 # Error rule for syntax errors
 def p_error(p):
