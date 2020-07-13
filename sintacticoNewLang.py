@@ -157,8 +157,7 @@ def p_declare_number(p):
 # Declaration of var boolean
 def p_var_boolean(p):
     '''var_boolean : declare_boolean EQUAL boolean_value
-    | declare_boolean
-    | declare_boolean EQUAL '''
+    | declare_boolean'''
     p[0] = 120
 
 
@@ -250,7 +249,12 @@ def p_attribute(p):
 def p_general_value(p):
     '''general_value : expression
     | boolean
-    | string'''
+    | string
+    | expCond
+    | expOpLog
+    | expNeg
+    | expEq
+    | expNotEq'''
 
 
 # Lists_values
@@ -297,7 +301,12 @@ def p_number_value(p):
 
 def p_declare_boolean_value(p):
     '''boolean_value : boolean
-    | other_value'''
+    | other_value
+    | expCond
+    | expOpLog
+    | expNeg
+    | expEq
+    | expNotEq'''
 
 
 def p_string_value(p):
