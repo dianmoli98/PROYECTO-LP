@@ -717,8 +717,8 @@ def p_error(p):
 #var str = new String("Ana");  #                                      NO SALE
 #function isLess(element, index, array)                              NO SALE
 # if (5>6) {                                                         NO SALE
-#for (let i = 0; i < 3; i++) {                                       NO SALE
-#while (i==5) {                                                      NO SALE
+#for (let i = 0; i < 3; i++) { }                                    
+#while (i==5) {str.charAt(0);}                                              
 
 # Build the parser
 parser = yacc.yacc()
