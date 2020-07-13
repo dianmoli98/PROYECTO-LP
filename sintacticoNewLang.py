@@ -659,78 +659,116 @@ def p_conjunto_has(p):
 def p_error(p):
     print("Syntax error in input!: "+str(p))
 
-#PRUEBASS
+
+
+# var tupla: [string, number] = ["Hola",4]                           NO coge
+#var nombre2 = “Nombre:” + name + “\n” + “Apellido:” + lastname;      NOSALE
+#var age = “Edad:” + (edad +1);                                      NO SALE
+#let result: boolean = var1 == var2 || var1>=var3;                   NO SALE
+#let result: boolean =! var1;                                        NO SAEL
+#var str = new String("Ana");  #                                      NO SALE
+#function isLess(element, index, array)                              NO SALE
+#division
+#modulo
+#negacion
+#and an or
+#console.log(“Prueba\n”);
+#let result: boolean =! var1;
+
+
+#PRUEBASS CON DECLARACION DE VARIABLES
+#let color;
+#let color
+
 #let eye = 10;
+#let eye = 10
 #var numero=18;
+#let color=null
+#let color=undefined;
+
 #let eye: number = 10;
 #let x: number = 40;
 #let var1: number= 50;
 #let var1: number= 9;
-#let result: boolean= var1== var2;
 #var eye = 10;
 #let color: string = "blue";
 #var color2 = 'red';
 #let name: string='Hola';
 #var str1: string = "Ana";
+#let va2r: boolean = true;
 
-#let list: number [] = [1,2,3];
+#DECLARACION  DE ARREGLOS
+#let miarray: number[];
+#let miarray: number[] = [1,2,3,4,5];
 #let x: Array<string> = ["Hola","Hola2"]
-#var arreglo2 = ["Lopez","Damian"];
 #var arreglo= [ 1 , 2,3,4,8];
-#let set1 = new Set ();
-#enum Color {Amarrillo, Azul, Rojo}
+#var arreglo2 = ["Lopez","Damian"];
 
+#DECLARACION DE TUPLAS
+
+
+#DECLARACION DE ENUM
+#enum Color {Amarrillo, Azul, Rojo}
+#enum Animal {Perro =1, Gato=23}
 #let c: Color = Color.Rojo;
 #let a: Animal = Animal. Perro;
 
+#CONJUNTOS
+#let set1 = new Set ();
+
+#OPERACIONES MATEMATICAS
+#let result: number= var1-var2;
+#let result: number= var1-var2+var3;
+#let result: number= (var1-var2)+var3;
+#(4-5)+9;
+#5-6
+#(8+9)-(4*5)
+#let result:number=(var1-var2)+var3;
+
+#CONTADOR
 #contador++;
 #--numero;
 #index--;
 
+#CONCATENACION
 #var nombre = "Marlon" + "Lindao";
 #var name = "Marlon"
 
+#FUNCIONES MATEMIATICAS
 #var numberAbs = Math.abs(-3);
 #var numberRound = Math.round(2.6);
 #var numberPow = Math.pow (4,2);
+#Math.abs(-3);
 
+#CONDICIONES
 #1 < 5 && 7>=6
 #(1 < 5)&&(7>=6)
 #! (1 < 5 && 7>=6)
+#let result: boolean= var1== v2ar;
 
 
-#let result: number= var1-var2;
-#let result: number= var1-var2+var3;
-#let result: number= (var1-var2)+var3;
-#let va2r: boolean = true;
+#FUNCIONES PARA STRINGS
+#var str3: string = str1.concat(str2);
+#str.charAt(0);
+#var result = str.split(" ");
 
-# var tupla: [string, number] = ["Hola",4]                           NO coge
-#enum Animal {enum Animal {Perro =1, Gato,}                          NO SALE
-#var nombre2 = “Nombre:” + name + “\n” + “Apellido:” + lastname;      NOSALE
-#var age = “Edad:” + (edad +1);                                      NO SALE                                                
-#let result: boolean = var1 == var2 || var1>=var3;                   NO SALE
-#let result: boolean =! var1;                                        NO SAEL
-#var str = new String("Ana");  #                                      NO SALE
-#function isLess(element, index, array)                              NO SALE
+#FUNCIONES PARA ARREGLOS
+#var result = arreglo1.concat(arreglo2);
+#var result = arreglo.filter(isLess);
+#arreglo.filter(isLess);
+#var result = arreglo1.join(",");
 
-## Pruebas Dennys Lopez
+#FUNCIONES PARA CONJUNTOS
+#set1.add(1);
+#let result:boolean =set1.has(1);
 
+#FUNCIONES IF, FOR Y WHILE
 # if (5>6) { }
 # if (5>6) { } elif(i==1){}else{}
 # if (5>6) { } elif(i==1){}elif(i==1){console.log("F")}else{}
-#for (let i = 0; i < 3; i++) { }                                    
-#while (i==5) {str.charAt(0);}                                              
-#console.log (x);  
-
-#str.charAt(0);
-#var str3: string = str1.concat(str2);
-#var result = arreglo1.join(",");
-#var result = str.split(" ");
-#var result = arreglo.filter(isLess);
-#arreglo.filter(isLess);
-
-#set1.add(1);
-#let result:boolean =set1.has(1);
+#for (let i = 0; i < 3; i++) { }
+#while (i==5) {str.charAt(0);}
+#console.log (x);
 
 # Build the parser
 parser = yacc.yacc()
