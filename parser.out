@@ -62,8 +62,8 @@ Rule 42    funcionif -> IF LPAREN formLog RPAREN substatement funcionelse
 Rule 43    funcionelif -> ELIF LPAREN formLog RPAREN substatement
 Rule 44    funcionelif -> ELIF LPAREN formLog RPAREN substatement funcionelif
 Rule 45    funcionelse -> ELSE substatement
-Rule 46    funcionfor -> FOR LPAREN declare_any EQUAL number_value POINTCOMMA formLog POINTCOMMA VARIABLE operador RPAREN substatement
-Rule 47    funcionfor -> FOR LPAREN VARIABLE EQUAL number_value POINTCOMMA formLog POINTCOMMA VARIABLE operador RPAREN substatement
+Rule 46    funcionfor -> FOR LPAREN prefix VARIABLE EQUAL number_value POINTCOMMA formLog POINTCOMMA term RPAREN substatement
+Rule 47    funcionfor -> FOR LPAREN VARIABLE EQUAL number_value POINTCOMMA formLog POINTCOMMA term RPAREN substatement
 Rule 48    funcionwhile -> WHILE LPAREN formLog RPAREN substatement
 Rule 49    substatement -> LKEY statement RKEY
 Rule 50    substatement -> LKEY RKEY
@@ -351,7 +351,7 @@ TYPEOF               :
 UNDEFINED            : 70
 VAR                  : 190
 VARBOOLEAN           : 63 78 195
-VARIABLE             : 46 47 47 87 204 222 225 227 227 229 230 234 234 235 236 236 237 238 238 239 243 243 244 247 247 248 249 249 252 252 253 254 255 256 256 257 258 259
+VARIABLE             : 46 47 87 204 222 225 227 227 229 230 234 234 235 236 236 237 238 238 239 243 243 244 247 247 248 249 249 252 252 253 254 255 256 256 257 258 259
 VARNUMBER            : 59 75 193
 VAROBJECT            : 
 VARSTRING            : 67 81 194
@@ -380,7 +380,7 @@ concatenate          : 4
 conjuntoAdd          : 250
 conjuntoHas          : 251
 declare              : 5
-declare_any          : 46 51 59 63 67 68 69 70 75 78 81 84 85 86 221 245 246
+declare_any          : 51 59 63 67 68 69 70 75 78 81 84 85 86 221 245 246
 declare_array        : 26
 declare_array_boolean : 60 61
 declare_array_main_boolean : 53
@@ -438,10 +438,10 @@ object_name          : 34 35 38 84 188 188
 object_value         : 171 180
 object_value_form1   : 95 96 183
 object_value_form2   : 97 184
-operador             : 46 47 164 165
+operador             : 164 165
 oplogico             : 160 161 162
 other_value          : 127 134 174
-prefix               : 87
+prefix               : 46 87
 statement            : 49 0
 statement_control    : 13
 statement_value      : 1 2
@@ -452,7 +452,7 @@ stringSplit          : 233
 string_value         : 79 123 124
 strings              : 122 123
 substatement         : 39 40 41 42 43 44 45 46 47 48
-term                 : 141 142 143 144 144 145 145
+term                 : 46 47 141 142 143 144 144 145 145
 term1                : 146 147 148 149
 termS                : 135 137
 typedate             : 
@@ -564,8 +564,8 @@ state 0
     (41) funcionif -> . IF LPAREN formLog RPAREN substatement funcionelif funcionelse
     (42) funcionif -> . IF LPAREN formLog RPAREN substatement funcionelse
     (48) funcionwhile -> . WHILE LPAREN formLog RPAREN substatement
-    (46) funcionfor -> . FOR LPAREN declare_any EQUAL number_value POINTCOMMA formLog POINTCOMMA VARIABLE operador RPAREN substatement
-    (47) funcionfor -> . FOR LPAREN VARIABLE EQUAL number_value POINTCOMMA formLog POINTCOMMA VARIABLE operador RPAREN substatement
+    (46) funcionfor -> . FOR LPAREN prefix VARIABLE EQUAL number_value POINTCOMMA formLog POINTCOMMA term RPAREN substatement
+    (47) funcionfor -> . FOR LPAREN VARIABLE EQUAL number_value POINTCOMMA formLog POINTCOMMA term RPAREN substatement
     (166) term1 -> . LPAREN group RPAREN
     (167) term1 -> . group
     (197) number -> . NUMBER
@@ -1991,8 +1991,8 @@ state 65
 
 state 66
 
-    (46) funcionfor -> FOR . LPAREN declare_any EQUAL number_value POINTCOMMA formLog POINTCOMMA VARIABLE operador RPAREN substatement
-    (47) funcionfor -> FOR . LPAREN VARIABLE EQUAL number_value POINTCOMMA formLog POINTCOMMA VARIABLE operador RPAREN substatement
+    (46) funcionfor -> FOR . LPAREN prefix VARIABLE EQUAL number_value POINTCOMMA formLog POINTCOMMA term RPAREN substatement
+    (47) funcionfor -> FOR . LPAREN VARIABLE EQUAL number_value POINTCOMMA formLog POINTCOMMA term RPAREN substatement
 
     LPAREN          shift and go to state 173
 
@@ -3438,7 +3438,6 @@ state 104
     VAR             reduce using rule 206 (operador -> GREATER .)
     STATIC          reduce using rule 206 (operador -> GREATER .)
     CONST           reduce using rule 206 (operador -> GREATER .)
-    RPAREN          reduce using rule 206 (operador -> GREATER .)
 
 
 state 105
@@ -3457,7 +3456,6 @@ state 105
     VAR             reduce using rule 207 (operador -> LESS .)
     STATIC          reduce using rule 207 (operador -> LESS .)
     CONST           reduce using rule 207 (operador -> LESS .)
-    RPAREN          reduce using rule 207 (operador -> LESS .)
 
 
 state 106
@@ -3476,7 +3474,6 @@ state 106
     VAR             reduce using rule 208 (operador -> GREATEREQUAL .)
     STATIC          reduce using rule 208 (operador -> GREATEREQUAL .)
     CONST           reduce using rule 208 (operador -> GREATEREQUAL .)
-    RPAREN          reduce using rule 208 (operador -> GREATEREQUAL .)
 
 
 state 107
@@ -3495,7 +3492,6 @@ state 107
     VAR             reduce using rule 209 (operador -> LESSEQUAL .)
     STATIC          reduce using rule 209 (operador -> LESSEQUAL .)
     CONST           reduce using rule 209 (operador -> LESSEQUAL .)
-    RPAREN          reduce using rule 209 (operador -> LESSEQUAL .)
 
 
 state 108
@@ -7303,9 +7299,8 @@ state 172
 
 state 173
 
-    (46) funcionfor -> FOR LPAREN . declare_any EQUAL number_value POINTCOMMA formLog POINTCOMMA VARIABLE operador RPAREN substatement
-    (47) funcionfor -> FOR LPAREN . VARIABLE EQUAL number_value POINTCOMMA formLog POINTCOMMA VARIABLE operador RPAREN substatement
-    (87) declare_any -> . prefix VARIABLE
+    (46) funcionfor -> FOR LPAREN . prefix VARIABLE EQUAL number_value POINTCOMMA formLog POINTCOMMA term RPAREN substatement
+    (47) funcionfor -> FOR LPAREN . VARIABLE EQUAL number_value POINTCOMMA formLog POINTCOMMA term RPAREN substatement
     (189) prefix -> . LET
     (190) prefix -> . VAR
     (191) prefix -> . STATIC
@@ -7317,8 +7312,7 @@ state 173
     STATIC          shift and go to state 80
     CONST           shift and go to state 81
 
-    declare_any                    shift and go to state 289
-    prefix                         shift and go to state 62
+    prefix                         shift and go to state 289
 
 state 174
 
@@ -7951,7 +7945,6 @@ state 195
     VAR             reduce using rule 210 (operador -> EQUALTO .)
     STATIC          reduce using rule 210 (operador -> EQUALTO .)
     CONST           reduce using rule 210 (operador -> EQUALTO .)
-    RPAREN          reduce using rule 210 (operador -> EQUALTO .)
 
 
 state 196
@@ -7970,7 +7963,6 @@ state 196
     VAR             reduce using rule 211 (operador -> NOTEQUALTO .)
     STATIC          reduce using rule 211 (operador -> NOTEQUALTO .)
     CONST           reduce using rule 211 (operador -> NOTEQUALTO .)
-    RPAREN          reduce using rule 211 (operador -> NOTEQUALTO .)
 
 
 state 197
@@ -9587,14 +9579,14 @@ state 288
 
 state 289
 
-    (46) funcionfor -> FOR LPAREN declare_any . EQUAL number_value POINTCOMMA formLog POINTCOMMA VARIABLE operador RPAREN substatement
+    (46) funcionfor -> FOR LPAREN prefix . VARIABLE EQUAL number_value POINTCOMMA formLog POINTCOMMA term RPAREN substatement
 
-    EQUAL           shift and go to state 339
+    VARIABLE        shift and go to state 339
 
 
 state 290
 
-    (47) funcionfor -> FOR LPAREN VARIABLE . EQUAL number_value POINTCOMMA formLog POINTCOMMA VARIABLE operador RPAREN substatement
+    (47) funcionfor -> FOR LPAREN VARIABLE . EQUAL number_value POINTCOMMA formLog POINTCOMMA term RPAREN substatement
 
     EQUAL           shift and go to state 340
 
@@ -11322,144 +11314,14 @@ state 338
 
 state 339
 
-    (46) funcionfor -> FOR LPAREN declare_any EQUAL . number_value POINTCOMMA formLog POINTCOMMA VARIABLE operador RPAREN substatement
-    (125) number_value -> . expression
-    (141) expression -> . expression PLUS term
-    (142) expression -> . expression MINUS term
-    (143) expression -> . term
-    (144) term -> . term PRODUCT term
-    (145) term -> . term DIVIDE term
-    (146) term -> . term1 INCREMENT
-    (147) term -> . INCREMENT term1
-    (148) term -> . term1 DECREMENT
-    (149) term -> . DECREMENT term1
-    (172) term -> . number
-    (173) term -> . factor_expr
-    (174) term -> . other_value
-    (166) term1 -> . LPAREN group RPAREN
-    (167) term1 -> . group
-    (197) number -> . NUMBER
-    (198) number -> . FLOAT
-    (175) factor_expr -> . LPAREN expression RPAREN
-    (176) other_value -> . variable
-    (177) other_value -> . funciones
-    (178) other_value -> . array_value
-    (179) other_value -> . enum_value
-    (180) other_value -> . object_value
-    (168) group -> . number
-    (169) group -> . variable
-    (170) group -> . array_value
-    (171) group -> . object_value
-    (204) variable -> . VARIABLE
-    (214) funciones -> . funcionmath
-    (215) funciones -> . funcionString
-    (216) funciones -> . funcionArray
-    (217) funciones -> . funcionConjunto
-    (187) array_value -> . variable LBRACKET expression RBRACKET
-    (188) enum_value -> . object_name POINT object_name
-    (183) object_value -> . object_value_form1
-    (184) object_value -> . object_value_form2
-    (218) funcionmath -> . mathAbs
-    (219) funcionmath -> . mathRound
-    (220) funcionmath -> . mathPow
-    (231) funcionString -> . stringCharAt
-    (232) funcionString -> . stringConcat
-    (233) funcionString -> . stringSplit
-    (240) funcionArray -> . arrayFilter
-    (241) funcionArray -> . arrayConcat
-    (242) funcionArray -> . arrayJoin
-    (250) funcionConjunto -> . conjuntoAdd
-    (251) funcionConjunto -> . conjuntoHas
-    (205) object_name -> . OBJECTNAME
-    (185) object_value_form1 -> . variable POINT variable
-    (186) object_value_form2 -> . variable POINT array_value
-    (221) mathAbs -> . declare_any EQUAL mathAbs
-    (222) mathAbs -> . FUNMATH POINT ABS LPAREN VARIABLE RPAREN
-    (223) mathAbs -> . FUNMATH POINT ABS LPAREN number_value RPAREN
-    (224) mathAbs -> . FUNMATH POINT ABS LPAREN MINUS number_value RPAREN
-    (225) mathRound -> . FUNMATH POINT ROUND LPAREN VARIABLE RPAREN
-    (226) mathRound -> . FUNMATH POINT ROUND LPAREN number_value RPAREN
-    (227) mathPow -> . FUNMATH POINT POW LPAREN VARIABLE COMMA VARIABLE RPAREN
-    (228) mathPow -> . FUNMATH POINT POW LPAREN number_value COMMA number_value RPAREN
-    (229) mathPow -> . FUNMATH POINT POW LPAREN VARIABLE COMMA number_value RPAREN
-    (230) mathPow -> . FUNMATH POINT POW LPAREN number_value COMMA VARIABLE RPAREN
-    (234) stringCharAt -> . VARIABLE POINT FUNCTIONCHARAT LPAREN VARIABLE RPAREN
-    (235) stringCharAt -> . VARIABLE POINT FUNCTIONCHARAT LPAREN number_value RPAREN
-    (236) stringConcat -> . VARIABLE POINT FUNCTIONCONCAT LPAREN VARIABLE RPAREN
-    (237) stringConcat -> . VARIABLE POINT FUNCTIONCONCAT LPAREN string RPAREN
-    (238) stringSplit -> . VARIABLE POINT FUNCTIONSPLIT LPAREN VARIABLE RPAREN
-    (239) stringSplit -> . VARIABLE POINT FUNCTIONSPLIT LPAREN string RPAREN
-    (249) arrayFilter -> . VARIABLE POINT FUNCTIONFILTER LPAREN VARIABLE RPAREN
-    (243) arrayConcat -> . VARIABLE POINT FUNCTIONCONCAT LPAREN VARIABLE RPAREN
-    (244) arrayConcat -> . VARIABLE POINT FUNCTIONCONCAT LPAREN list_types RPAREN
-    (245) arrayJoin -> . declare_any arrayJoin
-    (246) arrayJoin -> . declare_any arrayJoin POINTCOMMA
-    (247) arrayJoin -> . VARIABLE POINT FUNCTIONJOIN LPAREN VARIABLE RPAREN
-    (248) arrayJoin -> . VARIABLE POINT FUNCTIONJOIN LPAREN string RPAREN
-    (252) conjuntoAdd -> . VARIABLE POINT FUNCTIONADD LPAREN VARIABLE RPAREN
-    (253) conjuntoAdd -> . VARIABLE POINT FUNCTIONADD LPAREN number_value RPAREN
-    (254) conjuntoAdd -> . VARIABLE POINT FUNCTIONADD LPAREN boolean_value RPAREN
-    (255) conjuntoAdd -> . VARIABLE POINT FUNCTIONADD LPAREN string RPAREN
-    (256) conjuntoHas -> . VARIABLE POINT FUNCTIONHAS LPAREN VARIABLE RPAREN
-    (257) conjuntoHas -> . VARIABLE POINT FUNCTIONHAS LPAREN number_value RPAREN
-    (258) conjuntoHas -> . VARIABLE POINT FUNCTIONHAS LPAREN boolean_value RPAREN
-    (259) conjuntoHas -> . VARIABLE POINT FUNCTIONHAS LPAREN string RPAREN
-    (87) declare_any -> . prefix VARIABLE
-    (189) prefix -> . LET
-    (190) prefix -> . VAR
-    (191) prefix -> . STATIC
-    (192) prefix -> . CONST
+    (46) funcionfor -> FOR LPAREN prefix VARIABLE . EQUAL number_value POINTCOMMA formLog POINTCOMMA term RPAREN substatement
 
-    INCREMENT       shift and go to state 39
-    DECREMENT       shift and go to state 40
-    LPAREN          shift and go to state 180
-    NUMBER          shift and go to state 68
-    FLOAT           shift and go to state 69
-    VARIABLE        shift and go to state 63
-    OBJECTNAME      shift and go to state 56
-    FUNMATH         shift and go to state 96
-    LET             shift and go to state 78
-    VAR             shift and go to state 79
-    STATIC          shift and go to state 80
-    CONST           shift and go to state 81
+    EQUAL           shift and go to state 388
 
-    declare_any                    shift and go to state 125
-    number_value                   shift and go to state 388
-    expression                     shift and go to state 341
-    term                           shift and go to state 15
-    term1                          shift and go to state 38
-    number                         shift and go to state 41
-    factor_expr                    shift and go to state 42
-    other_value                    shift and go to state 43
-    group                          shift and go to state 67
-    variable                       shift and go to state 137
-    funciones                      shift and go to state 58
-    array_value                    shift and go to state 138
-    enum_value                     shift and go to state 50
-    object_value                   shift and go to state 70
-    funcionmath                    shift and go to state 47
-    funcionString                  shift and go to state 82
-    funcionArray                   shift and go to state 83
-    funcionConjunto                shift and go to state 84
-    object_name                    shift and go to state 74
-    object_value_form1             shift and go to state 123
-    object_value_form2             shift and go to state 124
-    mathAbs                        shift and go to state 85
-    mathRound                      shift and go to state 86
-    mathPow                        shift and go to state 87
-    stringCharAt                   shift and go to state 88
-    stringConcat                   shift and go to state 89
-    stringSplit                    shift and go to state 90
-    arrayFilter                    shift and go to state 91
-    arrayConcat                    shift and go to state 92
-    arrayJoin                      shift and go to state 93
-    conjuntoAdd                    shift and go to state 94
-    conjuntoHas                    shift and go to state 95
-    prefix                         shift and go to state 62
 
 state 340
 
-    (47) funcionfor -> FOR LPAREN VARIABLE EQUAL . number_value POINTCOMMA formLog POINTCOMMA VARIABLE operador RPAREN substatement
+    (47) funcionfor -> FOR LPAREN VARIABLE EQUAL . number_value POINTCOMMA formLog POINTCOMMA term RPAREN substatement
     (125) number_value -> . expression
     (141) expression -> . expression PLUS term
     (142) expression -> . expression MINUS term
@@ -11561,8 +11423,8 @@ state 340
     CONST           shift and go to state 81
 
     number_value                   shift and go to state 389
-    expression                     shift and go to state 341
     term                           shift and go to state 15
+    expression                     shift and go to state 341
     term1                          shift and go to state 38
     number                         shift and go to state 41
     factor_expr                    shift and go to state 42
@@ -13186,8 +13048,8 @@ state 386
     (41) funcionif -> . IF LPAREN formLog RPAREN substatement funcionelif funcionelse
     (42) funcionif -> . IF LPAREN formLog RPAREN substatement funcionelse
     (48) funcionwhile -> . WHILE LPAREN formLog RPAREN substatement
-    (46) funcionfor -> . FOR LPAREN declare_any EQUAL number_value POINTCOMMA formLog POINTCOMMA VARIABLE operador RPAREN substatement
-    (47) funcionfor -> . FOR LPAREN VARIABLE EQUAL number_value POINTCOMMA formLog POINTCOMMA VARIABLE operador RPAREN substatement
+    (46) funcionfor -> . FOR LPAREN prefix VARIABLE EQUAL number_value POINTCOMMA formLog POINTCOMMA term RPAREN substatement
+    (47) funcionfor -> . FOR LPAREN VARIABLE EQUAL number_value POINTCOMMA formLog POINTCOMMA term RPAREN substatement
     (166) term1 -> . LPAREN group RPAREN
     (167) term1 -> . group
     (197) number -> . NUMBER
@@ -13391,14 +13253,144 @@ state 387
 
 state 388
 
-    (46) funcionfor -> FOR LPAREN declare_any EQUAL number_value . POINTCOMMA formLog POINTCOMMA VARIABLE operador RPAREN substatement
+    (46) funcionfor -> FOR LPAREN prefix VARIABLE EQUAL . number_value POINTCOMMA formLog POINTCOMMA term RPAREN substatement
+    (125) number_value -> . expression
+    (141) expression -> . expression PLUS term
+    (142) expression -> . expression MINUS term
+    (143) expression -> . term
+    (144) term -> . term PRODUCT term
+    (145) term -> . term DIVIDE term
+    (146) term -> . term1 INCREMENT
+    (147) term -> . INCREMENT term1
+    (148) term -> . term1 DECREMENT
+    (149) term -> . DECREMENT term1
+    (172) term -> . number
+    (173) term -> . factor_expr
+    (174) term -> . other_value
+    (166) term1 -> . LPAREN group RPAREN
+    (167) term1 -> . group
+    (197) number -> . NUMBER
+    (198) number -> . FLOAT
+    (175) factor_expr -> . LPAREN expression RPAREN
+    (176) other_value -> . variable
+    (177) other_value -> . funciones
+    (178) other_value -> . array_value
+    (179) other_value -> . enum_value
+    (180) other_value -> . object_value
+    (168) group -> . number
+    (169) group -> . variable
+    (170) group -> . array_value
+    (171) group -> . object_value
+    (204) variable -> . VARIABLE
+    (214) funciones -> . funcionmath
+    (215) funciones -> . funcionString
+    (216) funciones -> . funcionArray
+    (217) funciones -> . funcionConjunto
+    (187) array_value -> . variable LBRACKET expression RBRACKET
+    (188) enum_value -> . object_name POINT object_name
+    (183) object_value -> . object_value_form1
+    (184) object_value -> . object_value_form2
+    (218) funcionmath -> . mathAbs
+    (219) funcionmath -> . mathRound
+    (220) funcionmath -> . mathPow
+    (231) funcionString -> . stringCharAt
+    (232) funcionString -> . stringConcat
+    (233) funcionString -> . stringSplit
+    (240) funcionArray -> . arrayFilter
+    (241) funcionArray -> . arrayConcat
+    (242) funcionArray -> . arrayJoin
+    (250) funcionConjunto -> . conjuntoAdd
+    (251) funcionConjunto -> . conjuntoHas
+    (205) object_name -> . OBJECTNAME
+    (185) object_value_form1 -> . variable POINT variable
+    (186) object_value_form2 -> . variable POINT array_value
+    (221) mathAbs -> . declare_any EQUAL mathAbs
+    (222) mathAbs -> . FUNMATH POINT ABS LPAREN VARIABLE RPAREN
+    (223) mathAbs -> . FUNMATH POINT ABS LPAREN number_value RPAREN
+    (224) mathAbs -> . FUNMATH POINT ABS LPAREN MINUS number_value RPAREN
+    (225) mathRound -> . FUNMATH POINT ROUND LPAREN VARIABLE RPAREN
+    (226) mathRound -> . FUNMATH POINT ROUND LPAREN number_value RPAREN
+    (227) mathPow -> . FUNMATH POINT POW LPAREN VARIABLE COMMA VARIABLE RPAREN
+    (228) mathPow -> . FUNMATH POINT POW LPAREN number_value COMMA number_value RPAREN
+    (229) mathPow -> . FUNMATH POINT POW LPAREN VARIABLE COMMA number_value RPAREN
+    (230) mathPow -> . FUNMATH POINT POW LPAREN number_value COMMA VARIABLE RPAREN
+    (234) stringCharAt -> . VARIABLE POINT FUNCTIONCHARAT LPAREN VARIABLE RPAREN
+    (235) stringCharAt -> . VARIABLE POINT FUNCTIONCHARAT LPAREN number_value RPAREN
+    (236) stringConcat -> . VARIABLE POINT FUNCTIONCONCAT LPAREN VARIABLE RPAREN
+    (237) stringConcat -> . VARIABLE POINT FUNCTIONCONCAT LPAREN string RPAREN
+    (238) stringSplit -> . VARIABLE POINT FUNCTIONSPLIT LPAREN VARIABLE RPAREN
+    (239) stringSplit -> . VARIABLE POINT FUNCTIONSPLIT LPAREN string RPAREN
+    (249) arrayFilter -> . VARIABLE POINT FUNCTIONFILTER LPAREN VARIABLE RPAREN
+    (243) arrayConcat -> . VARIABLE POINT FUNCTIONCONCAT LPAREN VARIABLE RPAREN
+    (244) arrayConcat -> . VARIABLE POINT FUNCTIONCONCAT LPAREN list_types RPAREN
+    (245) arrayJoin -> . declare_any arrayJoin
+    (246) arrayJoin -> . declare_any arrayJoin POINTCOMMA
+    (247) arrayJoin -> . VARIABLE POINT FUNCTIONJOIN LPAREN VARIABLE RPAREN
+    (248) arrayJoin -> . VARIABLE POINT FUNCTIONJOIN LPAREN string RPAREN
+    (252) conjuntoAdd -> . VARIABLE POINT FUNCTIONADD LPAREN VARIABLE RPAREN
+    (253) conjuntoAdd -> . VARIABLE POINT FUNCTIONADD LPAREN number_value RPAREN
+    (254) conjuntoAdd -> . VARIABLE POINT FUNCTIONADD LPAREN boolean_value RPAREN
+    (255) conjuntoAdd -> . VARIABLE POINT FUNCTIONADD LPAREN string RPAREN
+    (256) conjuntoHas -> . VARIABLE POINT FUNCTIONHAS LPAREN VARIABLE RPAREN
+    (257) conjuntoHas -> . VARIABLE POINT FUNCTIONHAS LPAREN number_value RPAREN
+    (258) conjuntoHas -> . VARIABLE POINT FUNCTIONHAS LPAREN boolean_value RPAREN
+    (259) conjuntoHas -> . VARIABLE POINT FUNCTIONHAS LPAREN string RPAREN
+    (87) declare_any -> . prefix VARIABLE
+    (189) prefix -> . LET
+    (190) prefix -> . VAR
+    (191) prefix -> . STATIC
+    (192) prefix -> . CONST
 
-    POINTCOMMA      shift and go to state 437
+    INCREMENT       shift and go to state 39
+    DECREMENT       shift and go to state 40
+    LPAREN          shift and go to state 180
+    NUMBER          shift and go to state 68
+    FLOAT           shift and go to state 69
+    VARIABLE        shift and go to state 63
+    OBJECTNAME      shift and go to state 56
+    FUNMATH         shift and go to state 96
+    LET             shift and go to state 78
+    VAR             shift and go to state 79
+    STATIC          shift and go to state 80
+    CONST           shift and go to state 81
 
+    prefix                         shift and go to state 62
+    number_value                   shift and go to state 437
+    term                           shift and go to state 15
+    expression                     shift and go to state 341
+    term1                          shift and go to state 38
+    number                         shift and go to state 41
+    factor_expr                    shift and go to state 42
+    other_value                    shift and go to state 43
+    group                          shift and go to state 67
+    variable                       shift and go to state 137
+    funciones                      shift and go to state 58
+    array_value                    shift and go to state 138
+    enum_value                     shift and go to state 50
+    object_value                   shift and go to state 70
+    funcionmath                    shift and go to state 47
+    funcionString                  shift and go to state 82
+    funcionArray                   shift and go to state 83
+    funcionConjunto                shift and go to state 84
+    object_name                    shift and go to state 74
+    object_value_form1             shift and go to state 123
+    object_value_form2             shift and go to state 124
+    mathAbs                        shift and go to state 85
+    mathRound                      shift and go to state 86
+    mathPow                        shift and go to state 87
+    stringCharAt                   shift and go to state 88
+    stringConcat                   shift and go to state 89
+    stringSplit                    shift and go to state 90
+    arrayFilter                    shift and go to state 91
+    arrayConcat                    shift and go to state 92
+    arrayJoin                      shift and go to state 93
+    conjuntoAdd                    shift and go to state 94
+    conjuntoHas                    shift and go to state 95
+    declare_any                    shift and go to state 125
 
 state 389
 
-    (47) funcionfor -> FOR LPAREN VARIABLE EQUAL number_value . POINTCOMMA formLog POINTCOMMA VARIABLE operador RPAREN substatement
+    (47) funcionfor -> FOR LPAREN VARIABLE EQUAL number_value . POINTCOMMA formLog POINTCOMMA term RPAREN substatement
 
     POINTCOMMA      shift and go to state 438
 
@@ -14349,154 +14341,14 @@ state 436
 
 state 437
 
-    (46) funcionfor -> FOR LPAREN declare_any EQUAL number_value POINTCOMMA . formLog POINTCOMMA VARIABLE operador RPAREN substatement
-    (181) formLog -> . expCond
-    (182) formLog -> . expOpLog
-    (164) expCond -> . expression operador expression
-    (165) expCond -> . LPAREN expression operador expression RPAREN
-    (160) expOpLog -> . expCond oplogico expCond
-    (161) expOpLog -> . factor_exprlog oplogico factor_exprlog
-    (162) expOpLog -> . expression oplogico expression
-    (141) expression -> . expression PLUS term
-    (142) expression -> . expression MINUS term
-    (143) expression -> . term
-    (163) factor_exprlog -> . LPAREN expCond RPAREN
-    (144) term -> . term PRODUCT term
-    (145) term -> . term DIVIDE term
-    (146) term -> . term1 INCREMENT
-    (147) term -> . INCREMENT term1
-    (148) term -> . term1 DECREMENT
-    (149) term -> . DECREMENT term1
-    (172) term -> . number
-    (173) term -> . factor_expr
-    (174) term -> . other_value
-    (166) term1 -> . LPAREN group RPAREN
-    (167) term1 -> . group
-    (197) number -> . NUMBER
-    (198) number -> . FLOAT
-    (175) factor_expr -> . LPAREN expression RPAREN
-    (176) other_value -> . variable
-    (177) other_value -> . funciones
-    (178) other_value -> . array_value
-    (179) other_value -> . enum_value
-    (180) other_value -> . object_value
-    (168) group -> . number
-    (169) group -> . variable
-    (170) group -> . array_value
-    (171) group -> . object_value
-    (204) variable -> . VARIABLE
-    (214) funciones -> . funcionmath
-    (215) funciones -> . funcionString
-    (216) funciones -> . funcionArray
-    (217) funciones -> . funcionConjunto
-    (187) array_value -> . variable LBRACKET expression RBRACKET
-    (188) enum_value -> . object_name POINT object_name
-    (183) object_value -> . object_value_form1
-    (184) object_value -> . object_value_form2
-    (218) funcionmath -> . mathAbs
-    (219) funcionmath -> . mathRound
-    (220) funcionmath -> . mathPow
-    (231) funcionString -> . stringCharAt
-    (232) funcionString -> . stringConcat
-    (233) funcionString -> . stringSplit
-    (240) funcionArray -> . arrayFilter
-    (241) funcionArray -> . arrayConcat
-    (242) funcionArray -> . arrayJoin
-    (250) funcionConjunto -> . conjuntoAdd
-    (251) funcionConjunto -> . conjuntoHas
-    (205) object_name -> . OBJECTNAME
-    (185) object_value_form1 -> . variable POINT variable
-    (186) object_value_form2 -> . variable POINT array_value
-    (221) mathAbs -> . declare_any EQUAL mathAbs
-    (222) mathAbs -> . FUNMATH POINT ABS LPAREN VARIABLE RPAREN
-    (223) mathAbs -> . FUNMATH POINT ABS LPAREN number_value RPAREN
-    (224) mathAbs -> . FUNMATH POINT ABS LPAREN MINUS number_value RPAREN
-    (225) mathRound -> . FUNMATH POINT ROUND LPAREN VARIABLE RPAREN
-    (226) mathRound -> . FUNMATH POINT ROUND LPAREN number_value RPAREN
-    (227) mathPow -> . FUNMATH POINT POW LPAREN VARIABLE COMMA VARIABLE RPAREN
-    (228) mathPow -> . FUNMATH POINT POW LPAREN number_value COMMA number_value RPAREN
-    (229) mathPow -> . FUNMATH POINT POW LPAREN VARIABLE COMMA number_value RPAREN
-    (230) mathPow -> . FUNMATH POINT POW LPAREN number_value COMMA VARIABLE RPAREN
-    (234) stringCharAt -> . VARIABLE POINT FUNCTIONCHARAT LPAREN VARIABLE RPAREN
-    (235) stringCharAt -> . VARIABLE POINT FUNCTIONCHARAT LPAREN number_value RPAREN
-    (236) stringConcat -> . VARIABLE POINT FUNCTIONCONCAT LPAREN VARIABLE RPAREN
-    (237) stringConcat -> . VARIABLE POINT FUNCTIONCONCAT LPAREN string RPAREN
-    (238) stringSplit -> . VARIABLE POINT FUNCTIONSPLIT LPAREN VARIABLE RPAREN
-    (239) stringSplit -> . VARIABLE POINT FUNCTIONSPLIT LPAREN string RPAREN
-    (249) arrayFilter -> . VARIABLE POINT FUNCTIONFILTER LPAREN VARIABLE RPAREN
-    (243) arrayConcat -> . VARIABLE POINT FUNCTIONCONCAT LPAREN VARIABLE RPAREN
-    (244) arrayConcat -> . VARIABLE POINT FUNCTIONCONCAT LPAREN list_types RPAREN
-    (245) arrayJoin -> . declare_any arrayJoin
-    (246) arrayJoin -> . declare_any arrayJoin POINTCOMMA
-    (247) arrayJoin -> . VARIABLE POINT FUNCTIONJOIN LPAREN VARIABLE RPAREN
-    (248) arrayJoin -> . VARIABLE POINT FUNCTIONJOIN LPAREN string RPAREN
-    (252) conjuntoAdd -> . VARIABLE POINT FUNCTIONADD LPAREN VARIABLE RPAREN
-    (253) conjuntoAdd -> . VARIABLE POINT FUNCTIONADD LPAREN number_value RPAREN
-    (254) conjuntoAdd -> . VARIABLE POINT FUNCTIONADD LPAREN boolean_value RPAREN
-    (255) conjuntoAdd -> . VARIABLE POINT FUNCTIONADD LPAREN string RPAREN
-    (256) conjuntoHas -> . VARIABLE POINT FUNCTIONHAS LPAREN VARIABLE RPAREN
-    (257) conjuntoHas -> . VARIABLE POINT FUNCTIONHAS LPAREN number_value RPAREN
-    (258) conjuntoHas -> . VARIABLE POINT FUNCTIONHAS LPAREN boolean_value RPAREN
-    (259) conjuntoHas -> . VARIABLE POINT FUNCTIONHAS LPAREN string RPAREN
-    (87) declare_any -> . prefix VARIABLE
-    (189) prefix -> . LET
-    (190) prefix -> . VAR
-    (191) prefix -> . STATIC
-    (192) prefix -> . CONST
+    (46) funcionfor -> FOR LPAREN prefix VARIABLE EQUAL number_value . POINTCOMMA formLog POINTCOMMA term RPAREN substatement
 
-    LPAREN          shift and go to state 29
-    INCREMENT       shift and go to state 39
-    DECREMENT       shift and go to state 40
-    NUMBER          shift and go to state 68
-    FLOAT           shift and go to state 69
-    VARIABLE        shift and go to state 63
-    OBJECTNAME      shift and go to state 56
-    FUNMATH         shift and go to state 96
-    LET             shift and go to state 78
-    VAR             shift and go to state 79
-    STATIC          shift and go to state 80
-    CONST           shift and go to state 81
+    POINTCOMMA      shift and go to state 452
 
-    declare_any                    shift and go to state 125
-    formLog                        shift and go to state 452
-    expCond                        shift and go to state 285
-    expOpLog                       shift and go to state 286
-    expression                     shift and go to state 287
-    factor_exprlog                 shift and go to state 207
-    term                           shift and go to state 15
-    term1                          shift and go to state 38
-    number                         shift and go to state 41
-    factor_expr                    shift and go to state 42
-    other_value                    shift and go to state 43
-    group                          shift and go to state 67
-    variable                       shift and go to state 137
-    funciones                      shift and go to state 58
-    array_value                    shift and go to state 138
-    enum_value                     shift and go to state 50
-    object_value                   shift and go to state 70
-    funcionmath                    shift and go to state 47
-    funcionString                  shift and go to state 82
-    funcionArray                   shift and go to state 83
-    funcionConjunto                shift and go to state 84
-    object_name                    shift and go to state 74
-    object_value_form1             shift and go to state 123
-    object_value_form2             shift and go to state 124
-    mathAbs                        shift and go to state 85
-    mathRound                      shift and go to state 86
-    mathPow                        shift and go to state 87
-    stringCharAt                   shift and go to state 88
-    stringConcat                   shift and go to state 89
-    stringSplit                    shift and go to state 90
-    arrayFilter                    shift and go to state 91
-    arrayConcat                    shift and go to state 92
-    arrayJoin                      shift and go to state 93
-    conjuntoAdd                    shift and go to state 94
-    conjuntoHas                    shift and go to state 95
-    prefix                         shift and go to state 62
 
 state 438
 
-    (47) funcionfor -> FOR LPAREN VARIABLE EQUAL number_value POINTCOMMA . formLog POINTCOMMA VARIABLE operador RPAREN substatement
+    (47) funcionfor -> FOR LPAREN VARIABLE EQUAL number_value POINTCOMMA . formLog POINTCOMMA term RPAREN substatement
     (181) formLog -> . expCond
     (182) formLog -> . expOpLog
     (164) expCond -> . expression operador expression
@@ -14605,11 +14457,11 @@ state 438
     CONST           shift and go to state 81
 
     formLog                        shift and go to state 453
+    term                           shift and go to state 15
     expCond                        shift and go to state 285
     expOpLog                       shift and go to state 286
     expression                     shift and go to state 287
     factor_exprlog                 shift and go to state 207
-    term                           shift and go to state 15
     term1                          shift and go to state 38
     number                         shift and go to state 41
     factor_expr                    shift and go to state 42
@@ -15223,14 +15075,154 @@ state 451
 
 state 452
 
-    (46) funcionfor -> FOR LPAREN declare_any EQUAL number_value POINTCOMMA formLog . POINTCOMMA VARIABLE operador RPAREN substatement
+    (46) funcionfor -> FOR LPAREN prefix VARIABLE EQUAL number_value POINTCOMMA . formLog POINTCOMMA term RPAREN substatement
+    (181) formLog -> . expCond
+    (182) formLog -> . expOpLog
+    (164) expCond -> . expression operador expression
+    (165) expCond -> . LPAREN expression operador expression RPAREN
+    (160) expOpLog -> . expCond oplogico expCond
+    (161) expOpLog -> . factor_exprlog oplogico factor_exprlog
+    (162) expOpLog -> . expression oplogico expression
+    (141) expression -> . expression PLUS term
+    (142) expression -> . expression MINUS term
+    (143) expression -> . term
+    (163) factor_exprlog -> . LPAREN expCond RPAREN
+    (144) term -> . term PRODUCT term
+    (145) term -> . term DIVIDE term
+    (146) term -> . term1 INCREMENT
+    (147) term -> . INCREMENT term1
+    (148) term -> . term1 DECREMENT
+    (149) term -> . DECREMENT term1
+    (172) term -> . number
+    (173) term -> . factor_expr
+    (174) term -> . other_value
+    (166) term1 -> . LPAREN group RPAREN
+    (167) term1 -> . group
+    (197) number -> . NUMBER
+    (198) number -> . FLOAT
+    (175) factor_expr -> . LPAREN expression RPAREN
+    (176) other_value -> . variable
+    (177) other_value -> . funciones
+    (178) other_value -> . array_value
+    (179) other_value -> . enum_value
+    (180) other_value -> . object_value
+    (168) group -> . number
+    (169) group -> . variable
+    (170) group -> . array_value
+    (171) group -> . object_value
+    (204) variable -> . VARIABLE
+    (214) funciones -> . funcionmath
+    (215) funciones -> . funcionString
+    (216) funciones -> . funcionArray
+    (217) funciones -> . funcionConjunto
+    (187) array_value -> . variable LBRACKET expression RBRACKET
+    (188) enum_value -> . object_name POINT object_name
+    (183) object_value -> . object_value_form1
+    (184) object_value -> . object_value_form2
+    (218) funcionmath -> . mathAbs
+    (219) funcionmath -> . mathRound
+    (220) funcionmath -> . mathPow
+    (231) funcionString -> . stringCharAt
+    (232) funcionString -> . stringConcat
+    (233) funcionString -> . stringSplit
+    (240) funcionArray -> . arrayFilter
+    (241) funcionArray -> . arrayConcat
+    (242) funcionArray -> . arrayJoin
+    (250) funcionConjunto -> . conjuntoAdd
+    (251) funcionConjunto -> . conjuntoHas
+    (205) object_name -> . OBJECTNAME
+    (185) object_value_form1 -> . variable POINT variable
+    (186) object_value_form2 -> . variable POINT array_value
+    (221) mathAbs -> . declare_any EQUAL mathAbs
+    (222) mathAbs -> . FUNMATH POINT ABS LPAREN VARIABLE RPAREN
+    (223) mathAbs -> . FUNMATH POINT ABS LPAREN number_value RPAREN
+    (224) mathAbs -> . FUNMATH POINT ABS LPAREN MINUS number_value RPAREN
+    (225) mathRound -> . FUNMATH POINT ROUND LPAREN VARIABLE RPAREN
+    (226) mathRound -> . FUNMATH POINT ROUND LPAREN number_value RPAREN
+    (227) mathPow -> . FUNMATH POINT POW LPAREN VARIABLE COMMA VARIABLE RPAREN
+    (228) mathPow -> . FUNMATH POINT POW LPAREN number_value COMMA number_value RPAREN
+    (229) mathPow -> . FUNMATH POINT POW LPAREN VARIABLE COMMA number_value RPAREN
+    (230) mathPow -> . FUNMATH POINT POW LPAREN number_value COMMA VARIABLE RPAREN
+    (234) stringCharAt -> . VARIABLE POINT FUNCTIONCHARAT LPAREN VARIABLE RPAREN
+    (235) stringCharAt -> . VARIABLE POINT FUNCTIONCHARAT LPAREN number_value RPAREN
+    (236) stringConcat -> . VARIABLE POINT FUNCTIONCONCAT LPAREN VARIABLE RPAREN
+    (237) stringConcat -> . VARIABLE POINT FUNCTIONCONCAT LPAREN string RPAREN
+    (238) stringSplit -> . VARIABLE POINT FUNCTIONSPLIT LPAREN VARIABLE RPAREN
+    (239) stringSplit -> . VARIABLE POINT FUNCTIONSPLIT LPAREN string RPAREN
+    (249) arrayFilter -> . VARIABLE POINT FUNCTIONFILTER LPAREN VARIABLE RPAREN
+    (243) arrayConcat -> . VARIABLE POINT FUNCTIONCONCAT LPAREN VARIABLE RPAREN
+    (244) arrayConcat -> . VARIABLE POINT FUNCTIONCONCAT LPAREN list_types RPAREN
+    (245) arrayJoin -> . declare_any arrayJoin
+    (246) arrayJoin -> . declare_any arrayJoin POINTCOMMA
+    (247) arrayJoin -> . VARIABLE POINT FUNCTIONJOIN LPAREN VARIABLE RPAREN
+    (248) arrayJoin -> . VARIABLE POINT FUNCTIONJOIN LPAREN string RPAREN
+    (252) conjuntoAdd -> . VARIABLE POINT FUNCTIONADD LPAREN VARIABLE RPAREN
+    (253) conjuntoAdd -> . VARIABLE POINT FUNCTIONADD LPAREN number_value RPAREN
+    (254) conjuntoAdd -> . VARIABLE POINT FUNCTIONADD LPAREN boolean_value RPAREN
+    (255) conjuntoAdd -> . VARIABLE POINT FUNCTIONADD LPAREN string RPAREN
+    (256) conjuntoHas -> . VARIABLE POINT FUNCTIONHAS LPAREN VARIABLE RPAREN
+    (257) conjuntoHas -> . VARIABLE POINT FUNCTIONHAS LPAREN number_value RPAREN
+    (258) conjuntoHas -> . VARIABLE POINT FUNCTIONHAS LPAREN boolean_value RPAREN
+    (259) conjuntoHas -> . VARIABLE POINT FUNCTIONHAS LPAREN string RPAREN
+    (87) declare_any -> . prefix VARIABLE
+    (189) prefix -> . LET
+    (190) prefix -> . VAR
+    (191) prefix -> . STATIC
+    (192) prefix -> . CONST
 
-    POINTCOMMA      shift and go to state 460
+    LPAREN          shift and go to state 29
+    INCREMENT       shift and go to state 39
+    DECREMENT       shift and go to state 40
+    NUMBER          shift and go to state 68
+    FLOAT           shift and go to state 69
+    VARIABLE        shift and go to state 63
+    OBJECTNAME      shift and go to state 56
+    FUNMATH         shift and go to state 96
+    LET             shift and go to state 78
+    VAR             shift and go to state 79
+    STATIC          shift and go to state 80
+    CONST           shift and go to state 81
 
+    prefix                         shift and go to state 62
+    formLog                        shift and go to state 460
+    term                           shift and go to state 15
+    expCond                        shift and go to state 285
+    expOpLog                       shift and go to state 286
+    expression                     shift and go to state 287
+    factor_exprlog                 shift and go to state 207
+    term1                          shift and go to state 38
+    number                         shift and go to state 41
+    factor_expr                    shift and go to state 42
+    other_value                    shift and go to state 43
+    group                          shift and go to state 67
+    variable                       shift and go to state 137
+    funciones                      shift and go to state 58
+    array_value                    shift and go to state 138
+    enum_value                     shift and go to state 50
+    object_value                   shift and go to state 70
+    funcionmath                    shift and go to state 47
+    funcionString                  shift and go to state 82
+    funcionArray                   shift and go to state 83
+    funcionConjunto                shift and go to state 84
+    object_name                    shift and go to state 74
+    object_value_form1             shift and go to state 123
+    object_value_form2             shift and go to state 124
+    mathAbs                        shift and go to state 85
+    mathRound                      shift and go to state 86
+    mathPow                        shift and go to state 87
+    stringCharAt                   shift and go to state 88
+    stringConcat                   shift and go to state 89
+    stringSplit                    shift and go to state 90
+    arrayFilter                    shift and go to state 91
+    arrayConcat                    shift and go to state 92
+    arrayJoin                      shift and go to state 93
+    conjuntoAdd                    shift and go to state 94
+    conjuntoHas                    shift and go to state 95
+    declare_any                    shift and go to state 125
 
 state 453
 
-    (47) funcionfor -> FOR LPAREN VARIABLE EQUAL number_value POINTCOMMA formLog . POINTCOMMA VARIABLE operador RPAREN substatement
+    (47) funcionfor -> FOR LPAREN VARIABLE EQUAL number_value POINTCOMMA formLog . POINTCOMMA term RPAREN substatement
 
     POINTCOMMA      shift and go to state 461
 
@@ -15363,17 +15355,141 @@ state 459
 
 state 460
 
-    (46) funcionfor -> FOR LPAREN declare_any EQUAL number_value POINTCOMMA formLog POINTCOMMA . VARIABLE operador RPAREN substatement
+    (46) funcionfor -> FOR LPAREN prefix VARIABLE EQUAL number_value POINTCOMMA formLog . POINTCOMMA term RPAREN substatement
 
-    VARIABLE        shift and go to state 467
+    POINTCOMMA      shift and go to state 467
 
 
 state 461
 
-    (47) funcionfor -> FOR LPAREN VARIABLE EQUAL number_value POINTCOMMA formLog POINTCOMMA . VARIABLE operador RPAREN substatement
+    (47) funcionfor -> FOR LPAREN VARIABLE EQUAL number_value POINTCOMMA formLog POINTCOMMA . term RPAREN substatement
+    (144) term -> . term PRODUCT term
+    (145) term -> . term DIVIDE term
+    (146) term -> . term1 INCREMENT
+    (147) term -> . INCREMENT term1
+    (148) term -> . term1 DECREMENT
+    (149) term -> . DECREMENT term1
+    (172) term -> . number
+    (173) term -> . factor_expr
+    (174) term -> . other_value
+    (166) term1 -> . LPAREN group RPAREN
+    (167) term1 -> . group
+    (197) number -> . NUMBER
+    (198) number -> . FLOAT
+    (175) factor_expr -> . LPAREN expression RPAREN
+    (176) other_value -> . variable
+    (177) other_value -> . funciones
+    (178) other_value -> . array_value
+    (179) other_value -> . enum_value
+    (180) other_value -> . object_value
+    (168) group -> . number
+    (169) group -> . variable
+    (170) group -> . array_value
+    (171) group -> . object_value
+    (204) variable -> . VARIABLE
+    (214) funciones -> . funcionmath
+    (215) funciones -> . funcionString
+    (216) funciones -> . funcionArray
+    (217) funciones -> . funcionConjunto
+    (187) array_value -> . variable LBRACKET expression RBRACKET
+    (188) enum_value -> . object_name POINT object_name
+    (183) object_value -> . object_value_form1
+    (184) object_value -> . object_value_form2
+    (218) funcionmath -> . mathAbs
+    (219) funcionmath -> . mathRound
+    (220) funcionmath -> . mathPow
+    (231) funcionString -> . stringCharAt
+    (232) funcionString -> . stringConcat
+    (233) funcionString -> . stringSplit
+    (240) funcionArray -> . arrayFilter
+    (241) funcionArray -> . arrayConcat
+    (242) funcionArray -> . arrayJoin
+    (250) funcionConjunto -> . conjuntoAdd
+    (251) funcionConjunto -> . conjuntoHas
+    (205) object_name -> . OBJECTNAME
+    (185) object_value_form1 -> . variable POINT variable
+    (186) object_value_form2 -> . variable POINT array_value
+    (221) mathAbs -> . declare_any EQUAL mathAbs
+    (222) mathAbs -> . FUNMATH POINT ABS LPAREN VARIABLE RPAREN
+    (223) mathAbs -> . FUNMATH POINT ABS LPAREN number_value RPAREN
+    (224) mathAbs -> . FUNMATH POINT ABS LPAREN MINUS number_value RPAREN
+    (225) mathRound -> . FUNMATH POINT ROUND LPAREN VARIABLE RPAREN
+    (226) mathRound -> . FUNMATH POINT ROUND LPAREN number_value RPAREN
+    (227) mathPow -> . FUNMATH POINT POW LPAREN VARIABLE COMMA VARIABLE RPAREN
+    (228) mathPow -> . FUNMATH POINT POW LPAREN number_value COMMA number_value RPAREN
+    (229) mathPow -> . FUNMATH POINT POW LPAREN VARIABLE COMMA number_value RPAREN
+    (230) mathPow -> . FUNMATH POINT POW LPAREN number_value COMMA VARIABLE RPAREN
+    (234) stringCharAt -> . VARIABLE POINT FUNCTIONCHARAT LPAREN VARIABLE RPAREN
+    (235) stringCharAt -> . VARIABLE POINT FUNCTIONCHARAT LPAREN number_value RPAREN
+    (236) stringConcat -> . VARIABLE POINT FUNCTIONCONCAT LPAREN VARIABLE RPAREN
+    (237) stringConcat -> . VARIABLE POINT FUNCTIONCONCAT LPAREN string RPAREN
+    (238) stringSplit -> . VARIABLE POINT FUNCTIONSPLIT LPAREN VARIABLE RPAREN
+    (239) stringSplit -> . VARIABLE POINT FUNCTIONSPLIT LPAREN string RPAREN
+    (249) arrayFilter -> . VARIABLE POINT FUNCTIONFILTER LPAREN VARIABLE RPAREN
+    (243) arrayConcat -> . VARIABLE POINT FUNCTIONCONCAT LPAREN VARIABLE RPAREN
+    (244) arrayConcat -> . VARIABLE POINT FUNCTIONCONCAT LPAREN list_types RPAREN
+    (245) arrayJoin -> . declare_any arrayJoin
+    (246) arrayJoin -> . declare_any arrayJoin POINTCOMMA
+    (247) arrayJoin -> . VARIABLE POINT FUNCTIONJOIN LPAREN VARIABLE RPAREN
+    (248) arrayJoin -> . VARIABLE POINT FUNCTIONJOIN LPAREN string RPAREN
+    (252) conjuntoAdd -> . VARIABLE POINT FUNCTIONADD LPAREN VARIABLE RPAREN
+    (253) conjuntoAdd -> . VARIABLE POINT FUNCTIONADD LPAREN number_value RPAREN
+    (254) conjuntoAdd -> . VARIABLE POINT FUNCTIONADD LPAREN boolean_value RPAREN
+    (255) conjuntoAdd -> . VARIABLE POINT FUNCTIONADD LPAREN string RPAREN
+    (256) conjuntoHas -> . VARIABLE POINT FUNCTIONHAS LPAREN VARIABLE RPAREN
+    (257) conjuntoHas -> . VARIABLE POINT FUNCTIONHAS LPAREN number_value RPAREN
+    (258) conjuntoHas -> . VARIABLE POINT FUNCTIONHAS LPAREN boolean_value RPAREN
+    (259) conjuntoHas -> . VARIABLE POINT FUNCTIONHAS LPAREN string RPAREN
+    (87) declare_any -> . prefix VARIABLE
+    (189) prefix -> . LET
+    (190) prefix -> . VAR
+    (191) prefix -> . STATIC
+    (192) prefix -> . CONST
 
-    VARIABLE        shift and go to state 468
+    INCREMENT       shift and go to state 39
+    DECREMENT       shift and go to state 40
+    LPAREN          shift and go to state 180
+    NUMBER          shift and go to state 68
+    FLOAT           shift and go to state 69
+    VARIABLE        shift and go to state 63
+    OBJECTNAME      shift and go to state 56
+    FUNMATH         shift and go to state 96
+    LET             shift and go to state 78
+    VAR             shift and go to state 79
+    STATIC          shift and go to state 80
+    CONST           shift and go to state 81
 
+    term                           shift and go to state 468
+    term1                          shift and go to state 38
+    number                         shift and go to state 41
+    factor_expr                    shift and go to state 42
+    other_value                    shift and go to state 43
+    group                          shift and go to state 67
+    variable                       shift and go to state 137
+    funciones                      shift and go to state 58
+    array_value                    shift and go to state 138
+    enum_value                     shift and go to state 50
+    object_value                   shift and go to state 70
+    funcionmath                    shift and go to state 47
+    funcionString                  shift and go to state 82
+    funcionArray                   shift and go to state 83
+    funcionConjunto                shift and go to state 84
+    object_name                    shift and go to state 74
+    object_value_form1             shift and go to state 123
+    object_value_form2             shift and go to state 124
+    mathAbs                        shift and go to state 85
+    mathRound                      shift and go to state 86
+    mathPow                        shift and go to state 87
+    stringCharAt                   shift and go to state 88
+    stringConcat                   shift and go to state 89
+    stringSplit                    shift and go to state 90
+    arrayFilter                    shift and go to state 91
+    arrayConcat                    shift and go to state 92
+    arrayJoin                      shift and go to state 93
+    conjuntoAdd                    shift and go to state 94
+    conjuntoHas                    shift and go to state 95
+    declare_any                    shift and go to state 125
+    prefix                         shift and go to state 62
 
 state 462
 
@@ -15484,41 +15600,145 @@ state 466
 
 state 467
 
-    (46) funcionfor -> FOR LPAREN declare_any EQUAL number_value POINTCOMMA formLog POINTCOMMA VARIABLE . operador RPAREN substatement
-    (206) operador -> . GREATER
-    (207) operador -> . LESS
-    (208) operador -> . GREATEREQUAL
-    (209) operador -> . LESSEQUAL
-    (210) operador -> . EQUALTO
-    (211) operador -> . NOTEQUALTO
+    (46) funcionfor -> FOR LPAREN prefix VARIABLE EQUAL number_value POINTCOMMA formLog POINTCOMMA . term RPAREN substatement
+    (144) term -> . term PRODUCT term
+    (145) term -> . term DIVIDE term
+    (146) term -> . term1 INCREMENT
+    (147) term -> . INCREMENT term1
+    (148) term -> . term1 DECREMENT
+    (149) term -> . DECREMENT term1
+    (172) term -> . number
+    (173) term -> . factor_expr
+    (174) term -> . other_value
+    (166) term1 -> . LPAREN group RPAREN
+    (167) term1 -> . group
+    (197) number -> . NUMBER
+    (198) number -> . FLOAT
+    (175) factor_expr -> . LPAREN expression RPAREN
+    (176) other_value -> . variable
+    (177) other_value -> . funciones
+    (178) other_value -> . array_value
+    (179) other_value -> . enum_value
+    (180) other_value -> . object_value
+    (168) group -> . number
+    (169) group -> . variable
+    (170) group -> . array_value
+    (171) group -> . object_value
+    (204) variable -> . VARIABLE
+    (214) funciones -> . funcionmath
+    (215) funciones -> . funcionString
+    (216) funciones -> . funcionArray
+    (217) funciones -> . funcionConjunto
+    (187) array_value -> . variable LBRACKET expression RBRACKET
+    (188) enum_value -> . object_name POINT object_name
+    (183) object_value -> . object_value_form1
+    (184) object_value -> . object_value_form2
+    (218) funcionmath -> . mathAbs
+    (219) funcionmath -> . mathRound
+    (220) funcionmath -> . mathPow
+    (231) funcionString -> . stringCharAt
+    (232) funcionString -> . stringConcat
+    (233) funcionString -> . stringSplit
+    (240) funcionArray -> . arrayFilter
+    (241) funcionArray -> . arrayConcat
+    (242) funcionArray -> . arrayJoin
+    (250) funcionConjunto -> . conjuntoAdd
+    (251) funcionConjunto -> . conjuntoHas
+    (205) object_name -> . OBJECTNAME
+    (185) object_value_form1 -> . variable POINT variable
+    (186) object_value_form2 -> . variable POINT array_value
+    (221) mathAbs -> . declare_any EQUAL mathAbs
+    (222) mathAbs -> . FUNMATH POINT ABS LPAREN VARIABLE RPAREN
+    (223) mathAbs -> . FUNMATH POINT ABS LPAREN number_value RPAREN
+    (224) mathAbs -> . FUNMATH POINT ABS LPAREN MINUS number_value RPAREN
+    (225) mathRound -> . FUNMATH POINT ROUND LPAREN VARIABLE RPAREN
+    (226) mathRound -> . FUNMATH POINT ROUND LPAREN number_value RPAREN
+    (227) mathPow -> . FUNMATH POINT POW LPAREN VARIABLE COMMA VARIABLE RPAREN
+    (228) mathPow -> . FUNMATH POINT POW LPAREN number_value COMMA number_value RPAREN
+    (229) mathPow -> . FUNMATH POINT POW LPAREN VARIABLE COMMA number_value RPAREN
+    (230) mathPow -> . FUNMATH POINT POW LPAREN number_value COMMA VARIABLE RPAREN
+    (234) stringCharAt -> . VARIABLE POINT FUNCTIONCHARAT LPAREN VARIABLE RPAREN
+    (235) stringCharAt -> . VARIABLE POINT FUNCTIONCHARAT LPAREN number_value RPAREN
+    (236) stringConcat -> . VARIABLE POINT FUNCTIONCONCAT LPAREN VARIABLE RPAREN
+    (237) stringConcat -> . VARIABLE POINT FUNCTIONCONCAT LPAREN string RPAREN
+    (238) stringSplit -> . VARIABLE POINT FUNCTIONSPLIT LPAREN VARIABLE RPAREN
+    (239) stringSplit -> . VARIABLE POINT FUNCTIONSPLIT LPAREN string RPAREN
+    (249) arrayFilter -> . VARIABLE POINT FUNCTIONFILTER LPAREN VARIABLE RPAREN
+    (243) arrayConcat -> . VARIABLE POINT FUNCTIONCONCAT LPAREN VARIABLE RPAREN
+    (244) arrayConcat -> . VARIABLE POINT FUNCTIONCONCAT LPAREN list_types RPAREN
+    (245) arrayJoin -> . declare_any arrayJoin
+    (246) arrayJoin -> . declare_any arrayJoin POINTCOMMA
+    (247) arrayJoin -> . VARIABLE POINT FUNCTIONJOIN LPAREN VARIABLE RPAREN
+    (248) arrayJoin -> . VARIABLE POINT FUNCTIONJOIN LPAREN string RPAREN
+    (252) conjuntoAdd -> . VARIABLE POINT FUNCTIONADD LPAREN VARIABLE RPAREN
+    (253) conjuntoAdd -> . VARIABLE POINT FUNCTIONADD LPAREN number_value RPAREN
+    (254) conjuntoAdd -> . VARIABLE POINT FUNCTIONADD LPAREN boolean_value RPAREN
+    (255) conjuntoAdd -> . VARIABLE POINT FUNCTIONADD LPAREN string RPAREN
+    (256) conjuntoHas -> . VARIABLE POINT FUNCTIONHAS LPAREN VARIABLE RPAREN
+    (257) conjuntoHas -> . VARIABLE POINT FUNCTIONHAS LPAREN number_value RPAREN
+    (258) conjuntoHas -> . VARIABLE POINT FUNCTIONHAS LPAREN boolean_value RPAREN
+    (259) conjuntoHas -> . VARIABLE POINT FUNCTIONHAS LPAREN string RPAREN
+    (87) declare_any -> . prefix VARIABLE
+    (189) prefix -> . LET
+    (190) prefix -> . VAR
+    (191) prefix -> . STATIC
+    (192) prefix -> . CONST
 
-    GREATER         shift and go to state 104
-    LESS            shift and go to state 105
-    GREATEREQUAL    shift and go to state 106
-    LESSEQUAL       shift and go to state 107
-    EQUALTO         shift and go to state 195
-    NOTEQUALTO      shift and go to state 196
+    INCREMENT       shift and go to state 39
+    DECREMENT       shift and go to state 40
+    LPAREN          shift and go to state 180
+    NUMBER          shift and go to state 68
+    FLOAT           shift and go to state 69
+    VARIABLE        shift and go to state 63
+    OBJECTNAME      shift and go to state 56
+    FUNMATH         shift and go to state 96
+    LET             shift and go to state 78
+    VAR             shift and go to state 79
+    STATIC          shift and go to state 80
+    CONST           shift and go to state 81
 
-    operador                       shift and go to state 470
+    prefix                         shift and go to state 62
+    term                           shift and go to state 470
+    term1                          shift and go to state 38
+    number                         shift and go to state 41
+    factor_expr                    shift and go to state 42
+    other_value                    shift and go to state 43
+    group                          shift and go to state 67
+    variable                       shift and go to state 137
+    funciones                      shift and go to state 58
+    array_value                    shift and go to state 138
+    enum_value                     shift and go to state 50
+    object_value                   shift and go to state 70
+    funcionmath                    shift and go to state 47
+    funcionString                  shift and go to state 82
+    funcionArray                   shift and go to state 83
+    funcionConjunto                shift and go to state 84
+    object_name                    shift and go to state 74
+    object_value_form1             shift and go to state 123
+    object_value_form2             shift and go to state 124
+    mathAbs                        shift and go to state 85
+    mathRound                      shift and go to state 86
+    mathPow                        shift and go to state 87
+    stringCharAt                   shift and go to state 88
+    stringConcat                   shift and go to state 89
+    stringSplit                    shift and go to state 90
+    arrayFilter                    shift and go to state 91
+    arrayConcat                    shift and go to state 92
+    arrayJoin                      shift and go to state 93
+    conjuntoAdd                    shift and go to state 94
+    conjuntoHas                    shift and go to state 95
+    declare_any                    shift and go to state 125
 
 state 468
 
-    (47) funcionfor -> FOR LPAREN VARIABLE EQUAL number_value POINTCOMMA formLog POINTCOMMA VARIABLE . operador RPAREN substatement
-    (206) operador -> . GREATER
-    (207) operador -> . LESS
-    (208) operador -> . GREATEREQUAL
-    (209) operador -> . LESSEQUAL
-    (210) operador -> . EQUALTO
-    (211) operador -> . NOTEQUALTO
+    (47) funcionfor -> FOR LPAREN VARIABLE EQUAL number_value POINTCOMMA formLog POINTCOMMA term . RPAREN substatement
+    (144) term -> term . PRODUCT term
+    (145) term -> term . DIVIDE term
 
-    GREATER         shift and go to state 104
-    LESS            shift and go to state 105
-    GREATEREQUAL    shift and go to state 106
-    LESSEQUAL       shift and go to state 107
-    EQUALTO         shift and go to state 195
-    NOTEQUALTO      shift and go to state 196
+    RPAREN          shift and go to state 471
+    PRODUCT         shift and go to state 113
+    DIVIDE          shift and go to state 114
 
-    operador                       shift and go to state 471
 
 state 469
 
@@ -15537,17 +15757,24 @@ state 469
 
 state 470
 
-    (46) funcionfor -> FOR LPAREN declare_any EQUAL number_value POINTCOMMA formLog POINTCOMMA VARIABLE operador . RPAREN substatement
+    (46) funcionfor -> FOR LPAREN prefix VARIABLE EQUAL number_value POINTCOMMA formLog POINTCOMMA term . RPAREN substatement
+    (144) term -> term . PRODUCT term
+    (145) term -> term . DIVIDE term
 
     RPAREN          shift and go to state 473
+    PRODUCT         shift and go to state 113
+    DIVIDE          shift and go to state 114
 
 
 state 471
 
-    (47) funcionfor -> FOR LPAREN VARIABLE EQUAL number_value POINTCOMMA formLog POINTCOMMA VARIABLE operador . RPAREN substatement
+    (47) funcionfor -> FOR LPAREN VARIABLE EQUAL number_value POINTCOMMA formLog POINTCOMMA term RPAREN . substatement
+    (49) substatement -> . LKEY statement RKEY
+    (50) substatement -> . LKEY RKEY
 
-    RPAREN          shift and go to state 474
+    LKEY            shift and go to state 386
 
+    substatement                   shift and go to state 474
 
 state 472
 
@@ -15561,7 +15788,7 @@ state 472
 
 state 473
 
-    (46) funcionfor -> FOR LPAREN declare_any EQUAL number_value POINTCOMMA formLog POINTCOMMA VARIABLE operador RPAREN . substatement
+    (46) funcionfor -> FOR LPAREN prefix VARIABLE EQUAL number_value POINTCOMMA formLog POINTCOMMA term RPAREN . substatement
     (49) substatement -> . LKEY statement RKEY
     (50) substatement -> . LKEY RKEY
 
@@ -15571,30 +15798,20 @@ state 473
 
 state 474
 
-    (47) funcionfor -> FOR LPAREN VARIABLE EQUAL number_value POINTCOMMA formLog POINTCOMMA VARIABLE operador RPAREN . substatement
-    (49) substatement -> . LKEY statement RKEY
-    (50) substatement -> . LKEY RKEY
+    (47) funcionfor -> FOR LPAREN VARIABLE EQUAL number_value POINTCOMMA formLog POINTCOMMA term RPAREN substatement .
 
-    LKEY            shift and go to state 386
+    POINTCOMMA      reduce using rule 47 (funcionfor -> FOR LPAREN VARIABLE EQUAL number_value POINTCOMMA formLog POINTCOMMA term RPAREN substatement .)
+    $end            reduce using rule 47 (funcionfor -> FOR LPAREN VARIABLE EQUAL number_value POINTCOMMA formLog POINTCOMMA term RPAREN substatement .)
+    RKEY            reduce using rule 47 (funcionfor -> FOR LPAREN VARIABLE EQUAL number_value POINTCOMMA formLog POINTCOMMA term RPAREN substatement .)
 
-    substatement                   shift and go to state 476
 
 state 475
 
-    (46) funcionfor -> FOR LPAREN declare_any EQUAL number_value POINTCOMMA formLog POINTCOMMA VARIABLE operador RPAREN substatement .
+    (46) funcionfor -> FOR LPAREN prefix VARIABLE EQUAL number_value POINTCOMMA formLog POINTCOMMA term RPAREN substatement .
 
-    POINTCOMMA      reduce using rule 46 (funcionfor -> FOR LPAREN declare_any EQUAL number_value POINTCOMMA formLog POINTCOMMA VARIABLE operador RPAREN substatement .)
-    $end            reduce using rule 46 (funcionfor -> FOR LPAREN declare_any EQUAL number_value POINTCOMMA formLog POINTCOMMA VARIABLE operador RPAREN substatement .)
-    RKEY            reduce using rule 46 (funcionfor -> FOR LPAREN declare_any EQUAL number_value POINTCOMMA formLog POINTCOMMA VARIABLE operador RPAREN substatement .)
-
-
-state 476
-
-    (47) funcionfor -> FOR LPAREN VARIABLE EQUAL number_value POINTCOMMA formLog POINTCOMMA VARIABLE operador RPAREN substatement .
-
-    POINTCOMMA      reduce using rule 47 (funcionfor -> FOR LPAREN VARIABLE EQUAL number_value POINTCOMMA formLog POINTCOMMA VARIABLE operador RPAREN substatement .)
-    $end            reduce using rule 47 (funcionfor -> FOR LPAREN VARIABLE EQUAL number_value POINTCOMMA formLog POINTCOMMA VARIABLE operador RPAREN substatement .)
-    RKEY            reduce using rule 47 (funcionfor -> FOR LPAREN VARIABLE EQUAL number_value POINTCOMMA formLog POINTCOMMA VARIABLE operador RPAREN substatement .)
+    POINTCOMMA      reduce using rule 46 (funcionfor -> FOR LPAREN prefix VARIABLE EQUAL number_value POINTCOMMA formLog POINTCOMMA term RPAREN substatement .)
+    $end            reduce using rule 46 (funcionfor -> FOR LPAREN prefix VARIABLE EQUAL number_value POINTCOMMA formLog POINTCOMMA term RPAREN substatement .)
+    RKEY            reduce using rule 46 (funcionfor -> FOR LPAREN prefix VARIABLE EQUAL number_value POINTCOMMA formLog POINTCOMMA term RPAREN substatement .)
 
 WARNING: 
 WARNING: Conflicts:

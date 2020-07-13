@@ -100,8 +100,8 @@ def p_condicionElse(p):
 
 #for
 def p_condicionFor(p):
-    '''funcionfor : FOR LPAREN declare_any EQUAL number_value POINTCOMMA formLog POINTCOMMA VARIABLE operador RPAREN substatement
-    | FOR LPAREN VARIABLE EQUAL number_value POINTCOMMA formLog POINTCOMMA VARIABLE operador RPAREN substatement
+    '''funcionfor : FOR LPAREN prefix VARIABLE EQUAL number_value POINTCOMMA formLog POINTCOMMA term RPAREN substatement
+    | FOR LPAREN VARIABLE EQUAL number_value POINTCOMMA formLog POINTCOMMA term RPAREN substatement
     '''
     p[0] = 1000
 
