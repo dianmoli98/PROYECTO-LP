@@ -22,13 +22,20 @@ def p_statement_value(p):
     | expNotEq
     | exp_set
     | statement_control
-    | comments'''
+    | comments
+    | consoleLog'''
     p[0] = p[1]
 
 def p_statement_control(p):
     '''statement_control : funcionif
     | funcionwhile
     | funcionfor'''
+
+def p_consoleLog(p):
+    '''consoleLog : PRINT LPAREN RPAREN
+    | PRINT LPAREN VARIABLE RPAREN
+    | PRINT LPAREN string RPAREN'''
+    print("console.log")
 
 #comentarios
 def p_declarationcomments(p):
