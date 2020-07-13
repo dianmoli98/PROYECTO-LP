@@ -561,7 +561,8 @@ def p_operadorlogico(p):
 def p_funciones(p):
     '''funciones : funcionmath
     | funcionString
-    | funcionArray'''
+    | funcionArray
+    | funcionConjunto'''
 
 #Math Funciones
 def p_funcionMath(p):
@@ -618,6 +619,23 @@ def p_array_join(p):
 
 def p_array_filter(p):
     '''arrayFilter : VARIABLE POINT FUNCTIONFILTER LPAREN VARIABLE RPAREN'''
+
+#conjuntos Funciones
+def p_funcionesConjuntos(p):
+    '''funcionConjunto : conjuntoAdd
+    | conjuntoHas'''
+
+def p_conjunto_add(p):
+    '''conjuntoAdd : VARIABLE POINT FUNCTIONADD LPAREN VARIABLE RPAREN
+    | VARIABLE POINT FUNCTIONADD LPAREN number_value RPAREN
+    | VARIABLE POINT FUNCTIONADD LPAREN boolean_value RPAREN
+    | VARIABLE POINT FUNCTIONADD LPAREN string RPAREN'''
+
+def p_conjunto_has(p):
+    '''conjuntoHas : VARIABLE POINT FUNCTIONHAS LPAREN VARIABLE RPAREN
+    | VARIABLE POINT FUNCTIONHAS LPAREN number_value RPAREN
+    | VARIABLE POINT FUNCTIONHAS LPAREN boolean_value RPAREN
+    | VARIABLE POINT FUNCTIONHAS LPAREN string RPAREN'''
 
 # Error rule for syntax errors
 def p_error(p):
