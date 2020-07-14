@@ -3,6 +3,7 @@ import lexico_NewLang as mylexer
 tokens = mylexer.tokens
 
 
+
 # Statement(1 code line)
 def p_statement(p):
     '''statement : statement_value
@@ -52,6 +53,7 @@ def p_declare(p):
     | var_undefined
     | declare_array
     | declare_enum
+    | declare_tuples
     | declare_generic'''
     p[0] = p[1]
 
@@ -125,6 +127,39 @@ def p_subStatement(p):
 def p_declare_Set(p):
     'exp_set : declare_any EQUAL NEW SET LPAREN RPAREN'
     p[0] = 600
+
+#Declaration of tuples
+def p_declare_tuples(p):
+    '''declare_tuples : declare_any TWOPOINTS tuples_2_variables
+    | declare_any TWOPOINTS tuples_2_variables EQUAL tuples_2_values
+    | declare_any TWOPOINTS tuples_3_variables
+    | declare_any TWOPOINTS tuples_3_variables EQUAL tuples_3_values
+    | declare_any TWOPOINTS tuples_4_variables
+    | declare_any TWOPOINTS tuples_4_variables EQUAL tuples_4_values'''
+    p[0] = 1000
+
+def p_declare_tuples_2_variables(p):
+    'tuples_2_variables : LBRACKET types COMMA types RBRACKET'
+
+
+def p_declare_tuples_3_variables(p):
+    'tuples_3_variables : LBRACKET types COMMA types COMMA types RBRACKET'
+
+
+def p_declare_tuples_4_variables(p):
+    'tuples_4_variables : LBRACKET types COMMA types COMMA types COMMA types RBRACKET'
+
+
+def p_declare_tuples_2_values(p):
+    'tuples_2_values : LBRACKET general_value COMMA general_value RBRACKET'
+
+
+def p_declare_tuples_3_values(p):
+    'tuples_3_values : LBRACKET general_value COMMA general_value COMMA general_value RBRACKET'
+
+
+def p_declare_tuples_4_values(p):
+    'tuples_4_values : LBRACKET general_value COMMA general_value COMMA general_value COMMA general_value RBRACKET'
 
 
 # Declaration of arrays
@@ -268,8 +303,15 @@ def p_assign_object_value(p):
 # Valores posibles para variables
 def p_assign_value(p):
     '''assign_value : general_value
-    | object_definition'''
+    | object_definition
+    | tuples_list'''
 
+def p_tuples_list(p):
+    'tuples_list : LBRACKET tuples_values RBRACKET'
+
+def p_tuples_values(p):
+    '''tuples_values : tuples_values COMMA general_value
+    | general_value'''
 
 # Definicion de un objeto
 def p_object_definition(p):
@@ -291,6 +333,8 @@ def p_general_value(p):
     '''general_value : expression
     | boolean
     | string
+    | concatenate
+    | string_object
     | expCond
     | expOpLog
     | expNeg
@@ -352,14 +396,14 @@ def p_declare_boolean_value(p):
 
 def p_string_value(p):
     '''string_value : string
-    | other_value'''
+    | other_value
+    | string_object
+    | concatenate'''
 
 
 # ConcatenationString--Review
 def p_concatenate(p):
-    '''concatenate : string PLUS termS
-    | termS PLUS string
-    | termS PLUS string PLUS termS'''
+    '''concatenate : string PLUS termS'''
     p[0] = 600
 
 
@@ -483,6 +527,8 @@ def p_object_value(p):
     | object_value_form2'''
     p[0] = 1
 
+def p_string_object(p):
+    'string_object : NEW OBJECTSTRING LPAREN string RPAREN'
 
 def p_object_value_form1(p):
     'object_value_form1 : variable POINT variable'
@@ -512,10 +558,13 @@ def p_prefix(p):
     | CONST'''
 
 def p_typedate(p):
-    '''typedate : VARNUMBER
-        | VARSTRING
-        | VARBOOLEAN
+    '''typedate : types
         | ENUM'''
+
+def p_types(p):
+    '''types : VARNUMBER
+        | VARSTRING
+        | VARBOOLEAN'''
 
 def p_number(p):
     '''number : NUMBER
@@ -650,13 +699,16 @@ def p_error(p):
 
 
 
-# var tupla: [string, number] = ["Hola",4]                           NO coge
-#var nombre2 = “Nombre:” + name + “\n” + “Apellido:” + lastname;      NOSALE
-#var age = “Edad:” + (edad +1);                                      NO SALE
-#var str = new String("Ana");  #                                      NO SALE
+# var tupla: [string, number] = ["Hola",4]                           NO coge --> Ya sale, pero revisar en que condiciones sale
+#Sale la declaracion de la tupla si el # de variables es igual al de los elementos de la lista, solo esta hasta 4 elementos
+#De otra forma sin usar la especificacion de los tipos de datos de la tupla, sale para cualquier tamaño de la lista con cualquier
+#tipo de dato.
+#var nombre2 = "Nombre:" + name + "Apellido:" + lastname;      Listo --> Concadenacion sale cuando primer elemento es string
+#var age = “Edad:” + (edad +1);                                      Sale
+#var str = new String("Ana");  #                                      NO SALE --> Listo
 #function isLess(element, index, array)                              NO SALE
 #modulo
-#console.log(“Prueba\n”);
+#console.log(“Prueba\n”);--> Problema con comillas del Word
 
 
 #PRUEBASS CON DECLARACION DE VARIABLES

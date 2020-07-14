@@ -11,6 +11,7 @@ reserved = {
     'const' : 'CONST',
     'number' : 'VARNUMBER',
     'string' : 'VARSTRING',
+    'String' : 'OBJECTSTRING',
     'boolean' : 'VARBOOLEAN',
     'enum' : 'ENUM',
     'null' : 'NULL',
@@ -157,6 +158,7 @@ t_CONST = r'const'
 t_VARNUMBER = r'number'
 t_VARSTRING = r'string'
 t_VARBOOLEAN = r'boolean'
+t_OBJECTSTRING = r'String'
 t_ENUM = r'enum'
 t_NULL = r'null'
 t_UNDEFINED = r'undefined'
