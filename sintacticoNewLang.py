@@ -22,13 +22,20 @@ def p_statement_value(p):
     | expNotEq
     | exp_set
     | statement_control
-    | comments'''
+    | comments
+    | consoleLog'''
     p[0] = p[1]
 
 def p_statement_control(p):
     '''statement_control : funcionif
     | funcionwhile
     | funcionfor'''
+
+def p_consoleLog(p):
+    '''consoleLog : PRINT LPAREN RPAREN
+    | PRINT LPAREN VARIABLE RPAREN
+    | PRINT LPAREN string RPAREN'''
+    print("console.log")
 
 #comentarios
 def p_declarationcomments(p):
@@ -100,8 +107,8 @@ def p_condicionElse(p):
 
 #for
 def p_condicionFor(p):
-    '''funcionfor : FOR LPAREN declare_any EQUAL number_value POINTCOMMA formLog POINTCOMMA VARIABLE operador RPAREN substatement
-    | FOR LPAREN VARIABLE EQUAL number_value POINTCOMMA formLog POINTCOMMA VARIABLE operador RPAREN substatement
+    '''funcionfor : FOR LPAREN prefix VARIABLE EQUAL number_value POINTCOMMA formLog POINTCOMMA term RPAREN substatement
+    | FOR LPAREN VARIABLE EQUAL number_value POINTCOMMA formLog POINTCOMMA term RPAREN substatement
     '''
     p[0] = 1000
 
@@ -376,37 +383,29 @@ def p_expression_minus(p):
 
 def p_expression_term(p):
     'expression : term'
-    p[0] = p[1]
-
 
 def p_term_product(p):
-    'term : term PRODUCT term'
-    p[0] = p[1] * p[3]
-
+    'expression : expression PRODUCT expression'
 
 def p_term_div(p):
-    'term : term DIVIDE term'
-    if p[3] != 0:
-        p[0] = p[1] / p[3]
-
+    'expression : expression DIVIDE expression'
 
 def p_expression_increment(p):
     '''term : term1 INCREMENT
     | INCREMENT  term1'''
     p[0]= None
 
-
 def p_expression_decrement(p):
     '''term : term1 DECREMENT
      | DECREMENT  term1'''
     p[0] = None
-
 
 def p_negation(p):
     '''expNeg : NEGATION expOpLog
         | NEGATION factor_exprlog
         | NEGATION boolean
         | NEGATION LPAREN expOpLog RPAREN
+        | NEGATION VARIABLE
         '''
     p[0] = 88.8
 
@@ -415,6 +414,7 @@ def p_equalto(p):
     | factor_exprlog  EQUALTO factor_exprlog
     | expression EQUALTO expression  '''
     p[0] = 99.9
+
 
 def p_notequal(p):
     '''expNotEq : expCond NOTEQUALTO expCond
@@ -430,11 +430,9 @@ def p_expression_opLogico(p):
     | expression oplogico expression'''
     p[0] = 77.7
 
-
 def p_exp_logica(p):
     'factor_exprlog : LPAREN expCond RPAREN'
     p[0] = p[2]
-
 
 def p_expression_condicional(p):
     '''expCond : expression operador expression
@@ -650,73 +648,116 @@ def p_conjunto_has(p):
 def p_error(p):
     print("Syntax error in input!: "+str(p))
 
-#PRUEBASS
+
+
+# var tupla: [string, number] = ["Hola",4]                           NO coge
+#var nombre2 = “Nombre:” + name + “\n” + “Apellido:” + lastname;      NOSALE
+#var age = “Edad:” + (edad +1);                                      NO SALE
+#var str = new String("Ana");  #                                      NO SALE
+#function isLess(element, index, array)                              NO SALE
+#modulo
+#console.log(“Prueba\n”);
+
+
+#PRUEBASS CON DECLARACION DE VARIABLES
+#let color;
+#let color
+
 #let eye = 10;
+#let eye = 10
 #var numero=18;
+#let color=null
+#let color=undefined;
+
 #let eye: number = 10;
 #let x: number = 40;
 #let var1: number= 50;
 #let var1: number= 9;
-#let result: boolean= var1== var2;
 #var eye = 10;
 #let color: string = "blue";
 #var color2 = 'red';
 #let name: string='Hola';
 #var str1: string = "Ana";
+#let va2r: boolean = true;
+#let result: boolean = !var1;
+#let result:boolean= var1>var2||var1<=var3;
 
-#let list: number [] = [1,2,3];
+#DECLARACION  DE ARREGLOS
+#let miarray: number[];
+#let miarray: number[] = [1,2,3,4,5];
 #let x: Array<string> = ["Hola","Hola2"]
-#var arreglo2 = ["Lopez","Damian"];
 #var arreglo= [ 1 , 2,3,4,8];
-#let set1 = new Set ();
-#enum Color {Amarrillo, Azul, Rojo}
+#var arreglo2 = ["Lopez","Damian"];
 
+#DECLARACION DE TUPLAS
+
+
+#DECLARACION DE ENUM
+#enum Color {Amarrillo, Azul, Rojo}
+#enum Animal {Perro =1, Gato=23}
 #let c: Color = Color.Rojo;
 #let a: Animal = Animal. Perro;
 
+#CONJUNTOS
+#let set1 = new Set ();
+
+#OPERACIONES MATEMATICAS
+#let result: number= var1-var2;
+#let result: number= var1-var2+var3;
+#let result: number= (var1-var2)+var3;
+#(4-5)+9;
+#5-6
+#(8+9)-(4*5)
+#(8+9)/var3
+#let result:number=(var1-var2)+var3;
+
+#CONTADOR
 #contador++;
 #--numero;
 #index--;
 
+#CONCATENACION
 #var nombre = "Marlon" + "Lindao";
 #var name = "Marlon"
 
+#FUNCIONES MATEMIATICAS
 #var numberAbs = Math.abs(-3);
 #var numberRound = Math.round(2.6);
 #var numberPow = Math.pow (4,2);
+#Math.abs(-3);
 
+#CONDICIONES
 #1 < 5 && 7>=6
 #(1 < 5)&&(7>=6)
 #! (1 < 5 && 7>=6)
+# !var3
+#let result: boolean= var1== v2ar;
+#var1 || va3
+#(var3-var8)&&(4-5)
+#3||(var7+ver5)
 
-#str.charAt(0);
+#FUNCIONES PARA STRINGS
 #var str3: string = str1.concat(str2);
-#var result = arreglo1.join(",");
+#str.charAt(0);
 #var result = str.split(" ");
+
+#FUNCIONES PARA ARREGLOS
+#var result = arreglo1.concat(arreglo2);
 #var result = arreglo.filter(isLess);
 #arreglo.filter(isLess);
+#var result = arreglo1.join(",");
 
+#FUNCIONES PARA CONJUNTOS
 #set1.add(1);
 #let result:boolean =set1.has(1);
 
-
-#let result: number= var1-var2;
-#let result: number= var1-var2+var3;
-#let result: number= (var1-var2)+var3;
-#let va2r: boolean = true;
-
-# var tupla: [string, number] = ["Hola",4]                           NO coge
-#enum Animal {enum Animal {Perro =1, Gato,}                          NO SALE
-#var nombre2 = “Nombre:” + name + “\n” + “Apellido:” + lastname;      NOSALE
-#var age = “Edad:” + (edad +1);                                      NO SALE
-#console.log (x);                                                    NO SALE
-#let result: boolean = var1 == var2 || var1>=var3;                   NO SALE
-#let result: boolean =! var1;                                        NO SAEL
-#var str = new String("Ana");  #                                      NO SALE
-#function isLess(element, index, array)                              NO SALE
-# if (5>6) {                                                         NO SALE
-#for (let i = 0; i < 3; i++) {                                       NO SALE
-#while (i==5) {                                                      NO SALE
+#FUNCIONES IF, FOR Y WHILE
+# if (5>6) { }
+# if (5>6) { } elif(i==1){}else{}
+# if (5>6) { } elif(i==1){}elif(i==1){console.log("F")}else{}
+#for (let i = 0; i < 3; i++) { }
+#while (i==5) {str.charAt(0);}
+#console.log (x);
 
 # Build the parser
 parser = yacc.yacc()
