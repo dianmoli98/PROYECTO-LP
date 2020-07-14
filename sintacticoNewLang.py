@@ -385,37 +385,29 @@ def p_expression_minus(p):
 
 def p_expression_term(p):
     'expression : term'
-    p[0] = p[1]
-
 
 def p_term_product(p):
-    'term : term PRODUCT term'
-    p[0] = p[1] * p[3]
-
+    'expression : expression PRODUCT expression'
 
 def p_term_div(p):
-    'term : term DIVIDE term'
-    if p[3] != 0:
-        p[0] = p[1] / p[3]
-
+    'expression : expression DIVIDE expression'
 
 def p_expression_increment(p):
     '''term : term1 INCREMENT
     | INCREMENT  term1'''
     p[0]= None
 
-
 def p_expression_decrement(p):
     '''term : term1 DECREMENT
      | DECREMENT  term1'''
     p[0] = None
-
 
 def p_negation(p):
     '''expNeg : NEGATION expOpLog
         | NEGATION factor_exprlog
         | NEGATION boolean
         | NEGATION LPAREN expOpLog RPAREN
+        | NEGATION VARIABLE
         '''
     p[0] = 88.8
 
@@ -424,6 +416,7 @@ def p_equalto(p):
     | factor_exprlog  EQUALTO factor_exprlog
     | expression EQUALTO expression  '''
     p[0] = 99.9
+
 
 def p_notequal(p):
     '''expNotEq : expCond NOTEQUALTO expCond
@@ -439,11 +432,9 @@ def p_expression_opLogico(p):
     | expression oplogico expression'''
     p[0] = 77.7
 
-
 def p_exp_logica(p):
     'factor_exprlog : LPAREN expCond RPAREN'
     p[0] = p[2]
-
 
 def p_expression_condicional(p):
     '''expCond : expression operador expression
@@ -664,16 +655,10 @@ def p_error(p):
 # var tupla: [string, number] = ["Hola",4]                           NO coge
 #var nombre2 = “Nombre:” + name + “\n” + “Apellido:” + lastname;      NOSALE
 #var age = “Edad:” + (edad +1);                                      NO SALE
-#let result: boolean = var1 == var2 || var1>=var3;                   NO SALE
-#let result: boolean =! var1;                                        NO SAEL
 #var str = new String("Ana");  #                                      NO SALE
 #function isLess(element, index, array)                              NO SALE
-#division
 #modulo
-#negacion
-#and an or
 #console.log(“Prueba\n”);
-#let result: boolean =! var1;
 
 
 #PRUEBASS CON DECLARACION DE VARIABLES
@@ -696,6 +681,8 @@ def p_error(p):
 #let name: string='Hola';
 #var str1: string = "Ana";
 #let va2r: boolean = true;
+#let result: boolean = !var1;
+#let result:boolean= var1>var2||var1<=var3;
 
 #DECLARACION  DE ARREGLOS
 #let miarray: number[];
@@ -723,6 +710,7 @@ def p_error(p):
 #(4-5)+9;
 #5-6
 #(8+9)-(4*5)
+#(8+9)/var3
 #let result:number=(var1-var2)+var3;
 
 #CONTADOR
@@ -744,8 +732,11 @@ def p_error(p):
 #1 < 5 && 7>=6
 #(1 < 5)&&(7>=6)
 #! (1 < 5 && 7>=6)
+# !var3
 #let result: boolean= var1== v2ar;
-
+#var1 || va3
+#(var3-var8)&&(4-5)
+#3||(var7+ver5)
 
 #FUNCIONES PARA STRINGS
 #var str3: string = str1.concat(str2);
