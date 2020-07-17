@@ -29,6 +29,7 @@ def p_statement_value(p):
     | exp_set
     | statement_control
     | comments
+    | funtionStatement
     | consoleLog'''
     p[0] = p[1]
 
@@ -93,6 +94,15 @@ def p_enums_string(p):
 
 def p_enums_string_value(p):
     'enums_string_value : object_name EQUAL string'
+
+# FUNCTION 
+def p_functionDeclarar(p):
+    '''funtionStatement : FUNCTION VARIABLE LPAREN RPAREN substatement
+    | FUNCTION VARIABLE LPAREN funcParametres RPAREN substatement'''
+
+def p_funtionParametres(p):
+    '''funcParametres : VARIABLE
+    | VARIABLE COMMA funcParametres'''
 
 #if
 def p_condicionIf(p):
@@ -278,7 +288,8 @@ def p_declare_generic(p):
 
 # Can be used for all declarations
 def p_declare_any(p):
-    'declare_any : prefix VARIABLE'
+    '''declare_any : prefix VARIABLE
+    | prefix VARIABLE TWOPOINTS ANY'''
 
 
 # Assignments
@@ -706,14 +717,14 @@ def p_error(p):
 
 
 
-# var tupla: [string, number] = ["Hola",4]                           NO coge --> Ya sale, pero revisar en que condiciones sale
+# var tupla: [string, number] = ["Hola",4];  
 #Sale la declaracion de la tupla si el # de variables es igual al de los elementos de la lista, solo esta hasta 4 elementos
 #De otra forma sin usar la especificacion de los tipos de datos de la tupla, sale para cualquier tamaño de la lista con cualquier
 #tipo de dato.
 #var nombre2 = "Nombre:" + name + "Apellido:" + lastname;      Listo --> Concadenacion sale cuando primer elemento es string
-#var age = “Edad:” + (edad +1);                                      Sale
-#var str = new String("Ana");  #                                      NO SALE --> Listo
-#function isLess(element, index, array)                              NO SALE
+#var age = "Edad:" + (edad +1);                           
+#var str = new String("Ana");  #                                 
+#function isLess(element, index, array) {var i:number =1;}
 #modulo
 #console.log(“Prueba\n”);--> Problema con comillas del Word
 

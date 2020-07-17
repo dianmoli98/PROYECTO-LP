@@ -54,6 +54,8 @@ reserved = {
     #FUNCIONES Conjuntos
     'add': 'FUNCTIONADD',
     'has': 'FUNCTIONHAS',
+
+    'function': 'FUNCTION'
 }
 
 tokens = [
@@ -78,8 +80,6 @@ tokens = [
     'RPAREN',
     'LKEY',
     'RKEY',
-    'LCOMILLA',
-    'RCOMILLA',
 
     'GREATER',
     'LESS',
@@ -127,8 +127,6 @@ t_LBRACKET = r'\['
 t_RBRACKET = r'\]'
 t_LKEY = r'\{'
 t_RKEY = r'\}'
-t_LCOMILLA = r'“'
-t_RCOMILLA = r'”'
 
 t_GREATER = r'>'
 t_LESS = r'<'
@@ -202,6 +200,8 @@ t_FUNCTIONFILTER= r'filter'
 #FUNCIONES Conjuntos
 t_FUNCTIONADD= r'add'
 t_FUNCTIONHAS= r'has'
+
+t_FUNCTION= r'function'
 
 
 t_ignore = ' \t'
