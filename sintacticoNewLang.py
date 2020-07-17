@@ -12,8 +12,8 @@ def p_statement(p):
 
 
 def p_statement_value(p):
-    '''statement_value : expression
-    | concatenate
+    '''statement_value : concatenate
+    | expression
     | declare
     | assign
     | expCond
@@ -173,6 +173,7 @@ def p_declare_array(p):
 # Declaration of array_number
 def p_declare_array_main_number(p):
     '''declare_array_main_number : declare_array_number EQUAL list_number
+    | declare_array_number EQUAL LBRACKET RBRACKET
     | declare_array_number'''
 
 
@@ -184,6 +185,7 @@ def p_declare_array_number(p):
 # Declaration of array_boolean
 def p_declare_array_main_boolean(p):
     '''declare_array_main_boolean : declare_array_boolean EQUAL list_boolean
+    | declare_array_boolean EQUAL LBRACKET RBRACKET
     | declare_array_boolean'''
 
 
@@ -195,6 +197,7 @@ def p_declare_array_boolean(p):
 # Declaration of array_string
 def p_declare_array_main_string(p):
     '''declare_array_main_string : declare_array_string EQUAL list_string
+    | declare_array_string EQUAL LBRACKET RBRACKET
     | declare_array_string'''
 
 def p_declare_array_string(p):
@@ -315,7 +318,8 @@ def p_tuples_values(p):
 
 # Definicion de un objeto
 def p_object_definition(p):
-    'object_definition : LKEY attributes RKEY'
+    '''object_definition : LKEY attributes RKEY
+    | LKEY RKEY '''
 
 
 def p_attributes_line(p):
@@ -346,7 +350,8 @@ def p_general_value(p):
 def p_list_types(p):
     '''list_types : list_number
     | list_boolean
-    | list_string'''
+    | list_string
+    | LBRACKET RBRACKET'''
 
 
 # List number
