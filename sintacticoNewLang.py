@@ -3,12 +3,17 @@ import lexico_NewLang as mylexer
 tokens = mylexer.tokens
 
 
-
 # Statement(1 code line)
 def p_statement(p):
-    '''statement : statement_value
+    '''statement : atomicstatement
+    | atomicstatement statement'''
+    p[0] = p[1]
+
+def p_atomicStatement(p):
+    '''atomicstatement : statement_value
     | statement_value POINTCOMMA'''
     p[0] = p[1]
+
 
 
 def p_statement_value(p):
@@ -811,8 +816,8 @@ def p_error(p):
 # if (5>6) { } elif(i==1){}elif(i==1){console.log("F")}else{}
 #for (let i = 0; i < 3; i++) { var i:number= 1; }
 #for(let i = 0; i < 3; i++) {if (5>6) { } elif(i==1){}elif(i==1){console.log("F")}else{}}
-#for(let i in list) {if (5>6) { } elif(i==1){}elif(i==1){console.log("F")}else{}}
-#while (i==5) {str.charAt(0);}
+#for(let i in list) {if (5>6) { } elif(i==1){}elif(i==1){console.log("F")}else{} while (i==5) {str.charAt(0); console.log (x);}}
+#while (i==5) {str.charAt(0); console.log (x);}
 #console.log (x);
 
 # Build the parser
