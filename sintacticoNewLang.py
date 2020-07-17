@@ -698,18 +698,13 @@ def p_error(p):
     print("Syntax error in input!: "+str(p))
 
 
-
-# var tupla: [string, number] = ["Hola",4]                           NO coge --> Ya sale, pero revisar en que condiciones sale
-#Sale la declaracion de la tupla si el # de variables es igual al de los elementos de la lista, solo esta hasta 4 elementos
-#De otra forma sin usar la especificacion de los tipos de datos de la tupla, sale para cualquier tamaño de la lista con cualquier
-#tipo de dato.
-#var nombre2 = "Nombre:" + name + "Apellido:" + lastname;      Listo --> Concadenacion sale cuando primer elemento es string
-#var age = “Edad:” + (edad +1);                                      Sale
-#var str = new String("Ana");  #                                      NO SALE --> Listo
 #function isLess(element, index, array)                              NO SALE
-#modulo
-#console.log(“Prueba\n”);--> Problema con comillas del Word
 
+# var tupla: [string, number] = ["Hola",4]
+#var nombre2 = "Nombre:" + name + "Apellido:" + lastname;
+#var age = var age = "Edad:" + (edad +1);
+#var str = new String("Ana");
+# console.log("Prueba\n")
 
 #PRUEBASS CON DECLARACION DE VARIABLES
 #let color;
