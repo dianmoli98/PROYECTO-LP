@@ -54,6 +54,8 @@ reserved = {
     #FUNCIONES Conjuntos
     'add': 'FUNCTIONADD',
     'has': 'FUNCTIONHAS',
+
+    'function': 'FUNCTION'
 }
 
 tokens = [
@@ -78,8 +80,6 @@ tokens = [
     'RPAREN',
     'LKEY',
     'RKEY',
-    'LCOMILLA',
-    'RCOMILLA',
 
     'GREATER',
     'LESS',
@@ -99,7 +99,6 @@ tokens = [
     'COMMA',
     'POINTCOMMA',
     'SPECIAL',
-    'DOLLAR',
     'PRINT',
     'COMMENT',
     'MULTICOMMENT'
@@ -111,7 +110,7 @@ t_NUMBER = r'[0-9]+'
 t_FLOAT = r'[0-9]+\.[0-9]+'
 t_NORMSTRING1 = r'\".*\"' #Falta arreglar los dos norm y el multi
 t_NORMSTRING2 = r'\'.*\''
-t_MULTISTRING = r'`(.*\n?)*`'
+t_MULTISTRING = r'`(.* |\n | \$\{.*\})*`'
 t_POINT = r'\.'
 
 #simbolos
@@ -127,8 +126,6 @@ t_LBRACKET = r'\['
 t_RBRACKET = r'\]'
 t_LKEY = r'\{'
 t_RKEY = r'\}'
-t_LCOMILLA = r'“'
-t_RCOMILLA = r'”'
 
 t_GREATER = r'>'
 t_LESS = r'<'
@@ -148,7 +145,6 @@ t_TWOPOINTS = r'\:'
 t_COMMA = r','
 t_POINTCOMMA = r';'
 t_SPECIAL = r'`'
-t_DOLLAR = r'\$'
 
 
 #Reservados
@@ -202,6 +198,8 @@ t_FUNCTIONFILTER= r'filter'
 #FUNCIONES Conjuntos
 t_FUNCTIONADD= r'add'
 t_FUNCTIONHAS= r'has'
+
+t_FUNCTION= r'function'
 
 
 t_ignore = ' \t'

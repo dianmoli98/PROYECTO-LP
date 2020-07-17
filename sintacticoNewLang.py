@@ -3,10 +3,15 @@ import lexico_NewLang as mylexer
 tokens = mylexer.tokens
 
 
-
 # Statement(1 code line)
 def p_statement(p):
-    '''statement : statement_value
+    '''statement : atomicstatement
+    | atomicstatement statement'''
+    p[0] = p[1]
+
+
+def p_atomicStatement(p):
+    '''atomicstatement : statement_value
     | statement_value POINTCOMMA'''
     p[0] = p[1]
 
@@ -24,13 +29,16 @@ def p_statement_value(p):
     | exp_set
     | statement_control
     | comments
+    | functionStatement
     | consoleLog'''
     p[0] = p[1]
+
 
 def p_statement_control(p):
     '''statement_control : funcionif
     | funcionwhile
     | funcionfor'''
+
 
 def p_consoleLog(p):
     '''consoleLog : PRINT LPAREN RPAREN
@@ -38,12 +46,16 @@ def p_consoleLog(p):
     | PRINT LPAREN string RPAREN'''
     print("console.log")
 
-#comentarios
+# comentarios
+
+
 def p_declarationcomments(p):
     '''comments : COMMENT
     | MULTICOMMENT'''
 
 # Declaration of Variables, Array and Enum
+
+
 def p_declare(p):
     '''declare : var_boolean
     | var_number
@@ -89,7 +101,21 @@ def p_enums_string(p):
 def p_enums_string_value(p):
     'enums_string_value : object_name EQUAL string'
 
-#if
+# FUNCTION
+
+
+def p_functionDeclarar(p):
+    '''functionStatement : FUNCTION VARIABLE LPAREN RPAREN substatement
+    | FUNCTION VARIABLE LPAREN funcParametres RPAREN substatement'''
+
+
+def p_funtionParametres(p):
+    '''funcParametres : VARIABLE
+    | VARIABLE COMMA funcParametres'''
+
+# if
+
+
 def p_condicionIf(p):
     '''funcionif : IF LPAREN formLog RPAREN substatement
     | IF LPAREN formLog RPAREN substatement funcionelif
@@ -98,37 +124,51 @@ def p_condicionIf(p):
     '''
     p[0] = 1000
 
-#elif
+# elif
+
+
 def p_condicionElif(p):
     '''funcionelif : ELIF LPAREN formLog RPAREN substatement
     | ELIF LPAREN formLog RPAREN substatement funcionelif '''
 
-#else
+# else
+
+
 def p_condicionElse(p):
     '''funcionelse : ELSE substatement'''
 
-#for
+# for
+
+
 def p_condicionFor(p):
-    '''funcionfor : FOR LPAREN prefix VARIABLE EQUAL number_value POINTCOMMA formLog POINTCOMMA term RPAREN substatement
+    '''funcionfor : FOR LPAREN LET VARIABLE EQUAL number_value POINTCOMMA formLog POINTCOMMA term RPAREN substatement
     | FOR LPAREN VARIABLE EQUAL number_value POINTCOMMA formLog POINTCOMMA term RPAREN substatement
+    | FOR LPAREN LET VARIABLE IN VARIABLE RPAREN substatement
+    | FOR LPAREN VARIABLE IN VARIABLE RPAREN substatement
     '''
     p[0] = 1000
 
 
-#While
+# While
 def p_condicionWhile(p):
     '''funcionwhile : WHILE LPAREN formLog RPAREN substatement
     '''
+
+
 def p_subStatement(p):
     '''substatement : LKEY statement RKEY
     | LKEY RKEY'''
 
-#Declaration of set
+# Declaration of set
+
+
 def p_declare_Set(p):
     'exp_set : declare_any EQUAL NEW SET LPAREN RPAREN'
     p[0] = 600
 
-#Declaration of tuples
+# Declaration of tuples
+
+
 def p_declare_tuples(p):
     '''declare_tuples : declare_any TWOPOINTS tuples_2_variables
     | declare_any TWOPOINTS tuples_2_variables EQUAL tuples_2_values
@@ -137,6 +177,7 @@ def p_declare_tuples(p):
     | declare_any TWOPOINTS tuples_4_variables
     | declare_any TWOPOINTS tuples_4_variables EQUAL tuples_4_values'''
     p[0] = 1000
+
 
 def p_declare_tuples_2_variables(p):
     'tuples_2_variables : LBRACKET types COMMA types RBRACKET'
@@ -171,6 +212,8 @@ def p_declare_array(p):
     p[0] = 400
 
 # Declaration of array_number
+
+
 def p_declare_array_main_number(p):
     '''declare_array_main_number : declare_array_number EQUAL list_number
     | declare_array_number EQUAL LBRACKET RBRACKET
@@ -200,6 +243,7 @@ def p_declare_array_main_string(p):
     | declare_array_string EQUAL LBRACKET RBRACKET
     | declare_array_string'''
 
+
 def p_declare_array_string(p):
     '''declare_array_string : declare_string LBRACKET RBRACKET
     | declare_any TWOPOINTS ARRAY LESS VARSTRING GREATER'''
@@ -213,13 +257,16 @@ def p_declare_generic_array(p):
 # Declaration of variables
 def p_declare_null(p):
     'var_null : declare_any EQUAL NULL'
-    p[0] =110.10
+    p[0] = 110.10
+
 
 def p_declare_undefined(p):
     'var_undefined : declare_any EQUAL UNDEFINED'
-    p[0] =120.20
+    p[0] = 120.20
 
 # Declaration of var_number add funcionmath
+
+
 def p_var_number(p):
     '''var_number : declare_number EQUAL number_value
     | declare_number EQUAL funcionmath
@@ -274,7 +321,7 @@ def p_declare_generic(p):
 
 # Can be used for all declarations
 def p_declare_any(p):
-    'declare_any : prefix VARIABLE'
+    '''declare_any : prefix VARIABLE'''
 
 
 # Assignments
@@ -285,6 +332,8 @@ def p_assign(p):
     p[0] = 50
 
 # Assign variable
+
+
 def p_assign_variable(p):
     '''assign_variable : variable EQUAL assign_value
     | variable EQUAL funciones
@@ -309,14 +358,18 @@ def p_assign_value(p):
     | object_definition
     | tuples_list'''
 
+
 def p_tuples_list(p):
     'tuples_list : LBRACKET tuples_values RBRACKET'
+
 
 def p_tuples_values(p):
     '''tuples_values : tuples_values COMMA general_value
     | general_value'''
 
 # Definicion de un objeto
+
+
 def p_object_definition(p):
     '''object_definition : LKEY attributes RKEY
     | LKEY RKEY '''
@@ -427,27 +480,34 @@ def p_value(p):
 def p_expression_plus(p):
     'expression : expression PLUS term'
 
+
 def p_expression_minus(p):
     'expression : expression MINUS term'
+
 
 def p_expression_term(p):
     'expression : term'
 
+
 def p_term_product(p):
     'expression : expression PRODUCT expression'
+
 
 def p_term_div(p):
     'expression : expression DIVIDE expression'
 
+
 def p_expression_increment(p):
     '''term : term1 INCREMENT
     | INCREMENT  term1'''
-    p[0]= None
+    p[0] = None
+
 
 def p_expression_decrement(p):
     '''term : term1 DECREMENT
      | DECREMENT  term1'''
     p[0] = None
+
 
 def p_negation(p):
     '''expNeg : NEGATION expOpLog
@@ -457,6 +517,7 @@ def p_negation(p):
         | NEGATION VARIABLE
         '''
     p[0] = 88.8
+
 
 def p_equalto(p):
     '''expEq : expCond EQUALTO expCond
@@ -472,21 +533,23 @@ def p_notequal(p):
     p[0] = 99.9
 
 
-#Operaciones Condicionales
+# Operaciones Condicionales
 def p_expression_opLogico(p):
     '''expOpLog : expCond oplogico expCond
     | factor_exprlog  oplogico factor_exprlog
     | expression oplogico expression'''
     p[0] = 77.7
 
+
 def p_exp_logica(p):
     'factor_exprlog : LPAREN expCond RPAREN'
     p[0] = p[2]
 
+
 def p_expression_condicional(p):
     '''expCond : expression operador expression
     | LPAREN expression operador expression RPAREN'''
-    p[0]= 66.6
+    p[0] = 66.6
 
 
 def p_term1_expr(p):
@@ -509,6 +572,7 @@ def p_term_factor(p):
     | other_value'''
     p[0] = p[1]
 
+
 def p_factor_expr(p):
     'factor_expr : LPAREN expression RPAREN'
     p[0] = p[2]
@@ -521,19 +585,25 @@ def p_other_value(p):
     | enum_value
     | object_value'''
 
-#FUNCIONES IF
+# FUNCIONES IF
+
+
 def p_funcionLog(p):
     '''formLog : expCond
        | expOpLog'''
 
 # Object value
+
+
 def p_object_value(p):
     '''object_value : object_value_form1
     | object_value_form2'''
     p[0] = 1
 
+
 def p_string_object(p):
     'string_object : NEW OBJECTSTRING LPAREN string RPAREN'
+
 
 def p_object_value_form1(p):
     'object_value_form1 : variable POINT variable'
@@ -562,14 +632,17 @@ def p_prefix(p):
     | STATIC
     | CONST'''
 
+
 def p_typedate(p):
     '''typedate : types
         | ENUM'''
+
 
 def p_types(p):
     '''types : VARNUMBER
         | VARSTRING
         | VARBOOLEAN'''
+
 
 def p_number(p):
     '''number : NUMBER
@@ -609,30 +682,38 @@ def p_operador(p):
 def p_operadorlogico(p):
     '''oplogico : AND
       | OR'''
-#funciones
+# funciones
+
+
 def p_funciones(p):
     '''funciones : funcionmath
     | funcionString
     | funcionArray
     | funcionConjunto'''
 
-#Math Funciones
+# Math Funciones
+
+
 def p_funcionMath(p):
     '''funcionmath : mathAbs
     | mathRound
     | mathPow'''
 
+
 def p_math_abs_declare(p):
     'mathAbs : declare_any EQUAL mathAbs'
+
 
 def p_math_abs(p):
     '''mathAbs : FUNMATH POINT  ABS LPAREN VARIABLE RPAREN
     | FUNMATH POINT  ABS LPAREN number_value RPAREN
     | FUNMATH POINT  ABS LPAREN MINUS  number_value RPAREN'''
 
+
 def p_math_round(p):
     '''mathRound : FUNMATH POINT  ROUND LPAREN VARIABLE RPAREN
     | FUNMATH POINT  ROUND LPAREN number_value RPAREN'''
+
 
 def p_math_pow(p):
     '''mathPow : FUNMATH POINT  POW LPAREN VARIABLE COMMA VARIABLE RPAREN
@@ -640,57 +721,73 @@ def p_math_pow(p):
     | FUNMATH POINT  POW LPAREN VARIABLE COMMA number_value RPAREN
     | FUNMATH POINT  POW LPAREN number_value COMMA VARIABLE RPAREN'''
 
-#String Funciones
+# String Funciones
+
+
 def p_funcionesString(p):
     '''funcionString : stringCharAt
     | stringConcat
     | stringSplit'''
 
+
 def p_string_charAt(p):
     '''stringCharAt : VARIABLE POINT FUNCTIONCHARAT LPAREN VARIABLE RPAREN
     | VARIABLE POINT FUNCTIONCHARAT LPAREN number_value RPAREN'''
+
 
 def p_string_concat(p):
     '''stringConcat : VARIABLE POINT FUNCTIONCONCAT LPAREN VARIABLE RPAREN
     | VARIABLE POINT FUNCTIONCONCAT LPAREN string RPAREN
     '''
+
+
 def p_string_split(p):
     '''stringSplit : VARIABLE POINT FUNCTIONSPLIT LPAREN VARIABLE RPAREN
     | VARIABLE POINT FUNCTIONSPLIT LPAREN string RPAREN
     '''
 
-#Arrays funciones
+# Arrays funciones
+
+
 def p_funcionesArray(p):
     '''funcionArray : arrayFilter
     | arrayConcat
     | arrayJoin'''
 
+
 def p_array_concat(p):
     '''arrayConcat : VARIABLE POINT FUNCTIONCONCAT LPAREN VARIABLE RPAREN
     | VARIABLE POINT FUNCTIONCONCAT LPAREN list_types RPAREN'''
 
+
 def p_array_join_declare(p):
     '''arrayJoin : declare_any arrayJoin
     | declare_any arrayJoin POINTCOMMA'''
+
 
 def p_array_join(p):
     '''arrayJoin : VARIABLE POINT FUNCTIONJOIN LPAREN VARIABLE RPAREN
     | VARIABLE POINT FUNCTIONJOIN LPAREN string RPAREN
     '''
 
+
 def p_array_filter(p):
     '''arrayFilter : VARIABLE POINT FUNCTIONFILTER LPAREN VARIABLE RPAREN'''
 
-#conjuntos Funciones
+# conjuntos Funciones
+
+
 def p_funcionesConjuntos(p):
     '''funcionConjunto : conjuntoAdd
     | conjuntoHas'''
+
 
 def p_conjunto_add(p):
     '''conjuntoAdd : VARIABLE POINT FUNCTIONADD LPAREN VARIABLE RPAREN
     | VARIABLE POINT FUNCTIONADD LPAREN number_value RPAREN
     | VARIABLE POINT FUNCTIONADD LPAREN boolean_value RPAREN
     | VARIABLE POINT FUNCTIONADD LPAREN string RPAREN'''
+
 
 def p_conjunto_has(p):
     '''conjuntoHas : VARIABLE POINT FUNCTIONHAS LPAREN VARIABLE RPAREN
@@ -699,123 +796,126 @@ def p_conjunto_has(p):
     | VARIABLE POINT FUNCTIONHAS LPAREN string RPAREN'''
 
 # Error rule for syntax errors
+
+
 def p_error(p):
     print("Syntax error in input!: "+str(p))
 
 
+# var tupla: [string, number] = ["Hola",4];
 
-# var tupla: [string, number] = ["Hola",4]                           NO coge --> Ya sale, pero revisar en que condiciones sale
-#Sale la declaracion de la tupla si el # de variables es igual al de los elementos de la lista, solo esta hasta 4 elementos
-#De otra forma sin usar la especificacion de los tipos de datos de la tupla, sale para cualquier tamaño de la lista con cualquier
-#tipo de dato.
-#var nombre2 = "Nombre:" + name + "Apellido:" + lastname;      Listo --> Concadenacion sale cuando primer elemento es string
-#var age = “Edad:” + (edad +1);                                      Sale
-#var str = new String("Ana");  #                                      NO SALE --> Listo
-#function isLess(element, index, array)                              NO SALE
-#modulo
-#console.log(“Prueba\n”);--> Problema con comillas del Word
+# tipo de dato.
+# var nombre2 = "Nombre:" + name + "Apellido:" + lastname;  
+
+# var age = "Edad:" + (edad +1);
+#var str = new String("Ana");  
+#var s:string=`Hola ${name}`
+# function isLess(element, index, array) {var i:number =1;}
 
 
-#PRUEBASS CON DECLARACION DE VARIABLES
-#let color;
-#let color
-
-#let eye = 10;
-#let eye = 10
-#var numero=18;
-#let color=null
-#let color=undefined;
-
-#let eye: number = 10;
-#let x: number = 40;
-#let var1: number= 50;
-#let var1: number= 9;
-#var eye = 10;
-#let color: string = "blue";
-#var color2 = 'red';
-#let name: string='Hola';
-#var str1: string = "Ana";
-#let va2r: boolean = true;
-#let result: boolean = !var1;
-#let result:boolean= var1>var2||var1<=var3;
-
-#DECLARACION  DE ARREGLOS
-#let miarray: number[];
-#let miarray: number[] = [1,2,3,4,5];
-#let x: Array<string> = ["Hola","Hola2"]
-#var arreglo= [ 1 , 2,3,4,8];
-#var arreglo2 = ["Lopez","Damian"];
-
-#DECLARACION DE TUPLAS
+# console.log(“Prueba\n”);--> Problema con comillas del Word
 
 
-#DECLARACION DE ENUM
-#enum Color {Amarrillo, Azul, Rojo}
-#enum Animal {Perro =1, Gato=23}
-#let c: Color = Color.Rojo;
-#let a: Animal = Animal. Perro;
+# PRUEBASS CON DECLARACION DE VARIABLES
+# let color;
+# let color
 
-#CONJUNTOS
-#let set1 = new Set ();
+# let eye = 10;
+# let eye = 10
+# var numero=18;
+# let color=null
+# let color=undefined;
 
-#OPERACIONES MATEMATICAS
-#let result: number= var1-var2;
-#let result: number= var1-var2+var3;
-#let result: number= (var1-var2)+var3;
-#(4-5)+9;
-#5-6
-#(8+9)-(4*5)
-#(8+9)/var3
-#let result:number=(var1-var2)+var3;
+# let eye: number = 10;
+# let x: number = 40;
+# let var1: number= 50;
+# let var1: number= 9;
+# var eye = 10;
+# let color: string = "blue";
+# var color2 = 'red';
+# let name: string='Hola';
+# var str1: string = "Ana";
+# let va2r: boolean = true;
+# let result: boolean = !var1;
+# let result:boolean= var1>var2||var1<=var3;
 
-#CONTADOR
-#contador++;
-#--numero;
-#index--;
+# DECLARACION  DE ARREGLOS
+# let miarray: number[];
+# let miarray: number[] = [1,2,3,4,5];
+# let x: Array<string> = ["Hola","Hola2"]
+# var arreglo= [ 1 , 2,3,4,8];
+# var arreglo2 = ["Lopez","Damian"];
 
-#CONCATENACION
-#var nombre = "Marlon" + "Lindao";
-#var name = "Marlon"
+# DECLARACION DE TUPLAS
 
-#FUNCIONES MATEMIATICAS
-#var numberAbs = Math.abs(-3);
-#var numberRound = Math.round(2.6);
-#var numberPow = Math.pow (4,2);
-#Math.abs(-3);
 
-#CONDICIONES
-#1 < 5 && 7>=6
-#(1 < 5)&&(7>=6)
+# DECLARACION DE ENUM
+# enum Color {Amarrillo, Azul, Rojo}
+# enum Animal {Perro =1, Gato=23}
+# let c: Color = Color.Rojo;
+# let a: Animal = Animal. Perro;
+
+# CONJUNTOS
+# let set1 = new Set ();
+
+# OPERACIONES MATEMATICAS
+# let result: number= var1-var2;
+# let result: number= var1-var2+var3;
+# let result: number= (var1-var2)+var3;
+# (4-5)+9;
+# 5-6
+# (8+9)-(4*5)
+# (8+9)/var3
+# let result:number=(var1-var2)+var3;
+
+# CONTADOR
+# contador++;
+# --numero;
+# index--;
+
+# CONCATENACION
+# var nombre = "Marlon" + "Lindao";
+# var name = "Marlon"
+
+# FUNCIONES MATEMIATICAS
+# var numberAbs = Math.abs(-3);
+# var numberRound = Math.round(2.6);
+# var numberPow = Math.pow (4,2);
+# Math.abs(-3);
+
+# CONDICIONES
+# 1 < 5 && 7>=6
+# (1 < 5)&&(7>=6)
 #! (1 < 5 && 7>=6)
 # !var3
-#let result: boolean= var1== v2ar;
-#var1 || va3
-#(var3-var8)&&(4-5)
-#3||(var7+ver5)
+# let result: boolean= var1== v2ar;
+# var1 || va3
+# (var3-var8)&&(4-5)
+# 3||(var7+ver5)
 
-#FUNCIONES PARA STRINGS
-#var str3: string = str1.concat(str2);
-#str.charAt(0);
-#var result = str.split(" ");
+# FUNCIONES PARA STRINGS
+# var str3: string = str1.concat(str2);
+# str.charAt(0);
+# var result = str.split(" ");
 
-#FUNCIONES PARA ARREGLOS
-#var result = arreglo1.concat(arreglo2);
-#var result = arreglo.filter(isLess);
-#arreglo.filter(isLess);
-#var result = arreglo1.join(",");
+# FUNCIONES PARA ARREGLOS
+# var result = arreglo1.concat(arreglo2);
+# var result = arreglo.filter(isLess);
+# arreglo.filter(isLess);
+# var result = arreglo1.join(",");
 
-#FUNCIONES PARA CONJUNTOS
-#set1.add(1);
-#let result:boolean =set1.has(1);
-
-#FUNCIONES IF, FOR Y WHILE
+# FUNCIONES PARA CONJUNTOS
+# set1.add(1);
+# let result:boolean =set1.has(1);
+# FUNCIONES IF, FOR Y WHILE
 # if (5>6) { }
 # if (5>6) { } elif(i==1){}else{}
 # if (5>6) { } elif(i==1){}elif(i==1){console.log("F")}else{}
-#for (let i = 0; i < 3; i++) { }
-#while (i==5) {str.charAt(0);}
+# for (let i = 0; i < 3; i++) { var i:number= 1; }
+# for(let i = 0; i < 3; i++) {if (5>6) { } elif(i==1){}elif(i==1){console.log("F")}else{}}
+# for(let i in list) {if (5>6) { } elif(i==1){}elif(i==1){console.log("F")}else{} while (i==5) {str.charAt(0); console.log (x);}}
+# while (i==5) {str.charAt(0); console.log (x);}
 #console.log (x);
-
 # Build the parser
 parser = yacc.yacc()
 
@@ -824,7 +924,7 @@ while True:
         s = input('Typescript > ')
     except EOFError:
         break
-    if not s: continue
+    if not s:
+        continue
     result = parser.parse(s)
     print(result)
-
