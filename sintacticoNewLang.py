@@ -109,8 +109,10 @@ def p_condicionElse(p):
 
 #for
 def p_condicionFor(p):
-    '''funcionfor : FOR LPAREN prefix VARIABLE EQUAL number_value POINTCOMMA formLog POINTCOMMA term RPAREN substatement
+    '''funcionfor : FOR LPAREN LET VARIABLE EQUAL number_value POINTCOMMA formLog POINTCOMMA term RPAREN substatement
     | FOR LPAREN VARIABLE EQUAL number_value POINTCOMMA formLog POINTCOMMA term RPAREN substatement
+    | FOR LPAREN LET VARIABLE IN VARIABLE RPAREN substatement
+    | FOR LPAREN VARIABLE IN VARIABLE RPAREN substatement
     '''
     p[0] = 1000
 
@@ -807,7 +809,9 @@ def p_error(p):
 # if (5>6) { }
 # if (5>6) { } elif(i==1){}else{}
 # if (5>6) { } elif(i==1){}elif(i==1){console.log("F")}else{}
-#for (let i = 0; i < 3; i++) { }
+#for (let i = 0; i < 3; i++) { var i:number= 1; }
+#for(let i = 0; i < 3; i++) {if (5>6) { } elif(i==1){}elif(i==1){console.log("F")}else{}}
+#for(let i in list) {if (5>6) { } elif(i==1){}elif(i==1){console.log("F")}else{}}
 #while (i==5) {str.charAt(0);}
 #console.log (x);
 
