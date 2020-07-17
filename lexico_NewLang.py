@@ -99,7 +99,6 @@ tokens = [
     'COMMA',
     'POINTCOMMA',
     'SPECIAL',
-    'DOLLAR',
     'PRINT',
     'COMMENT',
     'MULTICOMMENT'
@@ -111,7 +110,7 @@ t_NUMBER = r'[0-9]+'
 t_FLOAT = r'[0-9]+\.[0-9]+'
 t_NORMSTRING1 = r'\".*\"' #Falta arreglar los dos norm y el multi
 t_NORMSTRING2 = r'\'.*\''
-t_MULTISTRING = r'`(.*\n?)*`'
+t_MULTISTRING = r'`(.* |\n | \$\{.*\})*`'
 t_POINT = r'\.'
 
 #simbolos
@@ -146,7 +145,6 @@ t_TWOPOINTS = r'\:'
 t_COMMA = r','
 t_POINTCOMMA = r';'
 t_SPECIAL = r'`'
-t_DOLLAR = r'\$'
 
 
 #Reservados
