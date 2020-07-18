@@ -121,6 +121,8 @@ def p_condicionIf(p):
     | IF LPAREN formLog RPAREN substatement funcionelif
     | IF LPAREN formLog RPAREN substatement funcionelif funcionelse
     | IF LPAREN formLog RPAREN substatement funcionelse
+    | IF LPAREN VARIABLE INSTANCEOF OBJECTNAME RPAREN substatement
+
     '''
     p[0] = 1000
 
@@ -537,7 +539,8 @@ def p_notequal(p):
 def p_expression_opLogico(p):
     '''expOpLog : expCond oplogico expCond
     | factor_exprlog  oplogico factor_exprlog
-    | expression oplogico expression'''
+    | expression oplogico expression
+    | boolean oplogico boolean'''
     p[0] = 77.7
 
 

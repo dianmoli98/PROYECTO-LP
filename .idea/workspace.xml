@@ -2,8 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a8ed03b1-32b2-4f86-9dee-155e48412249" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/PROYECTO-LP.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/PROYECTO-LP.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/parser.out" beforeDir="false" afterPath="$PROJECT_DIR$/parser.out" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/parsetab.py" beforeDir="false" afterPath="$PROJECT_DIR$/parsetab.py" afterDir="false" />
@@ -13,25 +11,6 @@
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
-  </component>
-  <component name="FindInProjectRecents">
-    <findStrings>
-      <find>assign</find>
-      <find>group</find>
-      <find>let</find>
-      <find>prefix</find>
-      <find>declare_a</find>
-      <find>string_value</find>
-      <find>if</find>
-      <find>declare_any</find>
-      <find>number</find>
-      <find>boolean</find>
-      <find>FOR</find>
-      <find>DECLARE</find>
-      <find>JOIN</find>
-      <find>66.</find>
-      <find>equal</find>
-    </findStrings>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -87,6 +66,22 @@
     <servers />
   </component>
   <component name="WindowStateProjectService">
+    <state width="1345" height="91" key="GridCell.Tab.0.bottom" timestamp="1595034435917">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state width="1345" height="91" key="GridCell.Tab.0.bottom/0.0.1366.728@0.0.1366.728" timestamp="1595034435917" />
+    <state width="1345" height="91" key="GridCell.Tab.0.center" timestamp="1595034435917">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state width="1345" height="91" key="GridCell.Tab.0.center/0.0.1366.728@0.0.1366.728" timestamp="1595034435917" />
+    <state width="1345" height="91" key="GridCell.Tab.0.left" timestamp="1595034435917">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state width="1345" height="91" key="GridCell.Tab.0.left/0.0.1366.728@0.0.1366.728" timestamp="1595034435917" />
+    <state width="1345" height="91" key="GridCell.Tab.0.right" timestamp="1595034435917">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state width="1345" height="91" key="GridCell.Tab.0.right/0.0.1366.728@0.0.1366.728" timestamp="1595034435917" />
     <state x="184" y="8" key="SettingsEditor" timestamp="1594953522962">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
