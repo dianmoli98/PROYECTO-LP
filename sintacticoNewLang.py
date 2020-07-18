@@ -802,7 +802,16 @@ def p_conjunto_has(p):
 
 
 def p_error(p):
-    print("Syntax error in input!: "+str(p))
+    global flag_for_error
+    flag_for_error=1
+
+    if p is not None:
+        print("Error de syntax linea %s, en \'%s\'."%(str(p.lineno),str(p.type)))
+        print("ValueError: Nombre \'%s\' no es definido."%(str(p.value)))
+        #print(dir(p))
+
+    else:
+        print("Fin de entrada inesperado.")
 
 
 # var tupla: [string, number] = ["Hola",4];
@@ -816,7 +825,7 @@ def p_error(p):
 # function isLess(element, index, array) {var i:number =1;}
 
 
-# console.log(“Prueba\n”);--> Problema con comillas del Word
+# console.log("Prueba\n");
 
 
 # PRUEBASS CON DECLARACION DE VARIABLES
@@ -931,3 +940,19 @@ while True:
         continue
     result = parser.parse(s)
     print(result)
+
+#Example multiline
+"""
+
+linea = '''while (i==5) {
+    \nstr.charAt(0);
+    \nconsole.log (x);}
+    \nif (5>6) {var a=9; }
+    \nelif(i==1){}
+    \nelif(i==1){console.log(\"F\")}
+    \nelse{}'''
+
+resultado = parser.parse(linea)
+print(resultado)
+
+"""
