@@ -842,12 +842,14 @@ def p_conjunto_has(p):
 # Error rule for syntax errors
 
 lineaError=None
-ErrorDetect=False
+
+NoError=[True]
 
 def p_error(p):
-    ErrorDetect=True
     global flag_for_error
     flag_for_error=1
+
+    NoError[0]=False
 
     if p is not None:
         print("Error de syntax linea %s, en \'%s\'."%(str(lineaError),str(p.type)))
@@ -946,9 +948,7 @@ def p_error(p):
 
 # FUNCIONES PARA STRINGS
 # var str3: string = str1.concat(str2);
-# str.charAt(0);
-# var result = str.split(" ");
-
+# str.charAt(0ErrorDetect
 # FUNCIONES PARA ARREGLOS
 # var result = arreglo1.concat(arreglo2);
 # var result = arreglo.filter(isLess);
@@ -992,6 +992,7 @@ while True:
     try:
         s = input('Typescript > ')
         listaArg = s.split("\\" + "n")
+        NoError[0]=True
 
     except EOFError:
         break
@@ -1003,10 +1004,11 @@ while True:
         if not linea:
             continue
         result = parser.parse(linea)
-
-        if ErrorDetect:
+        
+        if not NoError[0]:
             break
-        # elif (i+1)==len(listaArg) and not ErrorDetect:
-        # print("Compilacion Exitosa")
-        # print(result)
+
+        if (i+1)==len(listaArg):
+            print("Compilacion Exitosa")
+            #print(result)
 
