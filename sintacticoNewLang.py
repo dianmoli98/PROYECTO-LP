@@ -40,7 +40,6 @@ def p_statement_control(p):
     p[0] = 1
 
 
-
 def p_consoleLog(p):
     '''consoleLog : PRINT LPAREN RPAREN
     | PRINT LPAREN VARIABLE RPAREN
@@ -49,8 +48,6 @@ def p_consoleLog(p):
 
 
 # comentarios
-
-
 def p_declarationcomments(p):
     '''comments : COMMENT
     | MULTICOMMENT'''
@@ -58,8 +55,6 @@ def p_declarationcomments(p):
 
 
 # Declaration of Variables, Array and Enum
-
-
 def p_declare(p):
     '''declare : var_boolean
     | var_number
@@ -109,14 +104,11 @@ def p_enums_string(p):
     p[0] = 1
 
 
-
 def p_enums_string_value(p):
     'enums_string_value : object_name EQUAL string'
     p[0] = 1
 
 # FUNCTION
-
-
 def p_functionDeclarar(p):
     '''functionStatement : FUNCTION VARIABLE LPAREN RPAREN substatement
     | FUNCTION VARIABLE LPAREN funcParametres RPAREN substatement'''
@@ -129,8 +121,6 @@ def p_funtionParametres(p):
     p[0] = 1
 
 # if
-
-
 def p_condicionIf(p):
     '''funcionif : IF LPAREN formLog RPAREN substatement
     | IF LPAREN formLog RPAREN substatement funcionelif
@@ -142,23 +132,19 @@ def p_condicionIf(p):
     p[0] = 1
 
 # elif
-
-
 def p_condicionElif(p):
     '''funcionelif : ELIF LPAREN formLog RPAREN substatement
     | ELIF LPAREN formLog RPAREN substatement funcionelif '''
     p[0] = 1
 
+
 # else
-
-
 def p_condicionElse(p):
     '''funcionelse : ELSE substatement'''
     p[0] = 1
 
+
 # for
-
-
 def p_condicionFor(p):
     '''funcionfor : FOR LPAREN LET VARIABLE EQUAL number_value POINTCOMMA formLog POINTCOMMA term RPAREN substatement
     | FOR LPAREN VARIABLE EQUAL number_value POINTCOMMA formLog POINTCOMMA term RPAREN substatement
@@ -170,8 +156,7 @@ def p_condicionFor(p):
 
 # While
 def p_condicionWhile(p):
-    '''funcionwhile : WHILE LPAREN formLog RPAREN substatement
-    '''
+    'funcionwhile : WHILE LPAREN formLog RPAREN substatement'
     p[0] = 1
 
 
@@ -181,15 +166,11 @@ def p_subStatement(p):
     p[0] = 1
 
 # Declaration of set
-
-
 def p_declare_Set(p):
     'exp_set : declare_any EQUAL NEW SET LPAREN RPAREN'
     p[0] = 1
 
 # Declaration of tuples
-
-
 def p_declare_tuples(p):
     '''declare_tuples : declare_any TWOPOINTS tuples_2_variables
     | declare_any TWOPOINTS tuples_2_variables EQUAL tuples_2_values
@@ -239,8 +220,6 @@ def p_declare_array(p):
     p[0] = 1
 
 # Declaration of array_number
-
-
 def p_declare_array_main_number(p):
     '''declare_array_main_number : declare_array_number EQUAL list_number
     | declare_array_number EQUAL LBRACKET RBRACKET
@@ -299,8 +278,6 @@ def p_declare_undefined(p):
     p[0] = 1
 
 # Declaration of var_number add funcionmath
-
-
 def p_var_number(p):
     '''var_number : declare_number EQUAL number_value
     | declare_number EQUAL funcionmath
@@ -371,8 +348,6 @@ def p_assign(p):
     p[0] = 1
 
 # Assign variable
-
-
 def p_assign_variable(p):
     '''assign_variable : variable EQUAL assign_value
     | variable EQUAL funciones
@@ -413,8 +388,6 @@ def p_tuples_values(p):
     p[0] = 1
 
 # Definicion de un objeto
-
-
 def p_object_definition(p):
     '''object_definition : LKEY attributes RKEY
     | LKEY RKEY '''
@@ -560,6 +533,9 @@ def p_term_div(p):
     'expression : expression DIVIDE expression'
     p[0] = 1
 
+def p_term_mod(p):
+    'expression : expression MOD expression'
+    p[0] = 1
 
 def p_expression_increment(p):
     '''term : term1 INCREMENT
@@ -652,41 +628,32 @@ def p_other_value(p):
     p[0] = 1
 
 # FUNCIONES IF
-
-
 def p_funcionLog(p):
     '''formLog : expCond
        | expOpLog'''
     p[0] = 1
 
 # Object value
-
-
 def p_object_value(p):
     '''object_value : object_value_form1
     | object_value_form2'''
     p[0] = 1
 
-
 def p_string_object(p):
     'string_object : NEW OBJECTSTRING LPAREN string RPAREN'
     p[0] = 1
-
 
 def p_object_value_form1(p):
     'object_value_form1 : variable POINT variable'
     p[0] = 1
 
-
 def p_object_value_form2(p):
     'object_value_form2 : variable POINT array_value'
-
 
 # Array
 def p_array_value(p):
     'array_value : variable LBRACKET expression RBRACKET'
     p[0] = 1
-
 
 # Enum value
 def p_enum_value(p):
@@ -702,12 +669,10 @@ def p_prefix(p):
     | CONST'''
     p[0] = 1
 
-
 def p_typedate(p):
     '''typedate : types
         | ENUM'''
     p[0] = 1
-
 
 def p_types(p):
     '''types : VARNUMBER
@@ -715,12 +680,10 @@ def p_types(p):
         | VARBOOLEAN'''
     p[0] = 1
 
-
 def p_number(p):
     '''number : NUMBER
     | FLOAT'''
     p[0] = 1
-
 
 def p_string(p):
     '''string : NORMSTRING1
@@ -728,22 +691,18 @@ def p_string(p):
     | MULTISTRING'''
     p[0] = 1
 
-
 def p_boolean_value(p):
     '''boolean : TRUE
     | FALSE'''
     p[0] = 1
 
-
 def p_variable(p):
     'variable : VARIABLE'
     p[0] = 1
 
-
 def p_object_name(p):
     'object_name : OBJECTNAME'
     p[0] = 1
-
 
 def p_operador(p):
     '''operador : GREATER
@@ -754,14 +713,12 @@ def p_operador(p):
       | NOTEQUALTO'''
     p[0] = 1
 
-
 def p_operadorlogico(p):
     '''oplogico : AND
       | OR'''
     p[0] = 1
+
 # funciones
-
-
 def p_funciones(p):
     '''funciones : funcionmath
     | funcionString
@@ -770,8 +727,6 @@ def p_funciones(p):
     p[0] = 1
 
 # Math Funciones
-
-
 def p_funcionMath(p):
     '''funcionmath : mathAbs
     | mathRound
@@ -805,8 +760,6 @@ def p_math_pow(p):
     p[0] = 1
 
 # String Funciones
-
-
 def p_funcionesString(p):
     '''funcionString : stringCharAt
     | stringConcat
@@ -834,8 +787,6 @@ def p_string_split(p):
     p[0] = 1
 
 # Arrays funciones
-
-
 def p_funcionesArray(p):
     '''funcionArray : arrayFilter
     | arrayConcat
@@ -867,8 +818,6 @@ def p_array_filter(p):
     p[0] = 1
 
 # conjuntos Funciones
-
-
 def p_funcionesConjuntos(p):
     '''funcionConjunto : conjuntoAdd
     | conjuntoHas'''
@@ -909,19 +858,17 @@ def p_error(p):
         print("Fin de entrada inesperado.")
 
 
+#PRUEBAS REALIZADAS POR DIANA MOLINA, DENNYS LOPEZ Y MARLON LINDAO
+
 # var tupla: [string, number] = ["Hola",4];
-
 # tipo de dato.
-# var nombre2 = "Nombre:" + name + "Apellido:" + lastname;  
-
+# var nombre2 = "Nombre:" + name + "Apellido:" + lastname;
 # var age = "Edad:" + (edad +1);
 #var str = new String("Ana");  
 #var s:string=`Hola ${name}`
 # function isLess(element, index, array) {var i:number =1;}
 
-
 # console.log("Prueba\n");
-
 
 # PRUEBASS CON DECLARACION DE VARIABLES
 # let color;
@@ -952,9 +899,6 @@ def p_error(p):
 # let x: Array<string> = ["Hola","Hola2"]
 # var arreglo= [ 1 , 2,3,4,8];
 # var arreglo2 = ["Lopez","Damian"];
-
-# DECLARACION DE TUPLAS
-
 
 # DECLARACION DE ENUM
 # enum Color {Amarrillo, Azul, Rojo}
@@ -1023,32 +967,6 @@ def p_error(p):
 # for(let i in list) {if (5>6) { } elif(i==1){}elif(i==1){console.log("F")}else{} while (i==5) {str.charAt(0); console.log (x);}}
 # while (i==5) {str.charAt(0); console.log (x);}
 #console.log (x);
-# Build the parser
-parser = yacc.yacc()
-
-while True:
-    listaArg=[]
-
-    try:
-        s = input('Typescript > ')
-        listaArg=s.split("\\"+"n")
-
-    except EOFError:
-        break
-    for i in range(len(listaArg)):
-        lineaError=i+1
-
-        linea=listaArg[i]
-        #p.lineno(i)
-        if not linea:
-            continue
-        result = parser.parse(linea)
-    
-        if ErrorDetect:
-            break
-        elif (i+1)==len(listaArg) and not ErrorDetect:
-            print("Compilacion Exitosa")
-            #print(result)
 
 #Example multiline
 """
@@ -1065,3 +983,30 @@ resultado = parser.parse(linea)
 print(resultado)
 
 """
+
+# Build the parser
+parser = yacc.yacc()
+while True:
+    listaArg = []
+
+    try:
+        s = input('Typescript > ')
+        listaArg = s.split("\\" + "n")
+
+    except EOFError:
+        break
+    for i in range(len(listaArg)):
+        lineaError = i + 1
+
+        linea = listaArg[i]
+        # p.lineno(i)
+        if not linea:
+            continue
+        result = parser.parse(linea)
+
+        if ErrorDetect:
+            break
+        # elif (i+1)==len(listaArg) and not ErrorDetect:
+        # print("Compilacion Exitosa")
+        # print(result)
+

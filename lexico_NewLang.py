@@ -17,7 +17,6 @@ reserved = {
     'null' : 'NULL',
     'undefined' : 'UNDEFINED',
     'static' : 'STATIC',
-    'typeof' : 'TYPEOF',
     'instanceof' : 'INSTANCEOF',
 
     'if' : 'IF',
@@ -160,7 +159,6 @@ t_NULL = r'null'
 t_UNDEFINED = r'undefined'
 t_STATIC = r'static'
 t_INSTANCEOF = r'instanceof'
-t_TYPEOF = r'typeof'
 
 t_IF = r'if'
 t_ELSE = r'else'
@@ -291,7 +289,6 @@ tests=[test1_assignacion,test_has,test_join,test_concat,test_for,test_while,test
 
 for i in tests:
     #print("\n"+i+"\n")
-    
     lexer.input(i)
     while(True):
         tok = lexer.token()
