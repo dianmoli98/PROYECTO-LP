@@ -7,13 +7,12 @@ tokens = mylexer.tokens
 def p_statement(p):
     '''statement : atomicstatement
     | atomicstatement statement'''
-    p[0] = p[1]
-
+    p[0] = 1
 
 def p_atomicStatement(p):
     '''atomicstatement : statement_value
     | statement_value POINTCOMMA'''
-    p[0] = p[1]
+    p[0] = 1
 
 
 def p_statement_value(p):
@@ -31,20 +30,23 @@ def p_statement_value(p):
     | comments
     | functionStatement
     | consoleLog'''
-    p[0] = p[1]
+    p[0] = 1
 
 
 def p_statement_control(p):
     '''statement_control : funcionif
     | funcionwhile
     | funcionfor'''
+    p[0] = 1
+
 
 
 def p_consoleLog(p):
     '''consoleLog : PRINT LPAREN RPAREN
     | PRINT LPAREN VARIABLE RPAREN
     | PRINT LPAREN string RPAREN'''
-    print("console.log")
+    p[0] = 1
+
 
 # comentarios
 
@@ -52,6 +54,8 @@ def p_consoleLog(p):
 def p_declarationcomments(p):
     '''comments : COMMENT
     | MULTICOMMENT'''
+    p[0] = 1
+
 
 # Declaration of Variables, Array and Enum
 
@@ -67,39 +71,48 @@ def p_declare(p):
     | declare_enum
     | declare_tuples
     | declare_generic'''
-    p[0] = p[1]
+    p[0] = 1
 
 
 # Declaration of enum
 def p_declare_enum(p):
     'declare_enum : ENUM OBJECTNAME LKEY enums RKEY'
-    p[0] = 500
+    p[0] = 1
 
 
 def p_enums(p):
     '''enums : enums_numeric
     | enums_string'''
+    p[0] = 1
+
 
 
 # For declarations of enums with numerics values
 def p_enums_numeric(p):
     '''enums_numeric : enums_numeric COMMA enums_numeric_value
     | enums_numeric_value'''
+    p[0] = 1
+
 
 
 def p_enums_numeric_value(p):
     '''enums_numeric_value : object_name EQUAL number
     | object_name'''
+    p[0] = 1
+
 
 
 # For declarations of enums with string values
 def p_enums_string(p):
     '''enums_string : enums_string COMMA enums_string_value
     | enums_string_value'''
+    p[0] = 1
+
 
 
 def p_enums_string_value(p):
     'enums_string_value : object_name EQUAL string'
+    p[0] = 1
 
 # FUNCTION
 
@@ -107,11 +120,13 @@ def p_enums_string_value(p):
 def p_functionDeclarar(p):
     '''functionStatement : FUNCTION VARIABLE LPAREN RPAREN substatement
     | FUNCTION VARIABLE LPAREN funcParametres RPAREN substatement'''
+    p[0] = 1
 
 
 def p_funtionParametres(p):
     '''funcParametres : VARIABLE
     | VARIABLE COMMA funcParametres'''
+    p[0] = 1
 
 # if
 
@@ -124,7 +139,7 @@ def p_condicionIf(p):
     | IF LPAREN VARIABLE INSTANCEOF OBJECTNAME RPAREN substatement
 
     '''
-    p[0] = 1000
+    p[0] = 1
 
 # elif
 
@@ -132,12 +147,14 @@ def p_condicionIf(p):
 def p_condicionElif(p):
     '''funcionelif : ELIF LPAREN formLog RPAREN substatement
     | ELIF LPAREN formLog RPAREN substatement funcionelif '''
+    p[0] = 1
 
 # else
 
 
 def p_condicionElse(p):
     '''funcionelse : ELSE substatement'''
+    p[0] = 1
 
 # for
 
@@ -148,25 +165,27 @@ def p_condicionFor(p):
     | FOR LPAREN LET VARIABLE IN VARIABLE RPAREN substatement
     | FOR LPAREN VARIABLE IN VARIABLE RPAREN substatement
     '''
-    p[0] = 1000
+    p[0] = 1
 
 
 # While
 def p_condicionWhile(p):
     '''funcionwhile : WHILE LPAREN formLog RPAREN substatement
     '''
+    p[0] = 1
 
 
 def p_subStatement(p):
     '''substatement : LKEY statement RKEY
     | LKEY RKEY'''
+    p[0] = 1
 
 # Declaration of set
 
 
 def p_declare_Set(p):
     'exp_set : declare_any EQUAL NEW SET LPAREN RPAREN'
-    p[0] = 600
+    p[0] = 1
 
 # Declaration of tuples
 
@@ -178,31 +197,37 @@ def p_declare_tuples(p):
     | declare_any TWOPOINTS tuples_3_variables EQUAL tuples_3_values
     | declare_any TWOPOINTS tuples_4_variables
     | declare_any TWOPOINTS tuples_4_variables EQUAL tuples_4_values'''
-    p[0] = 1000
+    p[0] = 1
 
 
 def p_declare_tuples_2_variables(p):
     'tuples_2_variables : LBRACKET types COMMA types RBRACKET'
+    p[0] = 1
 
 
 def p_declare_tuples_3_variables(p):
     'tuples_3_variables : LBRACKET types COMMA types COMMA types RBRACKET'
+    p[0] = 1
 
 
 def p_declare_tuples_4_variables(p):
     'tuples_4_variables : LBRACKET types COMMA types COMMA types COMMA types RBRACKET'
+    p[0] = 1
 
 
 def p_declare_tuples_2_values(p):
     'tuples_2_values : LBRACKET general_value COMMA general_value RBRACKET'
+    p[0] = 1
 
 
 def p_declare_tuples_3_values(p):
     'tuples_3_values : LBRACKET general_value COMMA general_value COMMA general_value RBRACKET'
+    p[0] = 1
 
 
 def p_declare_tuples_4_values(p):
     'tuples_4_values : LBRACKET general_value COMMA general_value COMMA general_value COMMA general_value RBRACKET'
+    p[0] = 1
 
 
 # Declaration of arrays
@@ -211,7 +236,7 @@ def p_declare_array(p):
     | declare_array_main_boolean
     | declare_array_main_string
     | declare_generic_array'''
-    p[0] = 400
+    p[0] = 1
 
 # Declaration of array_number
 
@@ -220,11 +245,13 @@ def p_declare_array_main_number(p):
     '''declare_array_main_number : declare_array_number EQUAL list_number
     | declare_array_number EQUAL LBRACKET RBRACKET
     | declare_array_number'''
+    p[0] = 1
 
 
 def p_declare_array_number(p):
     '''declare_array_number : declare_number LBRACKET RBRACKET
     | declare_any TWOPOINTS ARRAY LESS VARNUMBER GREATER'''
+    p[0] = 1
 
 
 # Declaration of array_boolean
@@ -232,11 +259,13 @@ def p_declare_array_main_boolean(p):
     '''declare_array_main_boolean : declare_array_boolean EQUAL list_boolean
     | declare_array_boolean EQUAL LBRACKET RBRACKET
     | declare_array_boolean'''
+    p[0] = 1
 
 
 def p_declare_array_boolean(p):
     '''declare_array_boolean : declare_boolean LBRACKET RBRACKET
     | declare_any TWOPOINTS ARRAY LESS VARBOOLEAN GREATER'''
+    p[0] = 1
 
 
 # Declaration of array_string
@@ -244,27 +273,30 @@ def p_declare_array_main_string(p):
     '''declare_array_main_string : declare_array_string EQUAL list_string
     | declare_array_string EQUAL LBRACKET RBRACKET
     | declare_array_string'''
+    p[0] = 1
 
 
 def p_declare_array_string(p):
     '''declare_array_string : declare_string LBRACKET RBRACKET
     | declare_any TWOPOINTS ARRAY LESS VARSTRING GREATER'''
+    p[0] = 1
 
 
 # Declaration of generic array
 def p_declare_generic_array(p):
     'declare_generic_array : declare_any EQUAL list_types'
+    p[0] = 1
 
 
 # Declaration of variables
 def p_declare_null(p):
     'var_null : declare_any EQUAL NULL'
-    p[0] = 110.10
+    p[0] = 1
 
 
 def p_declare_undefined(p):
     'var_undefined : declare_any EQUAL UNDEFINED'
-    p[0] = 120.20
+    p[0] = 1
 
 # Declaration of var_number add funcionmath
 
@@ -274,56 +306,61 @@ def p_var_number(p):
     | declare_number EQUAL funcionmath
     | declare_number
     | declare_number EQUAL expression'''
-    p[0] = 110
+    p[0] = 1
 
 
 def p_declare_number(p):
     'declare_number : declare_any TWOPOINTS VARNUMBER'
+    p[0] = 1
 
 
 # Declaration of var boolean
 def p_var_boolean(p):
     '''var_boolean : declare_boolean EQUAL boolean_value
     | declare_boolean'''
-    p[0] = 120
+    p[0] = 1
 
 
 def p_declare_boolean(p):
     'declare_boolean : declare_any TWOPOINTS VARBOOLEAN'
+    p[0] = 1
 
 
 # Declaration of var_string
 def p_var_string(p):
     '''var_string : declare_string EQUAL string_value
     | declare_string'''
-    p[0] = 130
+    p[0] = 1
 
 
 def p_declare_string(p):
     'declare_string : declare_any TWOPOINTS VARSTRING'
+    p[0] = 1
 
 
 # Declaration of var_enum
 def p_var_enum(p):
     '''var_enum : declare_var_enum EQUAL enum_value
     | declare_var_enum'''
-    p[0] = 140
+    p[0] = 1
 
 
 def p_declare_var_enum(p):
     'declare_var_enum : declare_any TWOPOINTS object_name'
+    p[0] = 1
 
 
 # General Declarator when data type is not specified
 def p_declare_generic(p):
     '''declare_generic : declare_any EQUAL assign_value
     | declare_any'''
-    p[0] = 100
+    p[0] = 1
 
 
 # Can be used for all declarations
 def p_declare_any(p):
     '''declare_any : prefix VARIABLE'''
+    p[0] = 1
 
 
 # Assignments
@@ -331,7 +368,7 @@ def p_assign(p):
     '''assign : assign_variable
     | assign_array
     | assign_object_value'''
-    p[0] = 50
+    p[0] = 1
 
 # Assign variable
 
@@ -340,11 +377,13 @@ def p_assign_variable(p):
     '''assign_variable : variable EQUAL assign_value
     | variable EQUAL funciones
     | variable EQUAL list_types'''
+    p[0] = 1
 
 
 # Assign array_value
 def p_assign_array(p):
     'assign_array : array_value EQUAL general_value'
+    p[0] = 1
 
 
 # Assign object value
@@ -352,6 +391,7 @@ def p_assign_object_value(p):
     '''assign_object_value : object_value_form1 EQUAL general_value
     | object_value_form1 EQUAL list_types
     | object_value_form2 EQUAL general_value'''
+    p[0] = 1
 
 
 # Valores posibles para variables
@@ -359,15 +399,18 @@ def p_assign_value(p):
     '''assign_value : general_value
     | object_definition
     | tuples_list'''
+    p[0] = 1
 
 
 def p_tuples_list(p):
     'tuples_list : LBRACKET tuples_values RBRACKET'
+    p[0] = 1
 
 
 def p_tuples_values(p):
     '''tuples_values : tuples_values COMMA general_value
     | general_value'''
+    p[0] = 1
 
 # Definicion de un objeto
 
@@ -375,16 +418,19 @@ def p_tuples_values(p):
 def p_object_definition(p):
     '''object_definition : LKEY attributes RKEY
     | LKEY RKEY '''
+    p[0] = 1
 
 
 def p_attributes_line(p):
     '''attributes : attributes COMMA attribute
     | attribute'''
+    p[0] = 1
 
 
 def p_attribute(p):
     '''attribute : variable TWOPOINTS general_value
     | variable TWOPOINTS list_types'''
+    p[0] = 1
 
 
 # Valor: String, operacion matematica, boolean
@@ -399,6 +445,7 @@ def p_general_value(p):
     | expNeg
     | expEq
     | expNotEq'''
+    p[0] = 1
 
 
 # Lists_values
@@ -407,31 +454,37 @@ def p_list_types(p):
     | list_boolean
     | list_string
     | LBRACKET RBRACKET'''
+    p[0] = 1
 
 
 # List number
 def p_list_number(p):
     'list_number : LBRACKET numbers RBRACKET'
+    p[0] = 1
 
 
 def p_numbers(p):
     '''numbers : numbers COMMA number_value
     | number_value'''
+    p[0] = 1
 
 
 # List boolean
 def p_list_boolean(p):
     'list_boolean : LBRACKET booleans RBRACKET'
+    p[0] = 1
 
 
 def p_booleans(p):
     '''booleans : booleans COMMA boolean_value
     | boolean_value'''
+    p[0] = 1
 
 
 # List string
 def p_list_string(p):
     'list_string : LBRACKET strings RBRACKET'
+    p[0] = 1
 
 
 def p_stringss(p):
@@ -442,6 +495,7 @@ def p_stringss(p):
 # Declarations values
 def p_number_value(p):
     'number_value : expression'
+    p[0] = 1
 
 
 def p_declare_boolean_value(p):
@@ -452,6 +506,7 @@ def p_declare_boolean_value(p):
     | expNeg
     | expEq
     | expNotEq'''
+    p[0] = 1
 
 
 def p_string_value(p):
@@ -459,56 +514,63 @@ def p_string_value(p):
     | other_value
     | string_object
     | concatenate'''
+    p[0] = 1
 
 
 # ConcatenationString--Review
 def p_concatenate(p):
     '''concatenate : string PLUS termS'''
-    p[0] = 600
+    p[0] = 1
 
 
 def p_concatenate_term(p):
     '''termS : termS PLUS value
     | value'''
-    p[0] = 1.0
+    p[0] = 1
 
 
 def p_value(p):
     '''value : expression
     | string'''
+    p[0] = 1
 
 
 # Math Operations
 def p_expression_plus(p):
     'expression : expression PLUS term'
+    p[0] = 1
 
 
 def p_expression_minus(p):
     'expression : expression MINUS term'
+    p[0] = 1
 
 
 def p_expression_term(p):
     'expression : term'
+    p[0] = 1
 
 
 def p_term_product(p):
     'expression : expression PRODUCT expression'
+    p[0] = 1
 
 
 def p_term_div(p):
     'expression : expression DIVIDE expression'
+    p[0] = 1
 
 
 def p_expression_increment(p):
     '''term : term1 INCREMENT
     | INCREMENT  term1'''
-    p[0] = None
+    p[0] = 1
 
 
 def p_expression_decrement(p):
     '''term : term1 DECREMENT
      | DECREMENT  term1'''
-    p[0] = None
+    p[0] = 1
 
 
 def p_negation(p):
@@ -518,21 +580,21 @@ def p_negation(p):
         | NEGATION LPAREN expOpLog RPAREN
         | NEGATION VARIABLE
         '''
-    p[0] = 88.8
+    p[0] = 1
 
 
 def p_equalto(p):
     '''expEq : expCond EQUALTO expCond
     | factor_exprlog  EQUALTO factor_exprlog
     | expression EQUALTO expression  '''
-    p[0] = 99.9
+    p[0] = 1
 
 
 def p_notequal(p):
     '''expNotEq : expCond NOTEQUALTO expCond
     | factor_exprlog  NOTEQUALTO factor_exprlog
     | expression NOTEQUALTO expression  '''
-    p[0] = 99.9
+    p[0] = 1
 
 
 # Operaciones Condicionales
@@ -541,18 +603,18 @@ def p_expression_opLogico(p):
     | factor_exprlog  oplogico factor_exprlog
     | expression oplogico expression
     | boolean oplogico boolean'''
-    p[0] = 77.7
+    p[0] = 1
 
 
 def p_exp_logica(p):
     'factor_exprlog : LPAREN expCond RPAREN'
-    p[0] = p[2]
+    p[0] = 1
 
 
 def p_expression_condicional(p):
     '''expCond : expression operador expression
     | LPAREN expression operador expression RPAREN'''
-    p[0] = 66.6
+    p[0] = 1
 
 
 def p_term1_expr(p):
@@ -566,19 +628,19 @@ def p_group_expr(p):
     | variable
     | array_value
     | object_value'''
-    p[0] = p[1]
+    p[0] = 1
 
 
 def p_term_factor(p):
     '''term : number
     | factor_expr
     | other_value'''
-    p[0] = p[1]
+    p[0] = 1
 
 
 def p_factor_expr(p):
     'factor_expr : LPAREN expression RPAREN'
-    p[0] = p[2]
+    p[0] = 1
 
 
 def p_other_value(p):
@@ -587,6 +649,7 @@ def p_other_value(p):
     | array_value
     | enum_value
     | object_value'''
+    p[0] = 1
 
 # FUNCIONES IF
 
@@ -594,6 +657,7 @@ def p_other_value(p):
 def p_funcionLog(p):
     '''formLog : expCond
        | expOpLog'''
+    p[0] = 1
 
 # Object value
 
@@ -606,10 +670,12 @@ def p_object_value(p):
 
 def p_string_object(p):
     'string_object : NEW OBJECTSTRING LPAREN string RPAREN'
+    p[0] = 1
 
 
 def p_object_value_form1(p):
     'object_value_form1 : variable POINT variable'
+    p[0] = 1
 
 
 def p_object_value_form2(p):
@@ -634,34 +700,39 @@ def p_prefix(p):
     | VAR
     | STATIC
     | CONST'''
+    p[0] = 1
 
 
 def p_typedate(p):
     '''typedate : types
         | ENUM'''
+    p[0] = 1
 
 
 def p_types(p):
     '''types : VARNUMBER
         | VARSTRING
         | VARBOOLEAN'''
+    p[0] = 1
 
 
 def p_number(p):
     '''number : NUMBER
     | FLOAT'''
-    p[0] = float(p[1])
+    p[0] = 1
 
 
 def p_string(p):
     '''string : NORMSTRING1
     | NORMSTRING2
     | MULTISTRING'''
+    p[0] = 1
 
 
 def p_boolean_value(p):
     '''boolean : TRUE
     | FALSE'''
+    p[0] = 1
 
 
 def p_variable(p):
@@ -671,6 +742,7 @@ def p_variable(p):
 
 def p_object_name(p):
     'object_name : OBJECTNAME'
+    p[0] = 1
 
 
 def p_operador(p):
@@ -680,11 +752,13 @@ def p_operador(p):
       | LESSEQUAL
       | EQUALTO
       | NOTEQUALTO'''
+    p[0] = 1
 
 
 def p_operadorlogico(p):
     '''oplogico : AND
       | OR'''
+    p[0] = 1
 # funciones
 
 
@@ -693,6 +767,7 @@ def p_funciones(p):
     | funcionString
     | funcionArray
     | funcionConjunto'''
+    p[0] = 1
 
 # Math Funciones
 
@@ -701,21 +776,25 @@ def p_funcionMath(p):
     '''funcionmath : mathAbs
     | mathRound
     | mathPow'''
+    p[0] = 1
 
 
 def p_math_abs_declare(p):
     'mathAbs : declare_any EQUAL mathAbs'
+    p[0] = 1
 
 
 def p_math_abs(p):
     '''mathAbs : FUNMATH POINT  ABS LPAREN VARIABLE RPAREN
     | FUNMATH POINT  ABS LPAREN number_value RPAREN
     | FUNMATH POINT  ABS LPAREN MINUS  number_value RPAREN'''
+    p[0] = 1
 
 
 def p_math_round(p):
     '''mathRound : FUNMATH POINT  ROUND LPAREN VARIABLE RPAREN
     | FUNMATH POINT  ROUND LPAREN number_value RPAREN'''
+    p[0] = 1
 
 
 def p_math_pow(p):
@@ -723,6 +802,7 @@ def p_math_pow(p):
     | FUNMATH POINT  POW LPAREN number_value COMMA number_value RPAREN
     | FUNMATH POINT  POW LPAREN VARIABLE COMMA number_value RPAREN
     | FUNMATH POINT  POW LPAREN number_value COMMA VARIABLE RPAREN'''
+    p[0] = 1
 
 # String Funciones
 
@@ -731,23 +811,27 @@ def p_funcionesString(p):
     '''funcionString : stringCharAt
     | stringConcat
     | stringSplit'''
+    p[0] = 1
 
 
 def p_string_charAt(p):
     '''stringCharAt : VARIABLE POINT FUNCTIONCHARAT LPAREN VARIABLE RPAREN
     | VARIABLE POINT FUNCTIONCHARAT LPAREN number_value RPAREN'''
+    p[0] = 1
 
 
 def p_string_concat(p):
     '''stringConcat : VARIABLE POINT FUNCTIONCONCAT LPAREN VARIABLE RPAREN
     | VARIABLE POINT FUNCTIONCONCAT LPAREN string RPAREN
     '''
+    p[0] = 1
 
 
 def p_string_split(p):
     '''stringSplit : VARIABLE POINT FUNCTIONSPLIT LPAREN VARIABLE RPAREN
     | VARIABLE POINT FUNCTIONSPLIT LPAREN string RPAREN
     '''
+    p[0] = 1
 
 # Arrays funciones
 
@@ -756,26 +840,31 @@ def p_funcionesArray(p):
     '''funcionArray : arrayFilter
     | arrayConcat
     | arrayJoin'''
+    p[0] = 1
 
 
 def p_array_concat(p):
     '''arrayConcat : VARIABLE POINT FUNCTIONCONCAT LPAREN VARIABLE RPAREN
     | VARIABLE POINT FUNCTIONCONCAT LPAREN list_types RPAREN'''
+    p[0] = 1
 
 
 def p_array_join_declare(p):
     '''arrayJoin : declare_any arrayJoin
     | declare_any arrayJoin POINTCOMMA'''
+    p[0] = 1
 
 
 def p_array_join(p):
     '''arrayJoin : VARIABLE POINT FUNCTIONJOIN LPAREN VARIABLE RPAREN
     | VARIABLE POINT FUNCTIONJOIN LPAREN string RPAREN
     '''
+    p[0] = 1
 
 
 def p_array_filter(p):
     '''arrayFilter : VARIABLE POINT FUNCTIONFILTER LPAREN VARIABLE RPAREN'''
+    p[0] = 1
 
 # conjuntos Funciones
 
@@ -783,6 +872,7 @@ def p_array_filter(p):
 def p_funcionesConjuntos(p):
     '''funcionConjunto : conjuntoAdd
     | conjuntoHas'''
+    p[0] = 1
 
 
 def p_conjunto_add(p):
@@ -790,6 +880,7 @@ def p_conjunto_add(p):
     | VARIABLE POINT FUNCTIONADD LPAREN number_value RPAREN
     | VARIABLE POINT FUNCTIONADD LPAREN boolean_value RPAREN
     | VARIABLE POINT FUNCTIONADD LPAREN string RPAREN'''
+    p[0] = 1
 
 
 def p_conjunto_has(p):
@@ -797,16 +888,20 @@ def p_conjunto_has(p):
     | VARIABLE POINT FUNCTIONHAS LPAREN number_value RPAREN
     | VARIABLE POINT FUNCTIONHAS LPAREN boolean_value RPAREN
     | VARIABLE POINT FUNCTIONHAS LPAREN string RPAREN'''
+    p[0] = 1
 
 # Error rule for syntax errors
 
+lineaError=None
+ErrorDetect=False
 
 def p_error(p):
+    ErrorDetect=True
     global flag_for_error
     flag_for_error=1
 
     if p is not None:
-        print("Error de syntax linea %s, en \'%s\'."%(str(p.lineno),str(p.type)))
+        print("Error de syntax linea %s, en \'%s\'."%(str(lineaError),str(p.type)))
         print("ValueError: Nombre \'%s\' no es definido."%(str(p.value)))
         #print(dir(p))
 
@@ -932,14 +1027,28 @@ def p_error(p):
 parser = yacc.yacc()
 
 while True:
+    listaArg=[]
+
     try:
         s = input('Typescript > ')
+        listaArg=s.split("\\"+"n")
+
     except EOFError:
         break
-    if not s:
-        continue
-    result = parser.parse(s)
-    print(result)
+    for i in range(len(listaArg)):
+        lineaError=i+1
+
+        linea=listaArg[i]
+        #p.lineno(i)
+        if not linea:
+            continue
+        result = parser.parse(linea)
+    
+        if ErrorDetect:
+            break
+        elif (i+1)==len(listaArg) and not ErrorDetect:
+            print("Compilacion Exitosa")
+            #print(result)
 
 #Example multiline
 """

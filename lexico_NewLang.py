@@ -290,14 +290,14 @@ tests=[test1_assignacion,test_has,test_join,test_concat,test_for,test_while,test
 
 
 for i in tests:
-    print("\n"+i+"\n")
+    #print("\n"+i+"\n")
     
     lexer.input(i)
     while(True):
         tok = lexer.token()
         if not tok:
             break  # No more input
-        print(tok)
+        #print(tok)
 
 
 
