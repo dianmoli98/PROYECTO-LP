@@ -852,15 +852,15 @@ def p_error(p):
     NoError[0]=False
 
     if p is not None:
-        print("Error de syntax linea %s, en \'%s\'."%(str(lineaError),str(p.type)))
-        print("ValueError: Nombre \'%s\' no es definido."%(str(p.value)))
+        #print("Error de syntax linea %s, en \'%s\'."%(str(lineaError),str(p.type)))
+        #print("ValueError: Nombre \'%s\' no es definido."%(str(p.value)))
         var1 = "Error de syntax linea %s, en \'%s\'."%(str(lineaError),str(p.type))
         var2 = "ValueError: Nombre \'%s\' no es definido."%(str(p.value))
         list_Errors.append((var1, var2))
-        #print(dir(p))
+        # #print(dir(p))
 
-    else:
-        print("Fin de entrada inesperado.")
+    #else:
+        #print("Fin de entrada inesperado.")
 
 
 #PRUEBAS REALIZADAS POR DIANA MOLINA, DENNYS LOPEZ Y MARLON LINDAO
