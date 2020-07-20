@@ -842,7 +842,7 @@ def p_conjunto_has(p):
 # Error rule for syntax errors
 
 lineaError=None
-
+list_Errors = []
 NoError=[True]
 
 def p_error(p):
@@ -854,6 +854,9 @@ def p_error(p):
     if p is not None:
         print("Error de syntax linea %s, en \'%s\'."%(str(lineaError),str(p.type)))
         print("ValueError: Nombre \'%s\' no es definido."%(str(p.value)))
+        var1 = "Error de syntax linea %s, en \'%s\'."%(str(lineaError),str(p.type))
+        var2 = "ValueError: Nombre \'%s\' no es definido."%(str(p.value))
+        list_Errors.append((var1, var2))
         #print(dir(p))
 
     else:
@@ -986,6 +989,10 @@ print(resultado)
 
 # Build the parser
 parser = yacc.yacc()
+
+
+def complle_sintactico():
+    return yacc.yacc()
 '''
 while True:
     listaArg = []
