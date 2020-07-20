@@ -986,6 +986,7 @@ print(resultado)
 
 # Build the parser
 parser = yacc.yacc()
+'''
 while True:
     listaArg = []
 
@@ -1011,4 +1012,4 @@ while True:
         if (i+1)==len(listaArg):
             print("Compilacion Exitosa")
             #print(result)
-
+'''

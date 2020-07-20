@@ -5,6 +5,8 @@
 
 import ply.lex as lex
 
+list_errors = []
+
 reserved = {
     'let' : 'LET',
     'var' : 'VAR',
@@ -234,11 +236,14 @@ def t_newline(t):
 
 def t_error(t):
     print("No se ha reconocido el token '%s' " % t.value[0])
+    list_errors.append(("No se ha reconocido el token '%s' " % t.value[0], t.lexer.lineno))
     t.lexer.skip(1)
 
 
 lexer = lex.lex()
 
+def compile_lexico():
+    return lex.lex()
 #Test - Dennys Lopez
 
 test1_assignacion="var arreglo1 = [\"Ana\",\"Juan\"];"
