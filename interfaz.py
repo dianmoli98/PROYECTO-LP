@@ -81,30 +81,14 @@ def call_lexer():
 
 def call_sintactico():
     entrada_exp = entrada.get('1.0', END)
-    parse.list_Errors.clear()
-    parse.lineaError = 1
-    listaArg = entrada_exp.split("\n")
-    string_error = ""
-    error = 0
 
-    for i in listaArg:
-        parse.lineaError += 1
-        sintactico.parse(i)
-        if not parse.NoError[0]:
-            break
-
-    if len(parse.list_Errors) > 0:
-        for e in parse.list_Errors:
-            string_error += e[0] + e[1] + "\n"
-            error += 1
-    if error == 0:
-        entrada_exp = "El analisis sintactico ha sido exitosa"
-    else:
-        entrada_exp = "Su codigo tiene los siguientes errores de sintaxis:\n" + string_error
+    salidaUI=parse.testUI(entrada_exp)
+    if salidaUI==None:
+        salidaUI=""
 
     output.config(state=NORMAL)
     output.delete('1.0', END)
-    output.insert(INSERT, entrada_exp)
+    output.insert(INSERT, salidaUI)
     output.config(state=DISABLED)
 
 def probar_expression():

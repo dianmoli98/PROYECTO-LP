@@ -235,7 +235,7 @@ def t_newline(t):
     t.lexer.lineno += len(t.value)
 
 def t_error(t):
-    print("No se ha reconocido el token '%s' " % t.value[0])
+    #print("No se ha reconocido el token '%s' " % t.value[0])
     list_errors.append(("No se ha reconocido el token '%s' " % t.value[0], t.lexer.lineno))
     t.lexer.skip(1)
 
@@ -290,14 +290,14 @@ tests=[test1_assignacion,test_has,test_join,test_concat,test_for,test_while,test
        test_boolean,test_boolean2, test_comment,test_suma,test_multiLineaComment]
 
 
-for i in tests:
+'''for i in tests:
     #print("\n"+i+"\n")
     lexer.input(i)
     while(True):
         tok = lexer.token()
         if not tok:
             break  # No more input
-        #print(tok)
+        #print(tok)'''
 
 
 

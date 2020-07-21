@@ -16,8 +16,7 @@ def p_atomicStatement(p):
 
 
 def p_statement_value(p):
-    '''statement_value : concatenate
-    | expression
+    '''statement_value : expression
     | declare
     | assign
     | expCond
@@ -841,9 +840,11 @@ def p_conjunto_has(p):
 
 # Error rule for syntax errors
 
-lineaError=None
+lineaError=[None]
 list_Errors = []
 NoError=[True]
+
+StringError=[""]
 
 def p_error(p):
     global flag_for_error
@@ -854,15 +855,52 @@ def p_error(p):
     if p is not None:
         #print("Error de syntax linea %s, en \'%s\'."%(str(lineaError),str(p.type)))
         #print("ValueError: Nombre \'%s\' no es definido."%(str(p.value)))
-        var1 = "Error de syntax linea %s, en \'%s\'."%(str(lineaError),str(p.type))
-        var2 = "ValueError: Nombre \'%s\' no es definido."%(str(p.value))
-        list_Errors.append((var1, var2))
+        var1 = "Error de syntax linea %s, en \'%s\'."%(str(lineaError[0]),str(p.type))
+        var2 = "ValueError: Nombre \'%s\' no es definido."%(str(p.value))   
+        
+        StringError[0]=var1+"\n"+var2
         # #print(dir(p))
 
-    #else:
-        #print("Fin de entrada inesperado.")
+    else:
+        StringError[0] ="Fin de entrada inesperado, linea "+str(lineaError[0])
 
+def testUI(texto):
 
+    listaArg = texto.split("\n")
+    NoError[0]=True
+    mensajeUI="Compilacion Exitosa"
+
+    
+    
+    for i in range(len(listaArg)):
+        lineaError[0] = i + 1
+
+        linea = listaArg[i]
+        # p.lineno(i)
+        if not linea or linea=="" or verSpace(linea):
+            
+            continue
+        #print(str(i)+":"+str(listaArg))
+
+        result = parser.parse(linea)
+        #print(result)
+
+        if not NoError[0]:
+
+            return StringError[0]
+        
+        
+
+        if (i+1)==len(listaArg):
+            return mensajeUI
+
+    return mensajeUI
+
+def verSpace(cadena):
+    for i in cadena:
+        if i!=" ":
+            return False
+    return True
 #PRUEBAS REALIZADAS POR DIANA MOLINA, DENNYS LOPEZ Y MARLON LINDAO
 
 # var tupla: [string, number] = ["Hola",4];
