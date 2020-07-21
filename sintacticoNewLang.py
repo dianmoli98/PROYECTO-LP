@@ -643,11 +643,11 @@ def p_string_object(p):
     p[0] = 1
 
 def p_object_value_form1(p):
-    'object_value_form1 : variable POINT variable'
+    'object_value_form1 : VARIABLE POINT VARIABLE'
     p[0] = 1
 
 def p_object_value_form2(p):
-    'object_value_form2 : variable POINT array_value'
+    'object_value_form2 : VARIABLE POINT array_value'
 
 # Array
 def p_array_value(p):
